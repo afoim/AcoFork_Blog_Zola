@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="zh" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>使用基于IPFS的Fleek部署静态网站、托管图床、部署服务 - AcoFork Blog</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css"/>
+    <link rel="icon" href="https://q2.qlogo.cn/headimg_dl?dst_uin=2726730791&amp;spec=0">
+    <script src="https://pic1.acofork.com/random.js"></script>
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.acofork.com/rss.xml">
+    <script src="/js/main.js"></script>
+</head>
+<body class="bg-[var(--page-bg)] text-gray-900 dark:text-gray-100 transition-colors duration-300 min-h-screen flex flex-col">
+
+    <!-- Navbar -->
+    <nav class="sticky top-0 z-50 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md shadow-sm dark:border-b dark:border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="/" class="text-xl font-bold text-blue-600 dark:text-blue-400">AcoFork Blog</a>
+                    </div>
+                    <!-- Desktop Menu -->
+                    <div class="hidden md:ml-6 md:flex md:space-x-8">
+                        
+                        <a href="&#x2F;" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            首页
+                        </a>
+                        
+                        <a href="&#x2F;posts" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            归档
+                        </a>
+                        
+                        <a href="&#x2F;friends" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            友链
+                        </a>
+                        
+                        <a href="&#x2F;sponsors" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            赞助
+                        </a>
+                        
+                        <a href="https:&#x2F;&#x2F;umami.acofork.com&#x2F;share&#x2F;CdkXbGgZr6ECKOyK" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           target="_blank">
+                            统计
+                        </a>
+                        
+                        <a href="https:&#x2F;&#x2F;status.acofork.com" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           target="_blank">
+                            监控
+                        </a>
+                        
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <!-- Mobile Menu Button -->
+                    <button type="button" onclick="toggleMobileMenu()" class="md:hidden p-2 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
+                        <span class="sr-only">Open menu</span>
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                    <!-- Search Button -->
+                    <button onclick="toggleSearch()" class="p-2 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </button>
+                    <!-- Theme Toggle -->
+                    <button onclick="toggleTheme()" class="p-2 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
+                        <svg id="sun-icon" class="h-6 w-6 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                        <svg id="moon-icon" class="h-6 w-6 block dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                
+                <a href="&#x2F;" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    首页
+                </a>
+                
+                <a href="&#x2F;posts" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    归档
+                </a>
+                
+                <a href="&#x2F;friends" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    友链
+                </a>
+                
+                <a href="&#x2F;sponsors" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    赞助
+                </a>
+                
+                <a href="https:&#x2F;&#x2F;umami.acofork.com&#x2F;share&#x2F;CdkXbGgZr6ECKOyK" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   target="_blank">
+                    统计
+                </a>
+                
+                <a href="https:&#x2F;&#x2F;status.acofork.com" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   target="_blank">
+                    监控
+                </a>
+                
+            </div>
+        </div>
+    </nav>
+
+    <!-- Search Modal -->
+    <div id="search-modal" class="fixed inset-0 z-50 hidden" role="dialog" aria-modal="true">
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" onclick="toggleSearch()"></div>
+        <div class="fixed inset-0 z-10 overflow-y-auto p-4 sm:p-6 md:p-20" onclick="if(event.target === this) toggleSearch()">
+            <div class="mx-auto max-w-xl transform rounded-xl bg-white dark:bg-gray-800 p-2 shadow-2xl transition-all">
+                <input type="text" id="search-input" 
+                       class="w-full rounded-md border-0 bg-gray-100 dark:bg-gray-700 px-4 py-2.5 text-gray-900 dark:text-white placeholder-gray-500 focus:ring-0 sm:text-sm" 
+                       placeholder="搜索文章..." autocomplete="off">
+                <ul id="search-results" class="max-h-96 scroll-py-3 overflow-y-auto p-3"></ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+<div class="max-w-4xl mx-auto">
+    <!-- Post Header -->
+    <header class="mb-8 text-center">
+        <div class="flex items-center justify-center space-x-2 text-sm text-gray-500 dark:text-gray-400 mb-4">
+            <time datetime="2024-10-17">2024-10-17</time>
+            <span>•</span>
+            <span>6 分钟阅读</span>
+            <span id="views-separator" style="display: none">•</span>
+            <span id="page-views" style="display: none"></span>
+        </div>
+        <h1 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">使用基于IPFS的Fleek部署静态网站、托管图床、部署服务</h1>
+        
+        <p class="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">IPFS是一个多节点的文件托管系统，你可以在上面共享文件、发布网站、而Fleek自动化了这个过程，并且可以链接你的Git存储库</p>
+        
+        
+        <div class="w-full rounded-2xl overflow-hidden shadow-sm mb-8">
+            <img src="&#x2F;img&#x2F;efb0f799fd3295ef58efed3cea88bb42.webp" alt="使用基于IPFS的Fleek部署静态网站、托管图床、部署服务" class="w-full h-auto">
+        </div>
+        
+    </header>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const baseUrl = 'https://umami.acofork.com';
+                const shareId = 'CdkXbGgZr6ECKOyK';
+                // Current page path
+                const urlPath = window.location.pathname;
+                
+                const stats = await window.fetchUmamiStats(baseUrl, shareId, {
+                    url: urlPath
+                });
+                
+                // Check for both 'visits' (new preference) or 'pageviews' (fallback)
+                const metric = (stats && (stats.visits || stats.pageviews));
+                
+                let views = 0;
+                let hasData = false;
+
+                if (metric && typeof metric.value !== 'undefined') {
+                    views = metric.value;
+                    hasData = true;
+                } else if (stats && (typeof stats.visits === 'number' || typeof stats.pageviews === 'number')) {
+                        // Fallback for flat structure
+                        views = stats.visits || stats.pageviews;
+                        hasData = true;
+                }
+
+                if (hasData) {
+                    const viewEl = document.getElementById('page-views');
+                    viewEl.textContent = views + ' 次访问';
+                    viewEl.style.display = 'inline';
+                    document.getElementById('views-separator').style.display = 'inline';
+                }
+            } catch (e) {
+                console.error('Failed to load page views:', e);
+            }
+        });
+    </script>
+
+    <!-- Post Content -->
+    <article class="prose prose-lg dark:prose-invert max-w-none bg-white dark:bg-gray-800 p-8 md:p-12 rounded-2xl shadow-sm">
+        <blockquote>
+<p>本文过旧，某些资源可能已经不可用</p>
+</blockquote>
+<h3 id="什么是IPFS？">什么是IPFS？</h3>
+<blockquote>
+<p>IPFS，是点到点的超媒体协议，它让网络更快、更安全、更开放。说简单一点，它就是一个去中心化互联网。说技术一点，它是一个基于分布式哈希表DHT进行内容寻址的，基于git模型版本管理的，基于默克尔对象关联的，基于点对点技术的，基于全球化命名空间IPNS的，基于各种技术的，一种分布式文件系统。</p>
+</blockquote>
+<p>用人话说，你可以把它看成一个共享网盘，你可以尝试下载<a rel="noopener nofollow" target="_blank" href="https://github.com/ipfs/ipfs-desktop">IPFS - Desktop（适用于有图形界面的系统）</a>或<a rel="noopener nofollow" target="_blank" href="https://github.com/ipfs/kubo">kubo - ipfs（适用于CLI）</a>。然后启动IPFS，你的设备将成为IPFS网络中的一个节点，如图<img src="/img/d634ed6fd557ee318c023ef82a276ac5.webp" alt="" /></p>
+<h3 id="使用IPFS能做什么？">使用IPFS能做什么？</h3>
+<p>当你连接到IPFS网络后，IPFS会自动将你的设备作为一个本地IPFS节点并且寻找其他IPFS节点，你将能够帮助其他用户建立连接、提供文件。同时你也可以将你的文件上传到你的IPFS节点，等待分发，让网络上的其他用户可以访问你的文件。在IPFS网络中，访问文件通过IPFS网关，如：<code>https://ipfs.io/ipfs/</code> + <code>CID（文件哈希）</code> 实现访问。比如： <a rel="noopener nofollow" target="_blank" href="https://ipfs.crossbell.io/ipfs/bafybeifbn36zmdb37ov6id3toy6bve47264hjk2yob6rm4bhw7ooawncf4">https://ipfs.crossbell.io/ipfs/bafybeifbn36zmdb37ov6id3toy6bve47264hjk2yob6rm4bhw7ooawncf4</a></p>
+<p>（这里使用 <code>ipfs.crossbell.io</code> 这个CrossBell托管的IPFS网关来规避GFW封禁）</p>
+<h3 id="这项技术真的有这么理想吗？">这项技术真的有这么理想吗？</h3>
+<p>这项技术确实很理想，但是实际应用下来会遇到以下问题</p>
+<ol>
+<li>
+<p>通过本地IPFS节点上传的文件迟迟无法通过IPFS网关+CID实现访问</p>
+</li>
+<li>
+<p>发现的节点太少</p>
+</li>
+<li>
+<p>可能会大量占用你的带宽</p>
+</li>
+</ol>
+<p>这些问题大部分原因都是因为这个网络太过于庞大，而单个IPFS节点的权重很低，尽管IPFS的分发一般在几小时内可以完成。但对于个人来说，我们应当寻找一些服务商帮我们完成这些需求，它们往往在IPFS网络中的权重更大，进行文件更新的效率也很高，同时也提供一些扩展服务，比如自动化Git部署。而这篇文章使用的则是<strong>Fleek</strong></p>
+<h3 id="关于Fleek">关于Fleek</h3>
+<p>你可以简单理解为它权重很大，有很多的IPFS节点，经由Fleek上传到IPFS网络上的文件可以在几秒内完成广播，并且支持连接Git存储库部署项目和绑定你的域名</p>
+<h3 id="Fleek是否值得信赖？">Fleek是否值得信赖？</h3>
+<p>本人仅接触此服务2天。观察到Fleek在成功部署网站后提供了三类访问方式</p>
+<ol>
+<li>
+<p><code>xxx-xxx.fleek.app</code>：这个域名使用了Cloudflare CDN，实测解析IP的数量为2，不建议使用</p>
+</li>
+<li>
+<p><img src="/img/f3b27578a99be24bc3cbd4ebec604516.webp" alt="" />：这种方法是原生的IPFS访问方式。通过IPFS网关+CID来访问。但由于CID为哈希值，当你的网站改动后你的CID会发生变化</p>
+</li>
+<li>
+<p>绑定自定义域名来访问，这将会使用亚马逊的CDN并且自动映射CID，实测解析IP数量超过30，并且速度很快</p>
+<blockquote>
+<p>[!WARNING]
+注意，任何使用HTTP协议的类ipfs技术都需要一个中心化服务器代理访问IPFS网络。只有当访问者连接上IPFS网络后才会使用去中心化的连接方式）</p>
+</blockquote>
+</li>
+</ol>
+<ul>
+<li>
+<p><img src="/img/dbdd0543ed26e22893491ce7ea230c29.webp" alt="" /></p>
+</li>
+<li>
+<p>尽管显示了IPFS的文件浏览界面，但实际上这个页面是由HTTP请求到亚马逊 CDN反代IPFS网络实现的，实际上仍为中心化网络</p>
+</li>
+<li>
+<p><img src="/img/66387eca1450457e8d44d32510251bbd.webp" alt="" /></p>
+</li>
+<li>
+<p>当你的设备已经连上IPFS网络后，所有流量将使用P2P（去中心化），所以你看到的访问地址实际上是本机地址</p>
+</li>
+</ul>
+<h3 id="梳理一下思路，我们可以用Fleek做到什么">梳理一下思路，我们可以用Fleek做到什么</h3>
+<p>让Fleek连接你的Git存储库，通过构建命令构建静态网站，并发布到IPFS，同时兼容HTTP访问</p>
+<h4 id="正式开始">正式开始</h4>
+<ol>
+<li>
+<p>前往fleek.xyz，通过MetaMask登录</p>
+</li>
+<li>
+<p>连接你的Git存储库，输入构建命令等相关信息</p>
+</li>
+<li>
+<p>部署网站</p>
+</li>
+<li>
+<p>绑定域名</p>
+</li>
+<li>
+<p>最终访问</p>
+</li>
+</ol>
+<p>效果图：</p>
+<p><img src="/img/79da414ffed348a90d1f0b98e42ac1f5.webp" alt="" /></p>
+<h4 id="拓展一下，我们还可以通过IPFS技术做什么？（域名已弃用）">拓展一下，我们还可以通过IPFS技术做什么？（域名已弃用）</h4>
+<ol>
+<li>
+<p>创建一个巨大的图床，已经投入使用，参见： <a rel="noopener nofollow" target="_blank" href="https://pic.onani.cn">https://pic.onani.cn</a> （原理：请求 <a rel="noopener nofollow" target="_blank" href="https://ipfs-pic.onani.cn">https://ipfs-pic.onani.cn</a> ，获取图片列表，随机选择使用JS展示）<img src="/img/918d34baaeed0fbe3304e1de4d286935.webp" alt="" /></p>
+</li>
+<li>
+<p>无需再自托管任何图片，已经投入使用，本博客所有图片都使用IPFS存储</p>
+</li>
+<li>
+<p>理论上，你可以将任何占用存储的服务上传到IPFS，实现存算分离</p>
+</li>
+</ol>
+
+    </article>
+
+    <!-- License -->
+    <div class="mt-8 p-6 bg-gray-50 dark:bg-gray-700/50 rounded-2xl text-sm text-gray-600 dark:text-gray-400">
+        <div class="flex flex-col gap-2">
+            <p class="font-medium text-gray-900 dark:text-white">版权声明</p>
+            <p>
+                本文由 <span class="font-medium">二叉树树</span> 创作，采用 
+                <a href="https:&#x2F;&#x2F;creativecommons.org&#x2F;licenses&#x2F;by-nc-sa&#x2F;4.0&#x2F;" target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-blue-400 hover:underline">CC BY-NC-SA 4.0</a> 
+                许可协议。
+            </p>
+            <p>
+                转载请注明出处：<a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;posts&#x2F;ipfs&#x2F;" class="text-blue-600 dark:text-blue-400 hover:underline break-all">AcoFork Blog - 使用基于IPFS的Fleek部署静态网站、托管图床、部署服务: https:&#x2F;&#x2F;blog.acofork.com&#x2F;posts&#x2F;ipfs&#x2F;</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Help & Edit -->
+    <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-sm">
+            <h3 class="font-bold text-gray-900 dark:text-white mb-2">这篇文章是否对你有帮助？</h3>
+            <div class="flex space-x-4">
+                <a href="&#x2F;posts&#x2F;pin" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline">联系</a>
+                <a href="&#x2F;sponsors" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline">赞助</a>
+            </div>
+        </div>
+        <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-sm">
+            <h3 class="font-bold text-gray-900 dark:text-white mb-2">发现错误或想要改进这篇文章？</h3>
+            <a href="https:&#x2F;&#x2F;github.com&#x2F;afoim&#x2F;AcoFork_Blog_Zola/blob/main/content/posts&#x2F;ipfs.md" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline flex items-center">
+                <span>在 GitHub 上编辑此页</span>
+                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+            </a>
+        </div>
+    </div>
+
+    <!-- Post Footer -->
+    <footer class="mt-8 flex flex-wrap gap-2 justify-center">
+        
+    </footer>
+
+    <!-- Comments (Giscus) -->
+    <div class="mt-12 bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-sm">
+<script src="https://giscus.app/client.js"
+        data-repo="afoim/giscus-fuwari"
+        data-repo-id="R_kgDOOi8quw"
+        data-category="Announcements"
+        data-category-id="DIC_kwDOOi8qu84CprDV"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="preferred_color_scheme"
+        data-lang="zh-CN"
+        crossorigin="anonymous"
+        async>
+</script>
+    </div>
+</div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col items-center justify-center space-y-2">
+                <p class="text-gray-500 dark:text-gray-400 text-sm">
+                    &copy; 2026 二叉树树. 
+                    <a href="https:&#x2F;&#x2F;creativecommons.org&#x2F;licenses&#x2F;by-nc-sa&#x2F;4.0&#x2F;" target="_blank" class="hover:underline">CC BY-NC-SA 4.0</a>
+                </p>
+                <p class="text-gray-400 dark:text-gray-500 text-xs">
+                    Powered by <a href="https://www.getzola.org" target="_blank" class="hover:text-gray-300">Zola</a>
+                     · <a href="https://github.com/afoim/AcoFork_Blog_Zola" target="_blank" class="hover:text-gray-300">Source Code</a>
+                </p>
+                <a href="https://blog.acofork.com/rss.xml" target="_blank" class="text-gray-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors p-2">
+                    <span class="sr-only">RSS</span>
+                    <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                        <path d="M5 3a1 1 0 000 2c5.523 0 10 4.477 10 10a1 1 0 102 0C17 8.373 11.627 3 5 3z"></path>
+                        <path d="M4 9a1 1 0 011-1 7 7 0 017 7 1 1 0 11-2 0 5 5 0 00-5-5 1 1 0 01-1-1zM3 15a2 2 0 114 0 2 2 0 01-4 0z"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/elasticlunr/0.9.6/elasticlunr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+    <script src="/js/umami-share.js"></script>
+    <script src="/js/search.js"></script>
+    <script src="/js/gfm-alerts.js"></script>
+    <script src="/js/anchor-fix.js"></script>
+    <script>
+        // Umami script needs to be loaded if it's not already
+        // This is a workaround since we removed the original script tag
+        (function() {
+            var el = document.createElement('script');
+            el.setAttribute('src', 'https://umami.acofork.com/script.js');
+            el.setAttribute('data-website-id', '5d710dbd-3a2e-43e3-a553-97b415090c63');
+            el.setAttribute('defer', '');
+            document.body.appendChild(el);
+        })();
+    </script>
+</body>
+</html>

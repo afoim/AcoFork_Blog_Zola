@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="zh" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>记录 - AcoFork Blog</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css"/>
+    <link rel="icon" href="https://q2.qlogo.cn/headimg_dl?dst_uin=2726730791&amp;spec=0">
+    <script src="https://pic1.acofork.com/random.js"></script>
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.acofork.com/rss.xml">
+    <script src="/js/main.js"></script>
+</head>
+<body class="bg-[var(--page-bg)] text-gray-900 dark:text-gray-100 transition-colors duration-300 min-h-screen flex flex-col">
+
+    <!-- Navbar -->
+    <nav class="sticky top-0 z-50 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md shadow-sm dark:border-b dark:border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="/" class="text-xl font-bold text-blue-600 dark:text-blue-400">AcoFork Blog</a>
+                    </div>
+                    <!-- Desktop Menu -->
+                    <div class="hidden md:ml-6 md:flex md:space-x-8">
+                        
+                        <a href="&#x2F;" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            首页
+                        </a>
+                        
+                        <a href="&#x2F;posts" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            归档
+                        </a>
+                        
+                        <a href="&#x2F;friends" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            友链
+                        </a>
+                        
+                        <a href="&#x2F;sponsors" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            赞助
+                        </a>
+                        
+                        <a href="https:&#x2F;&#x2F;umami.acofork.com&#x2F;share&#x2F;CdkXbGgZr6ECKOyK" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           target="_blank">
+                            统计
+                        </a>
+                        
+                        <a href="https:&#x2F;&#x2F;status.acofork.com" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           target="_blank">
+                            监控
+                        </a>
+                        
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <!-- Mobile Menu Button -->
+                    <button type="button" onclick="toggleMobileMenu()" class="md:hidden p-2 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
+                        <span class="sr-only">Open menu</span>
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                    <!-- Search Button -->
+                    <button onclick="toggleSearch()" class="p-2 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </button>
+                    <!-- Theme Toggle -->
+                    <button onclick="toggleTheme()" class="p-2 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
+                        <svg id="sun-icon" class="h-6 w-6 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                        <svg id="moon-icon" class="h-6 w-6 block dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                
+                <a href="&#x2F;" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    首页
+                </a>
+                
+                <a href="&#x2F;posts" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    归档
+                </a>
+                
+                <a href="&#x2F;friends" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    友链
+                </a>
+                
+                <a href="&#x2F;sponsors" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    赞助
+                </a>
+                
+                <a href="https:&#x2F;&#x2F;umami.acofork.com&#x2F;share&#x2F;CdkXbGgZr6ECKOyK" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   target="_blank">
+                    统计
+                </a>
+                
+                <a href="https:&#x2F;&#x2F;status.acofork.com" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   target="_blank">
+                    监控
+                </a>
+                
+            </div>
+        </div>
+    </nav>
+
+    <!-- Search Modal -->
+    <div id="search-modal" class="fixed inset-0 z-50 hidden" role="dialog" aria-modal="true">
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" onclick="toggleSearch()"></div>
+        <div class="fixed inset-0 z-10 overflow-y-auto p-4 sm:p-6 md:p-20" onclick="if(event.target === this) toggleSearch()">
+            <div class="mx-auto max-w-xl transform rounded-xl bg-white dark:bg-gray-800 p-2 shadow-2xl transition-all">
+                <input type="text" id="search-input" 
+                       class="w-full rounded-md border-0 bg-gray-100 dark:bg-gray-700 px-4 py-2.5 text-gray-900 dark:text-white placeholder-gray-500 focus:ring-0 sm:text-sm" 
+                       placeholder="搜索文章..." autocomplete="off">
+                <ul id="search-results" class="max-h-96 scroll-py-3 overflow-y-auto p-3"></ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+<div class="max-w-4xl mx-auto">
+    <!-- Post Header -->
+    <header class="mb-8 text-center">
+        <div class="flex items-center justify-center space-x-2 text-sm text-gray-500 dark:text-gray-400 mb-4">
+            <time datetime="1999-01-01">1999-01-01</time>
+            <span>•</span>
+            <span>6 分钟阅读</span>
+            <span id="views-separator" style="display: none">•</span>
+            <span id="page-views" style="display: none"></span>
+        </div>
+        <h1 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">记录</h1>
+        
+        <p class="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">一些记录，不定时更新</p>
+        
+        
+        <div class="w-full rounded-2xl overflow-hidden shadow-sm mb-8">
+            <img src="&#x2F;random&#x2F;h" alt="记录" class="w-full h-auto">
+        </div>
+        
+    </header>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const baseUrl = 'https://umami.acofork.com';
+                const shareId = 'CdkXbGgZr6ECKOyK';
+                // Current page path
+                const urlPath = window.location.pathname;
+                
+                const stats = await window.fetchUmamiStats(baseUrl, shareId, {
+                    url: urlPath
+                });
+                
+                // Check for both 'visits' (new preference) or 'pageviews' (fallback)
+                const metric = (stats && (stats.visits || stats.pageviews));
+                
+                let views = 0;
+                let hasData = false;
+
+                if (metric && typeof metric.value !== 'undefined') {
+                    views = metric.value;
+                    hasData = true;
+                } else if (stats && (typeof stats.visits === 'number' || typeof stats.pageviews === 'number')) {
+                        // Fallback for flat structure
+                        views = stats.visits || stats.pageviews;
+                        hasData = true;
+                }
+
+                if (hasData) {
+                    const viewEl = document.getElementById('page-views');
+                    viewEl.textContent = views + ' 次访问';
+                    viewEl.style.display = 'inline';
+                    document.getElementById('views-separator').style.display = 'inline';
+                }
+            } catch (e) {
+                console.error('Failed to load page views:', e);
+            }
+        });
+    </script>
+
+    <!-- Post Content -->
+    <article class="prose prose-lg dark:prose-invert max-w-none bg-white dark:bg-gray-800 p-8 md:p-12 rounded-2xl shadow-sm">
+        <h1 id="zt重置设备ID">zt重置设备ID</h1>
+<p>在 ZeroTier 中，如果你通过克隆 VM 或复制系统镜像导致 设备 ID（Node ID）重复，需要重置设备 ID。ZeroTier 的设备 ID 是基于本机生成的私钥，无法在软件内直接修改，但可以通过以下方法重置：</p>
+<p>方法 1：在 Linux / Debian 上重置</p>
+<p>停止 ZeroTier 服务：</p>
+<pre data-lang="shell" class="language-shell "><code class="language-shell" data-lang="shell">sudo systemctl stop zerotier-one
+</code></pre>
+<p>删除本地身份文件（Node ID）：</p>
+<pre data-lang="shell" class="language-shell "><code class="language-shell" data-lang="shell">sudo rm -rf &#x2F;var&#x2F;lib&#x2F;zerotier-one&#x2F;identity.*
+</code></pre>
+<p>注意：identity.* 文件包含你的 Node ID，如果删除，ZeroTier 会生成新的 Node ID。</p>
+<p>启动 ZeroTier 服务：</p>
+<pre data-lang="shell" class="language-shell "><code class="language-shell" data-lang="shell">sudo systemctl start zerotier-one
+</code></pre>
+<h1 id="r2.py所需依赖">r2.py所需依赖</h1>
+<pre data-lang="shell" class="language-shell "><code class="language-shell" data-lang="shell">pip install keyboard pyperclip pillow boto3 pyautogui
+</code></pre>
+<h1 id="ShellClash">ShellClash</h1>
+<blockquote>
+<p>用于在Linux上使用CLI来进行正向代理。通过导入标准的Clash <code>config.yaml</code> 来实现</p>
+</blockquote>
+<p><a rel="noopener nofollow" target="_blank" href="https://github.com/juewuy/ShellCrash">https://github.com/juewuy/ShellCrash</a></p>
+<p>Tg通知频道：<a rel="noopener nofollow" target="_blank" href="https://t.me/ShellClash">https://t.me/ShellClash</a></p>
+<pre data-lang="shell" class="language-shell "><code class="language-shell" data-lang="shell">bash -c &quot;$(curl -kfsSl https:&#x2F;&#x2F;r2.072103.xyz&#x2F;shellclash.sh)&quot; &amp;&amp; source &#x2F;etc&#x2F;profile &amp;&gt; &#x2F;dev&#x2F;null
+</code></pre>
+<p>打开CLI：clash、crash
+导入配置文件：6-2
+安装本地Web面板：9-4-1
+开机自启：4-1</p>
+<h1 id="Vless通用配置（不加密）">Vless通用配置（不加密）</h1>
+<pre data-lang="json" class="language-json "><code class="language-json" data-lang="json">{
+  &quot;inbounds&quot;: [
+    {
+      &quot;port&quot;: 1080,  &#x2F;&#x2F; 监听端口，可以根据需要修改
+      &quot;protocol&quot;: &quot;vless&quot;,  &#x2F;&#x2F; 使用 VLESS 协议
+      &quot;settings&quot;: {
+        &quot;clients&quot;: [
+          {
+            &quot;id&quot;: &quot;0721-07210721onani&quot;,  &#x2F;&#x2F; 这里是一个 UUID，用于识别用户
+            &quot;level&quot;: 0,  &#x2F;&#x2F; 用户等级，设置为 0 表示普通用户
+            &quot;email&quot;: &quot;user@example.com&quot;  &#x2F;&#x2F; 用户邮箱（可选）
+          }
+        ],
+        &quot;decryption&quot;: &quot;none&quot;  &#x2F;&#x2F; 设置为 none，表示没有加密
+      },
+      &quot;streamSettings&quot;: {
+        &quot;network&quot;: &quot;tcp&quot;,  &#x2F;&#x2F; 使用 TCP 网络
+        &quot;security&quot;: &quot;none&quot;  &#x2F;&#x2F; 不使用加密，适用于 VLESS
+      }
+    }
+  ],
+  &quot;outbounds&quot;: [
+    {
+      &quot;protocol&quot;: &quot;freedom&quot;,  &#x2F;&#x2F; 允许自由流量通过
+      &quot;settings&quot;: {}
+    }
+  ],
+  &quot;routing&quot;: {
+    &quot;rules&quot;: []
+  }
+}
+</code></pre>
+<hr />
+<h1 id="AMD笔记本优化">AMD笔记本优化</h1>
+<blockquote>
+<p>目标：关闭fTPM并且禁止系统重新安装、关闭Windows自动更新</p>
+</blockquote>
+<ul>
+<li>关闭fTPM： 组策略编辑器：<code>计算机配置 - 管理模板 - 系统 - 设备安装 - 设备安装限制 - 阻止安装与下列任何设备实例 ID 相匹配的设备</code> 填写：设备管理器中的<strong>受信任的平台模块 2.0</strong> 的<code>详细信息 - 设备实例路径</code>中的值</li>
+<li>关闭Windows自动更新：<code>计算机配置 - 管理模板 - Windows组件 - Windows更新</code>中的：
+<ul>
+<li>配置自动更新 - 已禁用</li>
+<li>删除所有使用Windows更新功能的访问权限 - 已启用</li>
+<li>不要连接任何Windows更新Internet位置 - 已启用</li>
+<li>Windows更新不包括驱动更新 - 已启用</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h1 id="VPS融合怪测试脚本">VPS融合怪测试脚本</h1>
+<pre data-lang="shell" class="language-shell "><code class="language-shell" data-lang="shell">bash &lt;(curl -sL kejilion.sh)
+</code></pre>
+<ul>
+<li>融合怪测试：8-32</li>
+<li>IP纯净度测试：8-4</li>
+</ul>
+<hr />
+<h1 id="哪吒探针Cloudflare版">哪吒探针Cloudflare版</h1>
+<p><a rel="noopener nofollow" target="_blank" href="https://github.com/yumusb/nezha-new">https://github.com/yumusb/nezha-new</a></p>
+<hr />
+<h1 id="VPS一键魔法脚本">VPS一键魔法脚本</h1>
+<ul>
+<li>
+<p>Hysteria2（UDP）：</p>
+<pre data-lang="shell" class="language-shell "><code class="language-shell" data-lang="shell">bash &lt;(curl -fsSL https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;0x0129&#x2F;hysteria2&#x2F;main&#x2F;install.sh) -port 0721
+</code></pre>
+</li>
+<li>
+<p>Vless+Trojan+Shadowsocks：</p>
+<pre data-lang="shell" class="language-shell "><code class="language-shell" data-lang="shell">bash &lt;(curl -s -L https:&#x2F;&#x2F;git.io&#x2F;v2ray.sh)
+</code></pre>
+</li>
+<li>
+<p>x-ui：</p>
+<pre data-lang="shell" class="language-shell "><code class="language-shell" data-lang="shell">bash &lt;(curl -Ls https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;vaxilu&#x2F;x-ui&#x2F;master&#x2F;install.sh)
+</code></pre>
+</li>
+</ul>
+<hr />
+<h1 id="Hysteria2_服务端搭建（全平台通用）">Hysteria2 服务端搭建（全平台通用）</h1>
+<ol>
+<li>
+<p>下载 Hysteria2 可执行文件： <a rel="noopener nofollow" target="_blank" href="https://github.com/apernet/hysteria/releases">https://github.com/apernet/hysteria/releases</a></p>
+</li>
+<li>
+<p>创建自签名SSL/TLS证书：</p>
+<ul>
+<li>创建私钥：<code>openssl genpkey -algorithm RSA -out hy2.key</code></li>
+<li>创建证书签名请求：<code>openssl req -new -key hy2.key -out hy2.csr</code></li>
+<li>创建证书：<code>openssl x509 -req -in hy2.csr -signkey hy2.key -out hy2.crt -days 9999</code></li>
+</ul>
+</li>
+<li>
+<p><code>config.yaml</code>：</p>
+</li>
+</ol>
+<pre data-lang="yaml" class="language-yaml "><code class="language-yaml" data-lang="yaml">listen: :443 
+
+tls:
+  cert: hy2.crt 
+  key: hy2.key 
+
+auth:
+  type: password
+  password: 0721
+
+masquerade: 
+  type: proxy
+  proxy:
+    url: https:&#x2F;&#x2F;news.ycombinator.com&#x2F; 
+    rewriteHost: true
+</code></pre>
+<ol start="4">
+<li>
+<p>启动 Hysteria2参数：<code>server</code></p>
+</li>
+<li>
+<p>V2Ray客户端连接直链：</p>
+<pre data-lang="shell" class="language-shell "><code class="language-shell" data-lang="shell">hysteria2:&#x2F;&#x2F;0721@10.147.17.1:443?sni=bing.com&amp;insecure=1#家里云
+</code></pre>
+</li>
+</ol>
+<hr />
+<h1 id="Cloudflare一键魔法">Cloudflare一键魔法</h1>
+<p>下载 <a rel="noopener nofollow" target="_blank" href="https://github.com/cmliu/edgetunnel/archive/refs/heads/main.zip">https://github.com/cmliu/edgetunnel/archive/refs/heads/main.zip</a> 将它上传到Cloudflare Pages设置UUID。访问 <a rel="noopener nofollow" target="_blank" href="https://%E4%BD%A0%E7%9A%84%E5%9F%9F%E5%90%8D.pages.dev/UUID">https://你的域名.pages.dev/UUID</a></p>
+<hr />
+<h1 id="Cloudflare_优选方法">Cloudflare 优选方法</h1>
+<h3 id="A、AAAA、CNAME">A、AAAA、CNAME</h3>
+<ol>
+<li>B域名直接套CDN指向源站</li>
+<li>B域名开启SaaS，设置回退源为指向源站的域名，自定义主机名为A域名</li>
+<li>B域名指向优选域名，不套CDN</li>
+<li>A域名指向B域名指向的优选域名的域名 ，不套CDN</li>
+</ol>
+<h3 id="Cloudflare_Pages">Cloudflare Pages</h3>
+<ol>
+<li>直接在Pages创建自定义域</li>
+<li>更改子域NS到阿里云云解析DNS</li>
+<li>在阿里云云解析DNS设置解析分流</li>
+</ol>
+<h3 id="Cloudflare_Workers">Cloudflare Workers</h3>
+<ol>
+<li>直接在Workers创建路由，如：example.com/*</li>
+<li>将被设置路由的域名解析到优选域名</li>
+</ol>
+<hr />
+<h2 id="Cloudflare_优选域名">Cloudflare 优选域名</h2>
+<p>二叉树树自用： fenliu.072103.xyz</p>
+<p><img src="/img/a99c1d498c8faafe22fd6e8999ed3f1c.webp" alt="" /></p>
+<p><a rel="noopener nofollow" target="_blank" href="https://blog.cmliussss.com/">CM大佬</a>： cf.090227.xyz<img src="/img/b4b79f9bdfb864b7a5f88be4cf0fb2f0.webp" alt="" /></p>
+<p><a rel="noopener nofollow" target="_blank" href="https://www.wetest.vip/page/cloudflare/cname.html">微测网</a>：cloudflare.182682.xyz</p>
+<p><img src="/img/a370abe0a2c92b01073038367e0fe518.webp" alt="" /></p>
+<hr />
+<h1 id="魔法软件">魔法软件</h1>
+<p>Windows：</p>
+<p><a rel="noopener nofollow" target="_blank" href="https://github.com/2dust/v2rayN">https://github.com/2dust/v2rayN</a></p>
+<p>Linux：</p>
+<p><a rel="noopener nofollow" target="_blank" href="https://github.com/2dust/v2rayNG">https://github.com/2dust/v2rayNG</a></p>
+<hr />
+<h1 id="使用Cloudflared中继RDP流量">使用Cloudflared中继RDP流量</h1>
+<pre data-lang="shell" class="language-shell "><code class="language-shell" data-lang="shell">cloudflared access rdp --hostname rdp.onani.cn --url rdp:&#x2F;&#x2F;localhost:3380
+</code></pre>
+<hr />
+<h1 id="FRP相关">FRP相关</h1>
+<h3 id="FRP基本认证参数">FRP基本认证参数</h3>
+<pre data-lang="yaml" class="language-yaml "><code class="language-yaml" data-lang="yaml">auth.token = &quot;07210721&quot;
+</code></pre>
+<h3 id="FRP_systemd服务配置（开机自启）">FRP systemd服务配置（开机自启）</h3>
+<p><a rel="noopener nofollow" target="_blank" href="https://gofrp.org/zh-cn/docs/setup/systemd/">https://gofrp.org/zh-cn/docs/setup/systemd/</a></p>
+<h1 id="Linux_Deb系安装Speedtest-cli">Linux Deb系安装Speedtest-cli</h1>
+<pre data-lang="shell" class="language-shell "><code class="language-shell" data-lang="shell">apt install -y lsb-release ca-certificates apt-transport-https curl gnupg dpkg
+curl -sSL https:&#x2F;&#x2F;packagecloud.io&#x2F;ookla&#x2F;speedtest-cli&#x2F;gpgkey | gpg --dearmor &gt; &#x2F;usr&#x2F;share&#x2F;keyrings&#x2F;speedtest.gpg
+echo &quot;deb [arch=$(dpkg --print-architecture) signed-by=&#x2F;usr&#x2F;share&#x2F;keyrings&#x2F;speedtest.gpg] https:&#x2F;&#x2F;packagecloud.io&#x2F;ookla&#x2F;speedtest-cli&#x2F;debian&#x2F; $(lsb_release -sc) main&quot; &gt; &#x2F;etc&#x2F;apt&#x2F;sources.list.d&#x2F;speedtest.list
+
+apt update
+apt install -y speedtest
+</code></pre>
+<hr />
+<h1 id="Linux监控面版：">Linux监控面版：</h1>
+<pre data-lang="shell" class="language-shell "><code class="language-shell" data-lang="shell">apt install s-tui
+</code></pre>
+<hr />
+<h1 id="Windows超级牛逼包管理器：https://scoop.sh">Windows超级牛逼包管理器：<a rel="noopener nofollow" target="_blank" href="https://scoop.sh">https://scoop.sh</a></h1>
+<hr />
+<h1 id="Linux各发行版安装注意">Linux各发行版安装注意</h1>
+<ol>
+<li>非常新的版本一般才会有Realtek有线网卡的驱动</li>
+<li>安装Debian要使用CLI安装（GUI安装会出现问题 <del>具体的问题我忘了</del>）</li>
+<li>安装CentOS/Rocky一定要先安装GUI，否则会导致上不了网</li>
+<li>除了Arch连接网络使用iwd，其他发行版都可以用nmcli连接网络</li>
+</ol>
+<hr />
+<h1 id="国内Linux镜像注意事项">国内Linux镜像注意事项</h1>
+<ol>
+<li><del>USTC（中科大源）经常会用JavaScript进行客户端验证，会导致wget和curl命令无法正确下载到文件</del><a href="/posts/bypass-ustc-verifying/">绕过USTC的浏览器JS验证 | AcoFork Blog</a>。建议使用TUNA（清华源）</li>
+</ol>
+<hr />
+<h1 id="国内Docker镜像">国内Docker镜像</h1>
+<ul>
+<li>1Panel Docker监控：<a rel="noopener nofollow" target="_blank" href="https://status.1panel.top/status/docker">https://status.1panel.top/status/docker</a></li>
+<li>南京大学GHCR镜像源：<a rel="noopener nofollow" target="_blank" href="https://ghcr.nju.edu.cn">https://ghcr.nju.edu.cn</a></li>
+</ul>
+<hr />
+<h1 id="安徽财贸职业学院教务学生正确入口（课表导入）">安徽财贸职业学院教务学生正确入口（课表导入）</h1>
+<p><a rel="noopener nofollow" target="_blank" href="https://authserver.afc.edu.cn/authserver/login">https://authserver.afc.edu.cn/authserver/login</a></p>
+
+    </article>
+
+    <!-- License -->
+    <div class="mt-8 p-6 bg-gray-50 dark:bg-gray-700/50 rounded-2xl text-sm text-gray-600 dark:text-gray-400">
+        <div class="flex flex-col gap-2">
+            <p class="font-medium text-gray-900 dark:text-white">版权声明</p>
+            <p>
+                本文由 <span class="font-medium">二叉树树</span> 创作，采用 
+                <a href="https:&#x2F;&#x2F;creativecommons.org&#x2F;licenses&#x2F;by-nc-sa&#x2F;4.0&#x2F;" target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-blue-400 hover:underline">CC BY-NC-SA 4.0</a> 
+                许可协议。
+            </p>
+            <p>
+                转载请注明出处：<a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;posts&#x2F;record&#x2F;" class="text-blue-600 dark:text-blue-400 hover:underline break-all">AcoFork Blog - 记录: https:&#x2F;&#x2F;blog.acofork.com&#x2F;posts&#x2F;record&#x2F;</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Help & Edit -->
+    <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-sm">
+            <h3 class="font-bold text-gray-900 dark:text-white mb-2">这篇文章是否对你有帮助？</h3>
+            <div class="flex space-x-4">
+                <a href="&#x2F;posts&#x2F;pin" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline">联系</a>
+                <a href="&#x2F;sponsors" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline">赞助</a>
+            </div>
+        </div>
+        <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-sm">
+            <h3 class="font-bold text-gray-900 dark:text-white mb-2">发现错误或想要改进这篇文章？</h3>
+            <a href="https:&#x2F;&#x2F;github.com&#x2F;afoim&#x2F;AcoFork_Blog_Zola/blob/main/content/posts&#x2F;record.md" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline flex items-center">
+                <span>在 GitHub 上编辑此页</span>
+                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+            </a>
+        </div>
+    </div>
+
+    <!-- Post Footer -->
+    <footer class="mt-8 flex flex-wrap gap-2 justify-center">
+        
+        
+        <a href="https://blog.acofork.com/tags/ji-lu/" class="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-full text-sm hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">#记录</a>
+        
+        
+    </footer>
+
+    <!-- Comments (Giscus) -->
+    <div class="mt-12 bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-sm">
+<script src="https://giscus.app/client.js"
+        data-repo="afoim/giscus-fuwari"
+        data-repo-id="R_kgDOOi8quw"
+        data-category="Announcements"
+        data-category-id="DIC_kwDOOi8qu84CprDV"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="preferred_color_scheme"
+        data-lang="zh-CN"
+        crossorigin="anonymous"
+        async>
+</script>
+    </div>
+</div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col items-center justify-center space-y-2">
+                <p class="text-gray-500 dark:text-gray-400 text-sm">
+                    &copy; 2026 二叉树树. 
+                    <a href="https:&#x2F;&#x2F;creativecommons.org&#x2F;licenses&#x2F;by-nc-sa&#x2F;4.0&#x2F;" target="_blank" class="hover:underline">CC BY-NC-SA 4.0</a>
+                </p>
+                <p class="text-gray-400 dark:text-gray-500 text-xs">
+                    Powered by <a href="https://www.getzola.org" target="_blank" class="hover:text-gray-300">Zola</a>
+                     · <a href="https://github.com/afoim/AcoFork_Blog_Zola" target="_blank" class="hover:text-gray-300">Source Code</a>
+                </p>
+                <a href="https://blog.acofork.com/rss.xml" target="_blank" class="text-gray-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors p-2">
+                    <span class="sr-only">RSS</span>
+                    <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                        <path d="M5 3a1 1 0 000 2c5.523 0 10 4.477 10 10a1 1 0 102 0C17 8.373 11.627 3 5 3z"></path>
+                        <path d="M4 9a1 1 0 011-1 7 7 0 017 7 1 1 0 11-2 0 5 5 0 00-5-5 1 1 0 01-1-1zM3 15a2 2 0 114 0 2 2 0 01-4 0z"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/elasticlunr/0.9.6/elasticlunr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+    <script src="/js/umami-share.js"></script>
+    <script src="/js/search.js"></script>
+    <script src="/js/gfm-alerts.js"></script>
+    <script src="/js/anchor-fix.js"></script>
+    <script>
+        // Umami script needs to be loaded if it's not already
+        // This is a workaround since we removed the original script tag
+        (function() {
+            var el = document.createElement('script');
+            el.setAttribute('src', 'https://umami.acofork.com/script.js');
+            el.setAttribute('data-website-id', '5d710dbd-3a2e-43e3-a553-97b415090c63');
+            el.setAttribute('defer', '');
+            document.body.appendChild(el);
+        })();
+    </script>
+</body>
+</html>

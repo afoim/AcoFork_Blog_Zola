@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="zh" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>手把手教你AI翻唱！ - AcoFork Blog</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css"/>
+    <link rel="icon" href="https://q2.qlogo.cn/headimg_dl?dst_uin=2726730791&amp;spec=0">
+    <script src="https://pic1.acofork.com/random.js"></script>
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.acofork.com/rss.xml">
+    <script src="/js/main.js"></script>
+</head>
+<body class="bg-[var(--page-bg)] text-gray-900 dark:text-gray-100 transition-colors duration-300 min-h-screen flex flex-col">
+
+    <!-- Navbar -->
+    <nav class="sticky top-0 z-50 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md shadow-sm dark:border-b dark:border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="/" class="text-xl font-bold text-blue-600 dark:text-blue-400">AcoFork Blog</a>
+                    </div>
+                    <!-- Desktop Menu -->
+                    <div class="hidden md:ml-6 md:flex md:space-x-8">
+                        
+                        <a href="&#x2F;" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            首页
+                        </a>
+                        
+                        <a href="&#x2F;posts" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            归档
+                        </a>
+                        
+                        <a href="&#x2F;friends" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            友链
+                        </a>
+                        
+                        <a href="&#x2F;sponsors" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            赞助
+                        </a>
+                        
+                        <a href="https:&#x2F;&#x2F;umami.acofork.com&#x2F;share&#x2F;CdkXbGgZr6ECKOyK" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           target="_blank">
+                            统计
+                        </a>
+                        
+                        <a href="https:&#x2F;&#x2F;status.acofork.com" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           target="_blank">
+                            监控
+                        </a>
+                        
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <!-- Mobile Menu Button -->
+                    <button type="button" onclick="toggleMobileMenu()" class="md:hidden p-2 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
+                        <span class="sr-only">Open menu</span>
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                    <!-- Search Button -->
+                    <button onclick="toggleSearch()" class="p-2 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </button>
+                    <!-- Theme Toggle -->
+                    <button onclick="toggleTheme()" class="p-2 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
+                        <svg id="sun-icon" class="h-6 w-6 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                        <svg id="moon-icon" class="h-6 w-6 block dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                
+                <a href="&#x2F;" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    首页
+                </a>
+                
+                <a href="&#x2F;posts" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    归档
+                </a>
+                
+                <a href="&#x2F;friends" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    友链
+                </a>
+                
+                <a href="&#x2F;sponsors" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    赞助
+                </a>
+                
+                <a href="https:&#x2F;&#x2F;umami.acofork.com&#x2F;share&#x2F;CdkXbGgZr6ECKOyK" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   target="_blank">
+                    统计
+                </a>
+                
+                <a href="https:&#x2F;&#x2F;status.acofork.com" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   target="_blank">
+                    监控
+                </a>
+                
+            </div>
+        </div>
+    </nav>
+
+    <!-- Search Modal -->
+    <div id="search-modal" class="fixed inset-0 z-50 hidden" role="dialog" aria-modal="true">
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" onclick="toggleSearch()"></div>
+        <div class="fixed inset-0 z-10 overflow-y-auto p-4 sm:p-6 md:p-20" onclick="if(event.target === this) toggleSearch()">
+            <div class="mx-auto max-w-xl transform rounded-xl bg-white dark:bg-gray-800 p-2 shadow-2xl transition-all">
+                <input type="text" id="search-input" 
+                       class="w-full rounded-md border-0 bg-gray-100 dark:bg-gray-700 px-4 py-2.5 text-gray-900 dark:text-white placeholder-gray-500 focus:ring-0 sm:text-sm" 
+                       placeholder="搜索文章..." autocomplete="off">
+                <ul id="search-results" class="max-h-96 scroll-py-3 overflow-y-auto p-3"></ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+<div class="max-w-4xl mx-auto">
+    <!-- Post Header -->
+    <header class="mb-8 text-center">
+        <div class="flex items-center justify-center space-x-2 text-sm text-gray-500 dark:text-gray-400 mb-4">
+            <time datetime="2025-10-13">2025-10-13</time>
+            <span>•</span>
+            <span>4 分钟阅读</span>
+            <span id="views-separator" style="display: none">•</span>
+            <span id="page-views" style="display: none"></span>
+        </div>
+        <h1 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">手把手教你AI翻唱！</h1>
+        
+        <p class="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">利用RVC训练音色模型然后使用Replay直出AI翻唱！</p>
+        
+        
+        <div class="w-full rounded-2xl overflow-hidden shadow-sm mb-8">
+            <img src="&#x2F;img&#x2F;b3a63ac4c1ffb964c6604b7d72b00f82.png" alt="手把手教你AI翻唱！" class="w-full h-auto">
+        </div>
+        
+    </header>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const baseUrl = 'https://umami.acofork.com';
+                const shareId = 'CdkXbGgZr6ECKOyK';
+                // Current page path
+                const urlPath = window.location.pathname;
+                
+                const stats = await window.fetchUmamiStats(baseUrl, shareId, {
+                    url: urlPath
+                });
+                
+                // Check for both 'visits' (new preference) or 'pageviews' (fallback)
+                const metric = (stats && (stats.visits || stats.pageviews));
+                
+                let views = 0;
+                let hasData = false;
+
+                if (metric && typeof metric.value !== 'undefined') {
+                    views = metric.value;
+                    hasData = true;
+                } else if (stats && (typeof stats.visits === 'number' || typeof stats.pageviews === 'number')) {
+                        // Fallback for flat structure
+                        views = stats.visits || stats.pageviews;
+                        hasData = true;
+                }
+
+                if (hasData) {
+                    const viewEl = document.getElementById('page-views');
+                    viewEl.textContent = views + ' 次访问';
+                    viewEl.style.display = 'inline';
+                    document.getElementById('views-separator').style.display = 'inline';
+                }
+            } catch (e) {
+                console.error('Failed to load page views:', e);
+            }
+        });
+    </script>
+
+    <!-- Post Content -->
+    <article class="prose prose-lg dark:prose-invert max-w-none bg-white dark:bg-gray-800 p-8 md:p-12 rounded-2xl shadow-sm">
+        <h1 id="视频教程">视频教程</h1>
+<p><a rel="noopener nofollow" target="_blank" href="https://www.bilibili.com/video/BV19F41zPEnM/">https://www.bilibili.com/video/BV19F41zPEnM/</a></p>
+<h1 id="流程">流程</h1>
+<p>RVC：训练角色音色模型</p>
+<p>Replay：利用音色模型+原曲进行AI翻唱</p>
+<p>UVR&amp;MSST：进行人声伴奏分离</p>
+<h1 id="准备音源">准备音源</h1>
+<p>至少10分钟，推荐1小时。音频内仅允许有一种音色，可以有停顿，如果想要更高质量可以自己裁剪停顿处</p>
+<h1 id="利用RVC训练模型">利用RVC训练模型</h1>
+<p>进入 <a rel="noopener nofollow" target="_blank" href="https://github.com/RVC-Project/Retrieval-based-Voice-Conversion-WebUI">RVC-Project/Retrieval-based-Voice-Conversion-WebUI: Easily train a good VC model with voice data &lt;= 10 mins!</a> 根据你的系统和显卡来进行下载，或者使用该链接下载（国内高速） <a rel="noopener nofollow" target="_blank" href="https://www.yuque.com/flowercry/hxf0ds">语音克隆&amp;变声器 整合包下载</a> 注意不要下错了</p>
+<p><img src="/img/f86eab00f4166f0e45e4d14814b7f5e4.png" alt="" /></p>
+<p>直接运行 <code>go-web.bat</code></p>
+<p><img src="/img/215e6dfad402ca528780a49d5705f218.png" alt="" /></p>
+<p>进入 WebUI 并切换到训练一栏</p>
+<p><img src="/img/a21b282876780e4879cefc8c463b32ed.png" alt="" /></p>
+<p>首先写模型名称</p>
+<p><img src="/img/d6778df36dd06970c8d30a831b7ee360.png" alt="" /></p>
+<p>然后将你的音源放到一个空文件夹</p>
+<p><img src="/img/f40eb76fe0d1e578a5736faa6c101351.png" alt="" /></p>
+<p>然后填进去</p>
+<p><img src="/img/a8202b5920c9234bf768679de290cace.png" alt="" /></p>
+<p>总训练轮数推荐50 ~ 200</p>
+<p><img src="/img/d6955099c9f4fb7e487d4e89557a0d03.png" alt="" /></p>
+<p>然后点击一键训练（需要很久，建议晚上睡觉前训练）</p>
+<p><img src="/img/3825729d122ed3d138cd23896fd144ee.png" alt="" /></p>
+<p>训练结束后可以在 <code>assets/weights</code> 找到模型文件， <code>.pth</code> 结尾的</p>
+<p><img src="/img/3bbf1f2144892c9ccc18028f62054840.png" alt="" /></p>
+<h1 id="利用Replay做AI翻唱">利用Replay做AI翻唱</h1>
+<p>下载 <a rel="noopener nofollow" target="_blank" href="https://www.weights.com/replay">Replay</a></p>
+<p>首先 <strong>Select Audio</strong> 选择你的原歌曲</p>
+<p><strong>Model</strong> 选择刚刚训练出的模型</p>
+<p>然后点击 <strong>Convert Audio</strong></p>
+<p><img src="/img/0396ba9780c37316efd61933b31c0816.png" alt="" /></p>
+<p>在输出的文件的 <strong>View in Folder</strong> 可以找到 <strong>干净的AI人声</strong></p>
+<p><img src="/img/d630983a00ee6c160b9f14389fe117df.png" alt="" /></p>
+<h1 id="伴奏和人声分离">伴奏和人声分离</h1>
+<h3 id="UVR">UVR</h3>
+<blockquote>
+<p>如果你是50系显卡请前往<a rel="noopener nofollow" target="_blank" href="https://github.com/Anjok07/ultimatevocalremovergui/issues/1889">GPU Acceleration Hangs on RTX 5070Ti (Driver 576.80, CUDA 12.9) · Issue #1889 · Anjok07/ultimatevocalremovergui</a>通过<a rel="noopener nofollow" target="_blank" href="https://www.mediafire.com/file_premium/4jg10r9wa3tujav/UVR_Patch_4_24_25_20_11_BETA_full_cuda_12.8.zip/file">UVR_Patch_4_24_25_20_11_BETA_full_cuda_12.8</a>下载适用于50系显卡的UVR</p>
+</blockquote>
+<p>下载 <a rel="noopener nofollow" target="_blank" href="https://github.com/Anjok07/ultimatevocalremovergui">Anjok07/ultimatevocalremovergui: GUI for a Vocal Remover that uses Deep Neural Networks.</a></p>
+<p>首先下载模型，选择设置</p>
+<p><img src="/img/5cb89c5964d969f78c6358fa7513bdfc.png" alt="" />
+选择 <strong>Download Center</strong> 下载 <strong>VR  Arch</strong> 的 <strong>5_HP-Karaoke-UVR</strong> 模型。然后回到首页
+<img src="/img/3d292d087dccfad1f7f4df955162cad9.png" alt="" /></p>
+<p>首先通过 <strong>Select Input</strong> 选择原音频</p>
+<p>然后通过 <strong>Select Output</strong> 选择输出的文件夹</p>
+<p><strong>CHOOSE PROCESS METHOD</strong> 选择 <strong>VR Architecture</strong></p>
+<p><strong>CHOOSE VR MODEL</strong> 选择我们刚刚下载的 <strong>5_HP-Karaoke-UVR</strong> 模型</p>
+<p>勾选 <strong>GPU Conversion</strong></p>
+<p>然后点击 <strong>Start Processing</strong></p>
+<p><img src="/img/a165ea0fcb59bf6a32a14205614b30bb.png" alt="" /></p>
+<p>输出文件夹中 <strong>Instrumental</strong> 为伴奏， <strong>Vocals</strong> 为人声</p>
+<p><img src="/img/07a35334f9e47c9caa5630a5026bcc57.png" alt="" /></p>
+<h3 id="MSST">MSST</h3>
+<p>下载 <a rel="noopener nofollow" target="_blank" href="https://github.com/SUC-DriverOld/MSST-WebUI">SUC-DriverOld/MSST-WebUI: A WebUI app for Music-Source-Separation-Training and we packed UVR together!</a></p>
+<p>双击 <code>go-webui.bat</code> 运行</p>
+<p><img src="/img/479c535dcd02065433e9376452a3aa5a.png" alt="" /></p>
+<p>首先去安装模型。每个模型的最终输出文件可能不一样</p>
+<p><img src="/img/de34301747b6161818074dd55d3063d1.png" alt="" /></p>
+<p>然后都是字面意思了，随后点击 <strong>输入音频分离</strong> 开始转换</p>
+<p><img src="/img/3dbe0b38aaf7095077ac625fe1ee4903.png" alt="" /></p>
+
+    </article>
+
+    <!-- License -->
+    <div class="mt-8 p-6 bg-gray-50 dark:bg-gray-700/50 rounded-2xl text-sm text-gray-600 dark:text-gray-400">
+        <div class="flex flex-col gap-2">
+            <p class="font-medium text-gray-900 dark:text-white">版权声明</p>
+            <p>
+                本文由 <span class="font-medium">二叉树树</span> 创作，采用 
+                <a href="https:&#x2F;&#x2F;creativecommons.org&#x2F;licenses&#x2F;by-nc-sa&#x2F;4.0&#x2F;" target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-blue-400 hover:underline">CC BY-NC-SA 4.0</a> 
+                许可协议。
+            </p>
+            <p>
+                转载请注明出处：<a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;posts&#x2F;rvc&#x2F;" class="text-blue-600 dark:text-blue-400 hover:underline break-all">AcoFork Blog - 手把手教你AI翻唱！: https:&#x2F;&#x2F;blog.acofork.com&#x2F;posts&#x2F;rvc&#x2F;</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Help & Edit -->
+    <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-sm">
+            <h3 class="font-bold text-gray-900 dark:text-white mb-2">这篇文章是否对你有帮助？</h3>
+            <div class="flex space-x-4">
+                <a href="&#x2F;posts&#x2F;pin" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline">联系</a>
+                <a href="&#x2F;sponsors" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline">赞助</a>
+            </div>
+        </div>
+        <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-sm">
+            <h3 class="font-bold text-gray-900 dark:text-white mb-2">发现错误或想要改进这篇文章？</h3>
+            <a href="https:&#x2F;&#x2F;github.com&#x2F;afoim&#x2F;AcoFork_Blog_Zola/blob/main/content/posts&#x2F;rvc.md" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline flex items-center">
+                <span>在 GitHub 上编辑此页</span>
+                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+            </a>
+        </div>
+    </div>
+
+    <!-- Post Footer -->
+    <footer class="mt-8 flex flex-wrap gap-2 justify-center">
+        
+    </footer>
+
+    <!-- Comments (Giscus) -->
+    <div class="mt-12 bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-sm">
+<script src="https://giscus.app/client.js"
+        data-repo="afoim/giscus-fuwari"
+        data-repo-id="R_kgDOOi8quw"
+        data-category="Announcements"
+        data-category-id="DIC_kwDOOi8qu84CprDV"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="preferred_color_scheme"
+        data-lang="zh-CN"
+        crossorigin="anonymous"
+        async>
+</script>
+    </div>
+</div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col items-center justify-center space-y-2">
+                <p class="text-gray-500 dark:text-gray-400 text-sm">
+                    &copy; 2026 二叉树树. 
+                    <a href="https:&#x2F;&#x2F;creativecommons.org&#x2F;licenses&#x2F;by-nc-sa&#x2F;4.0&#x2F;" target="_blank" class="hover:underline">CC BY-NC-SA 4.0</a>
+                </p>
+                <p class="text-gray-400 dark:text-gray-500 text-xs">
+                    Powered by <a href="https://www.getzola.org" target="_blank" class="hover:text-gray-300">Zola</a>
+                     · <a href="https://github.com/afoim/AcoFork_Blog_Zola" target="_blank" class="hover:text-gray-300">Source Code</a>
+                </p>
+                <a href="https://blog.acofork.com/rss.xml" target="_blank" class="text-gray-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors p-2">
+                    <span class="sr-only">RSS</span>
+                    <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                        <path d="M5 3a1 1 0 000 2c5.523 0 10 4.477 10 10a1 1 0 102 0C17 8.373 11.627 3 5 3z"></path>
+                        <path d="M4 9a1 1 0 011-1 7 7 0 017 7 1 1 0 11-2 0 5 5 0 00-5-5 1 1 0 01-1-1zM3 15a2 2 0 114 0 2 2 0 01-4 0z"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/elasticlunr/0.9.6/elasticlunr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+    <script src="/js/umami-share.js"></script>
+    <script src="/js/search.js"></script>
+    <script src="/js/gfm-alerts.js"></script>
+    <script src="/js/anchor-fix.js"></script>
+    <script>
+        // Umami script needs to be loaded if it's not already
+        // This is a workaround since we removed the original script tag
+        (function() {
+            var el = document.createElement('script');
+            el.setAttribute('src', 'https://umami.acofork.com/script.js');
+            el.setAttribute('data-website-id', '5d710dbd-3a2e-43e3-a553-97b415090c63');
+            el.setAttribute('defer', '');
+            document.body.appendChild(el);
+        })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="zh" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>在VPS上部署一个自己的Github全站反代！ - AcoFork Blog</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css"/>
+    <link rel="icon" href="https://q2.qlogo.cn/headimg_dl?dst_uin=2726730791&amp;spec=0">
+    <script src="https://pic1.acofork.com/random.js"></script>
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.acofork.com/rss.xml">
+    <script src="/js/main.js"></script>
+</head>
+<body class="bg-[var(--page-bg)] text-gray-900 dark:text-gray-100 transition-colors duration-300 min-h-screen flex flex-col">
+
+    <!-- Navbar -->
+    <nav class="sticky top-0 z-50 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md shadow-sm dark:border-b dark:border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="/" class="text-xl font-bold text-blue-600 dark:text-blue-400">AcoFork Blog</a>
+                    </div>
+                    <!-- Desktop Menu -->
+                    <div class="hidden md:ml-6 md:flex md:space-x-8">
+                        
+                        <a href="&#x2F;" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            首页
+                        </a>
+                        
+                        <a href="&#x2F;posts" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            归档
+                        </a>
+                        
+                        <a href="&#x2F;friends" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            友链
+                        </a>
+                        
+                        <a href="&#x2F;sponsors" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            赞助
+                        </a>
+                        
+                        <a href="https:&#x2F;&#x2F;umami.acofork.com&#x2F;share&#x2F;CdkXbGgZr6ECKOyK" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           target="_blank">
+                            统计
+                        </a>
+                        
+                        <a href="https:&#x2F;&#x2F;status.acofork.com" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           target="_blank">
+                            监控
+                        </a>
+                        
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <!-- Mobile Menu Button -->
+                    <button type="button" onclick="toggleMobileMenu()" class="md:hidden p-2 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
+                        <span class="sr-only">Open menu</span>
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                    <!-- Search Button -->
+                    <button onclick="toggleSearch()" class="p-2 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </button>
+                    <!-- Theme Toggle -->
+                    <button onclick="toggleTheme()" class="p-2 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
+                        <svg id="sun-icon" class="h-6 w-6 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                        <svg id="moon-icon" class="h-6 w-6 block dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                
+                <a href="&#x2F;" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    首页
+                </a>
+                
+                <a href="&#x2F;posts" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    归档
+                </a>
+                
+                <a href="&#x2F;friends" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    友链
+                </a>
+                
+                <a href="&#x2F;sponsors" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    赞助
+                </a>
+                
+                <a href="https:&#x2F;&#x2F;umami.acofork.com&#x2F;share&#x2F;CdkXbGgZr6ECKOyK" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   target="_blank">
+                    统计
+                </a>
+                
+                <a href="https:&#x2F;&#x2F;status.acofork.com" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   target="_blank">
+                    监控
+                </a>
+                
+            </div>
+        </div>
+    </nav>
+
+    <!-- Search Modal -->
+    <div id="search-modal" class="fixed inset-0 z-50 hidden" role="dialog" aria-modal="true">
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" onclick="toggleSearch()"></div>
+        <div class="fixed inset-0 z-10 overflow-y-auto p-4 sm:p-6 md:p-20" onclick="if(event.target === this) toggleSearch()">
+            <div class="mx-auto max-w-xl transform rounded-xl bg-white dark:bg-gray-800 p-2 shadow-2xl transition-all">
+                <input type="text" id="search-input" 
+                       class="w-full rounded-md border-0 bg-gray-100 dark:bg-gray-700 px-4 py-2.5 text-gray-900 dark:text-white placeholder-gray-500 focus:ring-0 sm:text-sm" 
+                       placeholder="搜索文章..." autocomplete="off">
+                <ul id="search-results" class="max-h-96 scroll-py-3 overflow-y-auto p-3"></ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+<div class="max-w-4xl mx-auto">
+    <!-- Post Header -->
+    <header class="mb-8 text-center">
+        <div class="flex items-center justify-center space-x-2 text-sm text-gray-500 dark:text-gray-400 mb-4">
+            <time datetime="2025-06-20">2025-06-20</time>
+            <span>•</span>
+            <span>1 分钟阅读</span>
+            <span id="views-separator" style="display: none">•</span>
+            <span id="page-views" style="display: none"></span>
+        </div>
+        <h1 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">在VPS上部署一个自己的Github全站反代！</h1>
+        
+        <p class="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">利用Go作为后端，重写Github发送的HTML，并且创建多个反向代理，从0自建Github全站反代！</p>
+        
+        
+        <div class="w-full rounded-2xl overflow-hidden shadow-sm mb-8">
+            <img src="&#x2F;img&#x2F;cdfc03c805654fe17b029c77607283d7.webp" alt="在VPS上部署一个自己的Github全站反代！" class="w-full h-auto">
+        </div>
+        
+    </header>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const baseUrl = 'https://umami.acofork.com';
+                const shareId = 'CdkXbGgZr6ECKOyK';
+                // Current page path
+                const urlPath = window.location.pathname;
+                
+                const stats = await window.fetchUmamiStats(baseUrl, shareId, {
+                    url: urlPath
+                });
+                
+                // Check for both 'visits' (new preference) or 'pageviews' (fallback)
+                const metric = (stats && (stats.visits || stats.pageviews));
+                
+                let views = 0;
+                let hasData = false;
+
+                if (metric && typeof metric.value !== 'undefined') {
+                    views = metric.value;
+                    hasData = true;
+                } else if (stats && (typeof stats.visits === 'number' || typeof stats.pageviews === 'number')) {
+                        // Fallback for flat structure
+                        views = stats.visits || stats.pageviews;
+                        hasData = true;
+                }
+
+                if (hasData) {
+                    const viewEl = document.getElementById('page-views');
+                    viewEl.textContent = views + ' 次访问';
+                    viewEl.style.display = 'inline';
+                    document.getElementById('views-separator').style.display = 'inline';
+                }
+            } catch (e) {
+                console.error('Failed to load page views:', e);
+            }
+        });
+    </script>
+
+    <!-- Post Content -->
+    <article class="prose prose-lg dark:prose-invert max-w-none bg-white dark:bg-gray-800 p-8 md:p-12 rounded-2xl shadow-sm">
+        <h1 id="引言">引言</h1>
+<p>至今我仍在维护一个Github全站反代的服务，就是 <a rel="noopener nofollow" target="_blank" href="https://gh.072103.xyz/afoim">https://gh.072103.xyz/afoim</a> 。也跟大家谈过<a href="/posts/gh-proxy/">原理</a>。最近弄到了一个免费的VPS，就想着将Cloudflare Worker的反代移植到VPS上来</p>
+<h1 id="正式开始">正式开始</h1>
+<p>VPS安装Golang运行时</p>
+<pre data-lang="bash" class="language-bash "><code class="language-bash" data-lang="bash">apt install golang
+</code></pre>
+<p>创建一个文件夹。放置 <code>main.go</code> 源码如下</p>
+<pre data-lang="go" class="language-go "><code class="language-go" data-lang="go">package main
+
+import (
+	&quot;fmt&quot;
+	&quot;io&quot;
+	&quot;log&quot;
+	&quot;net&#x2F;http&quot;
+	&quot;net&#x2F;url&quot;
+	&quot;regexp&quot;
+	&quot;strings&quot;
+	&quot;time&quot;
+)
+
+&#x2F;&#x2F; 域名映射配置
+var domainMappings = map[string]string{
+	&quot;github.com&quot;:                    &quot;gh.&quot;,
+	&quot;avatars.githubusercontent.com&quot;: &quot;avatars-githubusercontent-com.&quot;,
+	&quot;github.githubassets.com&quot;:       &quot;github-githubassets-com.&quot;,
+	&quot;collector.github.com&quot;:          &quot;collector-github-com.&quot;,
+	&quot;api.github.com&quot;:                &quot;api-github-com.&quot;,
+	&quot;raw.githubusercontent.com&quot;:     &quot;raw-githubusercontent-com.&quot;,
+	&quot;gist.githubusercontent.com&quot;:    &quot;gist-githubusercontent-com.&quot;,
+	&quot;github.io&quot;:                     &quot;github-io.&quot;,
+	&quot;assets-cdn.github.com&quot;:         &quot;assets-cdn-github-com.&quot;,
+	&quot;cdn.jsdelivr.net&quot;:              &quot;cdn.jsdelivr-net.&quot;,
+	&quot;securitylab.github.com&quot;:        &quot;securitylab-github-com.&quot;,
+	&quot;www.githubstatus.com&quot;:          &quot;www-githubstatus-com.&quot;,
+	&quot;npmjs.com&quot;:                     &quot;npmjs-com.&quot;,
+	&quot;git-lfs.github.com&quot;:            &quot;git-lfs-github-com.&quot;,
+	&quot;githubusercontent.com&quot;:         &quot;githubusercontent-com.&quot;,
+	&quot;github.global.ssl.fastly.net&quot;:  &quot;github-global-ssl-fastly-net.&quot;,
+	&quot;api.npms.io&quot;:                   &quot;api-npms-io.&quot;,
+	&quot;github.community&quot;:              &quot;github-community.&quot;,
+}
+
+&#x2F;&#x2F; 需要重定向的路径
+var redirectPaths = []string{&quot;&#x2F;&quot;, &quot;&#x2F;login&quot;, &quot;&#x2F;signup&quot;, &quot;&#x2F;copilot&quot;}
+
+&#x2F;&#x2F; 检查路径是否需要重定向
+func shouldRedirect(path string) bool {
+	for _, p := range redirectPaths {
+		if path == p {
+			return true
+		}
+	}
+	return false
+}
+
+&#x2F;&#x2F; 获取代理前缀
+func getProxyPrefix(host string) string {
+	if strings.HasPrefix(host, &quot;gh.&quot;) {
+		return &quot;gh.&quot;
+	}
+
+	for _, prefix := range domainMappings {
+		if strings.HasPrefix(host, prefix) {
+			return prefix
+		}
+	}
+
+	return &quot;&quot;
+}
+
+&#x2F;&#x2F; 根据前缀获取目标域名
+func getTargetHost(prefix string) string {
+	for original, p := range domainMappings {
+		if p == prefix {
+			return original
+		}
+	}
+	return &quot;&quot;
+}
+
+&#x2F;&#x2F; 处理响应内容，替换域名引用
+func modifyResponse(body []byte, contentType, hostPrefix, currentHostname string) []byte {
+	&#x2F;&#x2F; 只处理文本内容
+	if !strings.Contains(contentType, &quot;text&#x2F;&quot;) &amp;&amp;
+		!strings.Contains(contentType, &quot;application&#x2F;json&quot;) &amp;&amp;
+		!strings.Contains(contentType, &quot;application&#x2F;javascript&quot;) &amp;&amp;
+		!strings.Contains(contentType, &quot;application&#x2F;xml&quot;) {
+		return body
+	}
+
+	text := string(body)
+
+	&#x2F;&#x2F; 获取当前域名的后缀部分
+	domainSuffix := currentHostname[len(hostPrefix):]
+
+	&#x2F;&#x2F; 替换所有域名引用
+	for originalDomain, proxyPrefix := range domainMappings {
+		fullProxyDomain := proxyPrefix + domainSuffix
+
+		&#x2F;&#x2F; 替换完整URLs - 使用简单的字符串替换
+		text = strings.ReplaceAll(text, &quot;https:&#x2F;&#x2F;&quot;+originalDomain, &quot;https:&#x2F;&#x2F;&quot;+fullProxyDomain)
+		text = strings.ReplaceAll(text, &quot;http:&#x2F;&#x2F;&quot;+originalDomain, &quot;https:&#x2F;&#x2F;&quot;+fullProxyDomain)
+
+		&#x2F;&#x2F; 替换协议相对URLs
+		text = strings.ReplaceAll(text, &quot;&#x2F;&#x2F;&quot;+originalDomain, &quot;&#x2F;&#x2F;&quot;+fullProxyDomain)
+		
+		&#x2F;&#x2F; 替换带引号的域名引用
+		text = strings.ReplaceAll(text, `&quot;`+originalDomain+`&quot;`, `&quot;`+fullProxyDomain+`&quot;`)
+		text = strings.ReplaceAll(text, `&#x27;`+originalDomain+`&#x27;`, `&#x27;`+fullProxyDomain+`&#x27;`)
+	}
+
+	&#x2F;&#x2F; 处理相对路径 - 使用简单的字符串替换
+	if hostPrefix == &quot;gh.&quot; {
+		&#x2F;&#x2F; 替换引号内的相对路径
+		text = strings.ReplaceAll(text, `&quot;&#x2F;`, `&quot;https:&#x2F;&#x2F;`+currentHostname+`&#x2F;`)
+		text = strings.ReplaceAll(text, `&#x27;&#x2F;`, `&#x27;https:&#x2F;&#x2F;`+currentHostname+`&#x2F;`)
+	}
+
+	return []byte(text)
+}
+
+&#x2F;&#x2F; 处理请求
+func handleRequest(w http.ResponseWriter, r *http.Request) {
+	currentHost := r.Host
+
+	&#x2F;&#x2F; 检查特殊路径重定向
+	if shouldRedirect(r.URL.Path) {
+		http.Redirect(w, r, &quot;https:&#x2F;&#x2F;www.gov.cn&quot;, http.StatusFound)
+		return
+	}
+
+	&#x2F;&#x2F; 从当前主机名中提取前缀
+	hostPrefix := getProxyPrefix(currentHost)
+	if hostPrefix == &quot;&quot; {
+		http.Error(w, &quot;Domain not configured for proxy&quot;, http.StatusNotFound)
+		return
+	}
+
+	&#x2F;&#x2F; 根据前缀找到对应的原始域名
+	targetHost := getTargetHost(hostPrefix)
+	if targetHost == &quot;&quot; {
+		http.Error(w, &quot;Domain not configured for proxy&quot;, http.StatusNotFound)
+		return
+	}
+
+	&#x2F;&#x2F; 处理路径，修复嵌套URL问题
+	pathname := r.URL.Path
+
+	&#x2F;&#x2F; 修复特定的嵌套URL模式
+	&#x2F;&#x2F; 处理 URL 编码的嵌套路径
+	re1 := regexp.MustCompile(`(&#x2F;[^&#x2F;]+&#x2F;[^&#x2F;]+&#x2F;(?:latest-commit|tree-commit-info)&#x2F;[^&#x2F;]+)&#x2F;https%3A&#x2F;&#x2F;[^&#x2F;]+.*`)
+	pathname = re1.ReplaceAllString(pathname, &quot;$1&quot;)
+
+	&#x2F;&#x2F; 处理未编码的嵌套路径
+	re2 := regexp.MustCompile(`(&#x2F;[^&#x2F;]+&#x2F;[^&#x2F;]+&#x2F;(?:latest-commit|tree-commit-info)&#x2F;[^&#x2F;]+)&#x2F;https:&#x2F;&#x2F;[^&#x2F;]+.*`)
+	pathname = re2.ReplaceAllString(pathname, &quot;$1&quot;)
+
+	&#x2F;&#x2F; 处理简化的嵌套路径（如 &#x2F;main&#x2F;https:&#x2F;domain&#x2F;）
+	re3 := regexp.MustCompile(`(&#x2F;[^&#x2F;]+&#x2F;[^&#x2F;]+&#x2F;(?:latest-commit|tree-commit-info)&#x2F;[^&#x2F;]+)&#x2F;https:&#x2F;[^&#x2F;]+.*`)
+	pathname = re3.ReplaceAllString(pathname, &quot;$1&quot;)
+
+	&#x2F;&#x2F; 构建目标URL
+	targetURL := &amp;url.URL{
+		Scheme:   &quot;https&quot;,
+		Host:     targetHost,
+		Path:     pathname,
+		RawQuery: r.URL.RawQuery,
+	}
+
+	&#x2F;&#x2F; 创建新的请求
+	req, err := http.NewRequest(r.Method, targetURL.String(), r.Body)
+	if err != nil {
+		http.Error(w, fmt.Sprintf(&quot;Failed to create request: %v&quot;, err), http.StatusInternalServerError)
+		return
+	}
+
+	&#x2F;&#x2F; 复制请求头
+	for key, values := range r.Header {
+		for _, value := range values {
+			req.Header.Add(key, value)
+		}
+	}
+
+	&#x2F;&#x2F; 设置必要的请求头
+	req.Header.Set(&quot;Host&quot;, targetHost)
+	req.Header.Set(&quot;Referer&quot;, targetURL.String())
+	&#x2F;&#x2F; 禁用压缩以避免编码问题
+	req.Header.Set(&quot;Accept-Encoding&quot;, &quot;identity&quot;)
+
+	&#x2F;&#x2F; 创建HTTP客户端
+	client := &amp;http.Client{
+		Timeout: 30 * time.Second,
+	}
+
+	&#x2F;&#x2F; 发起请求
+	resp, err := client.Do(req)
+	if err != nil {
+		http.Error(w, fmt.Sprintf(&quot;Proxy Error: %v&quot;, err), http.StatusBadGateway)
+		return
+	}
+	defer resp.Body.Close()
+
+	&#x2F;&#x2F; 读取响应体
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		http.Error(w, fmt.Sprintf(&quot;Failed to read response: %v&quot;, err), http.StatusInternalServerError)
+		return
+	}
+
+	&#x2F;&#x2F; 处理响应内容
+	contentType := resp.Header.Get(&quot;Content-Type&quot;)
+	modifiedBody := modifyResponse(body, contentType, hostPrefix, currentHost)
+
+	&#x2F;&#x2F; 设置响应头（排除压缩相关头部）
+	for key, values := range resp.Header {
+		&#x2F;&#x2F; 跳过压缩相关的头部，因为Go已经自动解压缩了内容
+		if key == &quot;Content-Encoding&quot; || key == &quot;Content-Length&quot; {
+			continue
+		}
+		for _, value := range values {
+			w.Header().Add(key, value)
+		}
+	}
+
+	&#x2F;&#x2F; 设置CORS和缓存头
+	w.Header().Set(&quot;Access-Control-Allow-Origin&quot;, &quot;*&quot;)
+	w.Header().Set(&quot;Access-Control-Allow-Credentials&quot;, &quot;true&quot;)
+	w.Header().Set(&quot;Cache-Control&quot;, &quot;public, max-age=14400&quot;)
+	w.Header().Del(&quot;Content-Security-Policy&quot;)
+	w.Header().Del(&quot;Content-Security-Policy-Report-Only&quot;)
+	w.Header().Del(&quot;Clear-Site-Data&quot;)
+
+	&#x2F;&#x2F; 设置正确的Content-Length
+	w.Header().Set(&quot;Content-Length&quot;, fmt.Sprintf(&quot;%d&quot;, len(modifiedBody)))
+
+	&#x2F;&#x2F; 设置状态码
+	w.WriteHeader(resp.StatusCode)
+
+	&#x2F;&#x2F; 写入响应
+	w.Write(modifiedBody)
+}
+
+func main() {
+	&#x2F;&#x2F; 创建路由处理器
+	http.HandleFunc(&quot;&#x2F;&quot;, handleRequest)
+
+	&#x2F;&#x2F; 启动服务器
+	port := &quot;:8080&quot;
+	log.Printf(&quot;GitHub代理服务器启动在端口 %s&quot;, port)
+	log.Printf(&quot;请确保你的域名已正确配置并指向此服务器&quot;)
+
+	if err := http.ListenAndServe(port, nil); err != nil {
+		log.Fatal(&quot;服务器启动失败:&quot;, err)
+	}
+}
+</code></pre>
+<p>继续放置 <code>go.mod</code> 。源码如下</p>
+<pre data-lang="go" class="language-go "><code class="language-go" data-lang="go">module github-proxy
+
+go 1.19
+</code></pre>
+<p>运行。默认跑在8080端口</p>
+<pre data-lang="bash" class="language-bash "><code class="language-bash" data-lang="bash">go run .
+</code></pre>
+<p>输出以下日志即成功</p>
+<pre data-lang="bash" class="language-bash "><code class="language-bash" data-lang="bash">root@localhost:~&#x2F;go_proxy# go run .
+2025&#x2F;06&#x2F;20 23:13:17 GitHub代理服务器启动在端口 :8080
+2025&#x2F;06&#x2F;20 23:13:17 请确保你的域名已正确配置并指向此服务器
+</code></pre>
+<p>使用Nginx或者OpenResty反向代理 <code>localhost:8080</code> 。配置域名，格式为 <code>gh.你的域名</code> 。我的配置如下</p>
+<p><img src="/img/a278240460e6c55ae124e9a7a6bf7ca6.webp" alt="" /></p>
+<p>签发泛域名证书并且部署，配置完毕后如下</p>
+<p><img src="/img/248ecd1d15ab1d9cc437acf843808036.webp" alt="" /></p>
+<p>访问，现在你通过自己的域名+VPS代理访问Github。国内直连，无需梯子</p>
+<p><img src="/img/33a87f06aebd772d8d6371d63f6bf42f.webp" alt="" /></p>
+
+    </article>
+
+    <!-- License -->
+    <div class="mt-8 p-6 bg-gray-50 dark:bg-gray-700/50 rounded-2xl text-sm text-gray-600 dark:text-gray-400">
+        <div class="flex flex-col gap-2">
+            <p class="font-medium text-gray-900 dark:text-white">版权声明</p>
+            <p>
+                本文由 <span class="font-medium">二叉树树</span> 创作，采用 
+                <a href="https:&#x2F;&#x2F;creativecommons.org&#x2F;licenses&#x2F;by-nc-sa&#x2F;4.0&#x2F;" target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-blue-400 hover:underline">CC BY-NC-SA 4.0</a> 
+                许可协议。
+            </p>
+            <p>
+                转载请注明出处：<a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;posts&#x2F;go-proxy-gh&#x2F;" class="text-blue-600 dark:text-blue-400 hover:underline break-all">AcoFork Blog - 在VPS上部署一个自己的Github全站反代！: https:&#x2F;&#x2F;blog.acofork.com&#x2F;posts&#x2F;go-proxy-gh&#x2F;</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Help & Edit -->
+    <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-sm">
+            <h3 class="font-bold text-gray-900 dark:text-white mb-2">这篇文章是否对你有帮助？</h3>
+            <div class="flex space-x-4">
+                <a href="&#x2F;posts&#x2F;pin" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline">联系</a>
+                <a href="&#x2F;sponsors" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline">赞助</a>
+            </div>
+        </div>
+        <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-sm">
+            <h3 class="font-bold text-gray-900 dark:text-white mb-2">发现错误或想要改进这篇文章？</h3>
+            <a href="https:&#x2F;&#x2F;github.com&#x2F;afoim&#x2F;AcoFork_Blog_Zola/blob/main/content/posts&#x2F;go-proxy-gh.md" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline flex items-center">
+                <span>在 GitHub 上编辑此页</span>
+                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+            </a>
+        </div>
+    </div>
+
+    <!-- Post Footer -->
+    <footer class="mt-8 flex flex-wrap gap-2 justify-center">
+        
+        
+        <a href="https://blog.acofork.com/tags/github/" class="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-full text-sm hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">#Github</a>
+        
+        <a href="https://blog.acofork.com/tags/fan-xiang-dai-li/" class="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-full text-sm hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">#反向代理</a>
+        
+        
+    </footer>
+
+    <!-- Comments (Giscus) -->
+    <div class="mt-12 bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-sm">
+<script src="https://giscus.app/client.js"
+        data-repo="afoim/giscus-fuwari"
+        data-repo-id="R_kgDOOi8quw"
+        data-category="Announcements"
+        data-category-id="DIC_kwDOOi8qu84CprDV"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="preferred_color_scheme"
+        data-lang="zh-CN"
+        crossorigin="anonymous"
+        async>
+</script>
+    </div>
+</div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col items-center justify-center space-y-2">
+                <p class="text-gray-500 dark:text-gray-400 text-sm">
+                    &copy; 2026 二叉树树. 
+                    <a href="https:&#x2F;&#x2F;creativecommons.org&#x2F;licenses&#x2F;by-nc-sa&#x2F;4.0&#x2F;" target="_blank" class="hover:underline">CC BY-NC-SA 4.0</a>
+                </p>
+                <p class="text-gray-400 dark:text-gray-500 text-xs">
+                    Powered by <a href="https://www.getzola.org" target="_blank" class="hover:text-gray-300">Zola</a>
+                     · <a href="https://github.com/afoim/AcoFork_Blog_Zola" target="_blank" class="hover:text-gray-300">Source Code</a>
+                </p>
+                <a href="https://blog.acofork.com/rss.xml" target="_blank" class="text-gray-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors p-2">
+                    <span class="sr-only">RSS</span>
+                    <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                        <path d="M5 3a1 1 0 000 2c5.523 0 10 4.477 10 10a1 1 0 102 0C17 8.373 11.627 3 5 3z"></path>
+                        <path d="M4 9a1 1 0 011-1 7 7 0 017 7 1 1 0 11-2 0 5 5 0 00-5-5 1 1 0 01-1-1zM3 15a2 2 0 114 0 2 2 0 01-4 0z"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/elasticlunr/0.9.6/elasticlunr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+    <script src="/js/umami-share.js"></script>
+    <script src="/js/search.js"></script>
+    <script src="/js/gfm-alerts.js"></script>
+    <script src="/js/anchor-fix.js"></script>
+    <script>
+        // Umami script needs to be loaded if it's not already
+        // This is a workaround since we removed the original script tag
+        (function() {
+            var el = document.createElement('script');
+            el.setAttribute('src', 'https://umami.acofork.com/script.js');
+            el.setAttribute('data-website-id', '5d710dbd-3a2e-43e3-a553-97b415090c63');
+            el.setAttribute('defer', '');
+            document.body.appendChild(el);
+        })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="zh" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ciallo～(∠・ω&lt; )⌒★ - AcoFork Blog</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css"/>
+    <link rel="icon" href="https://q2.qlogo.cn/headimg_dl?dst_uin=2726730791&amp;spec=0">
+    <script src="https://pic1.acofork.com/random.js"></script>
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.acofork.com/rss.xml">
+    <script src="/js/main.js"></script>
+</head>
+<body class="bg-[var(--page-bg)] text-gray-900 dark:text-gray-100 transition-colors duration-300 min-h-screen flex flex-col">
+
+    <!-- Navbar -->
+    <nav class="sticky top-0 z-50 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md shadow-sm dark:border-b dark:border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="/" class="text-xl font-bold text-blue-600 dark:text-blue-400">AcoFork Blog</a>
+                    </div>
+                    <!-- Desktop Menu -->
+                    <div class="hidden md:ml-6 md:flex md:space-x-8">
+                        
+                        <a href="&#x2F;" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            首页
+                        </a>
+                        
+                        <a href="&#x2F;posts" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            归档
+                        </a>
+                        
+                        <a href="&#x2F;friends" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            友链
+                        </a>
+                        
+                        <a href="&#x2F;sponsors" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            赞助
+                        </a>
+                        
+                        <a href="https:&#x2F;&#x2F;umami.acofork.com&#x2F;share&#x2F;CdkXbGgZr6ECKOyK" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           target="_blank">
+                            统计
+                        </a>
+                        
+                        <a href="https:&#x2F;&#x2F;status.acofork.com" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           target="_blank">
+                            监控
+                        </a>
+                        
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <!-- Mobile Menu Button -->
+                    <button type="button" onclick="toggleMobileMenu()" class="md:hidden p-2 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
+                        <span class="sr-only">Open menu</span>
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                    <!-- Search Button -->
+                    <button onclick="toggleSearch()" class="p-2 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </button>
+                    <!-- Theme Toggle -->
+                    <button onclick="toggleTheme()" class="p-2 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
+                        <svg id="sun-icon" class="h-6 w-6 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                        <svg id="moon-icon" class="h-6 w-6 block dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                
+                <a href="&#x2F;" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    首页
+                </a>
+                
+                <a href="&#x2F;posts" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    归档
+                </a>
+                
+                <a href="&#x2F;friends" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    友链
+                </a>
+                
+                <a href="&#x2F;sponsors" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    赞助
+                </a>
+                
+                <a href="https:&#x2F;&#x2F;umami.acofork.com&#x2F;share&#x2F;CdkXbGgZr6ECKOyK" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   target="_blank">
+                    统计
+                </a>
+                
+                <a href="https:&#x2F;&#x2F;status.acofork.com" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   target="_blank">
+                    监控
+                </a>
+                
+            </div>
+        </div>
+    </nav>
+
+    <!-- Search Modal -->
+    <div id="search-modal" class="fixed inset-0 z-50 hidden" role="dialog" aria-modal="true">
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" onclick="toggleSearch()"></div>
+        <div class="fixed inset-0 z-10 overflow-y-auto p-4 sm:p-6 md:p-20" onclick="if(event.target === this) toggleSearch()">
+            <div class="mx-auto max-w-xl transform rounded-xl bg-white dark:bg-gray-800 p-2 shadow-2xl transition-all">
+                <input type="text" id="search-input" 
+                       class="w-full rounded-md border-0 bg-gray-100 dark:bg-gray-700 px-4 py-2.5 text-gray-900 dark:text-white placeholder-gray-500 focus:ring-0 sm:text-sm" 
+                       placeholder="搜索文章..." autocomplete="off">
+                <ul id="search-results" class="max-h-96 scroll-py-3 overflow-y-auto p-3"></ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+<div class="max-w-4xl mx-auto">
+    <!-- Post Header -->
+    <header class="mb-8 text-center">
+        <div class="flex items-center justify-center space-x-2 text-sm text-gray-500 dark:text-gray-400 mb-4">
+            <time datetime="2025-08-21">2025-08-21</time>
+            <span>•</span>
+            <span>5 分钟阅读</span>
+            <span id="views-separator" style="display: none">•</span>
+            <span id="page-views" style="display: none"></span>
+        </div>
+        <h1 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">Ciallo～(∠・ω&lt; )⌒★</h1>
+        
+        <p class="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">[开源]刨手手表情包下载站</p>
+        
+        
+        <div class="w-full rounded-2xl overflow-hidden shadow-sm mb-8">
+            <img src="&#x2F;img&#x2F;dc12547bbacecaeb42bd5bd1634eee86.png" alt="Ciallo～(∠・ω&lt; )⌒★" class="w-full h-auto">
+        </div>
+        
+    </header>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const baseUrl = 'https://umami.acofork.com';
+                const shareId = 'CdkXbGgZr6ECKOyK';
+                // Current page path
+                const urlPath = window.location.pathname;
+                
+                const stats = await window.fetchUmamiStats(baseUrl, shareId, {
+                    url: urlPath
+                });
+                
+                // Check for both 'visits' (new preference) or 'pageviews' (fallback)
+                const metric = (stats && (stats.visits || stats.pageviews));
+                
+                let views = 0;
+                let hasData = false;
+
+                if (metric && typeof metric.value !== 'undefined') {
+                    views = metric.value;
+                    hasData = true;
+                } else if (stats && (typeof stats.visits === 'number' || typeof stats.pageviews === 'number')) {
+                        // Fallback for flat structure
+                        views = stats.visits || stats.pageviews;
+                        hasData = true;
+                }
+
+                if (hasData) {
+                    const viewEl = document.getElementById('page-views');
+                    viewEl.textContent = views + ' 次访问';
+                    viewEl.style.display = 'inline';
+                    document.getElementById('views-separator').style.display = 'inline';
+                }
+            } catch (e) {
+                console.error('Failed to load page views:', e);
+            }
+        });
+    </script>
+
+    <!-- Post Content -->
+    <article class="prose prose-lg dark:prose-invert max-w-none bg-white dark:bg-gray-800 p-8 md:p-12 rounded-2xl shadow-sm">
+        <blockquote>
+<p>本文由 <a rel="noopener nofollow" target="_blank" href="https://github.com/afoim/fuwari/pull/40">https://github.com/afoim/fuwari/pull/40</a> 提供，非站长原创</p>
+</blockquote>
+<h1 id="刨手手表情包下载站">刨手手表情包下载站</h1>
+<p>一个简单、美观、现代化的表情包预览和下载网站  <a rel="noopener nofollow" target="_blank" href="https://paoshoushou.112601.xyz/">体验界面</a>
+<img src="/img/dc12547bbacecaeb42bd5bd1634eee86.png" alt="示例" /><br />
+<a href="#">项目主页文章（博客）</a> | <a rel="noopener nofollow" target="_blank" href="https://paoshoushou.112601.xyz/">体验界面</a> | <a rel="noopener nofollow" target="_blank" href="https://github.com/yunsen2025/paoshoushouGIF-web">GitHub仓库</a></p>
+<blockquote>
+<p>[!NOTE]</p>
+<p><strong>这是一个纯前端项目，无需后端支持，可直接部署到任何静态网站托管服务</strong></p>
+</blockquote>
+<hr />
+<h1 id="项目特性：">项目特性：</h1>
+<ul>
+<li>🎨 <strong>现代化设计</strong>：采用渐变背景、玻璃拟态、流畅动画等现代UI设计</li>
+<li>📱 <strong>完全响应式</strong>：支持手机、平板、电脑等各种设备，自适应布局</li>
+<li>⚡ <strong>轻量高效</strong>：纯HTML+CSS+JS，无框架依赖，加载速度快</li>
+<li>🖱️ <strong>交互友好</strong>：点击图片直接下载，悬停显示下载提示，操作简单直观</li>
+<li>🎭 <strong>丰富表情</strong>：内置多个精选表情包，涵盖各种场景</li>
+<li>📦 <strong>自动打包</strong>：GitHub Actions自动打包表情包为zip文件，发布到Releases</li>
+<li>🔧 <strong>易于扩展</strong>：简单的数组配置，可轻松添加新的表情包</li>
+</ul>
+<hr />
+<h1 id="使用方式：">使用方式：</h1>
+<h2 id="1._直接访问">1. 直接访问</h2>
+<p>访问在线体验地址：<a rel="noopener nofollow" target="_blank" href="https://paoshoushou.112601.xyz/"><a rel="noopener nofollow" target="_blank" href="https://paoshoushou.112601.xyz/">https://paoshoushou.112601.xyz/</a></a></p>
+<h2 id="2._本地部署">2. 本地部署</h2>
+<ol>
+<li>克隆或下载项目文件</li>
+</ol>
+<pre data-lang="bash" class="language-bash "><code class="language-bash" data-lang="bash">git clone https:&#x2F;&#x2F;github.com&#x2F;yunsen2025&#x2F;paoshoushouGIF-web.git
+</code></pre>
+<ol start="2">
+<li>直接用浏览器打开 <code>index.html</code> 文件</li>
+</ol>
+<h2 id="3._服务器部署">3. 服务器部署</h2>
+<p>将项目文件上传到任何支持静态文件的Web服务器即可</p>
+<hr />
+<h1 id="文件结构">文件结构</h1>
+<pre><code>paoshoushouGIF-web&#x2F;
+├── index.html          # 主页面文件
+├── claude.html         # 备用页面
+├── README.md           # 项目说明
+├── pack-release.sh     # 手动打包脚本
+├── .github&#x2F;
+│   └── workflows&#x2F;
+│       └── release.yml # GitHub Actions自动打包配置
+└── gif&#x2F;               # 表情包文件夹
+    ├── 0.gif
+    ├── 1.gif
+    ├── ...
+    └── 48.gif
+</code></pre>
+<hr />
+<h1 id="功能说明">功能说明</h1>
+<h2 id="核心功能">核心功能</h2>
+<table><thead><tr><th>功能</th><th>描述</th></tr></thead><tbody>
+<tr><td>表情预览</td><td>网格布局展示所有表情包，支持懒加载</td></tr>
+<tr><td>点击下载</td><td>点击任意表情包图片即可下载到本地</td></tr>
+<tr><td>悬停提示</td><td>鼠标悬停显示下载图标提示</td></tr>
+<tr><td>批量下载</td><td>点击右上角按钮可下载整个项目</td></tr>
+<tr><td>响应式布局</td><td>根据屏幕大小自动调整列数</td></tr>
+<tr><td>加载动画</td><td>表情包依次淡入，提升用户体验</td></tr>
+</tbody></table>
+<h2 id="技术特色">技术特色</h2>
+<ul>
+<li><strong>现代CSS</strong>：使用CSS Grid、Flexbox、渐变、阴影等现代特性</li>
+<li><strong>流畅动画</strong>：悬停效果、过渡动画、加载动画</li>
+<li><strong>玻璃拟态</strong>：毛玻璃效果营造现代感</li>
+<li><strong>多媒体查询</strong>：5个断点适配不同屏幕尺寸</li>
+</ul>
+<hr />
+<h1 id="自动打包说明">自动打包说明</h1>
+<h2 id="🤖_GitHub_Actions_自动打包">🤖 GitHub Actions 自动打包</h2>
+<p>项目配置了GitHub Actions，可以自动将gif文件夹打包为zip文件：</p>
+<h3 id="触发条件">触发条件</h3>
+<ul>
+<li>当向 <code>gif/</code> 文件夹添加新文件时自动触发</li>
+<li>手动在GitHub上触发 (Actions -&gt; 自动打包表情包 -&gt; Run workflow)</li>
+</ul>
+<h3 id="下载方式">下载方式</h3>
+<ol>
+<li>访问 <a rel="noopener nofollow" target="_blank" href="https://github.com/yunsen2025/paoshoushouGIF-web/releases">Releases页面</a></li>
+<li>下载最新版本的zip文件</li>
+<li>或点击网站右上角“📦 一键下载图包“按钮</li>
+</ol>
+<h3 id="文件内容">文件内容</h3>
+<p>打包的zip文件包含：</p>
+<ul>
+<li>所有gif表情包文件</li>
+<li>README.txt说明文件（包含使用说明和版权信息）</li>
+</ul>
+<hr />
+<h1 id="自定义配置">自定义配置</h1>
+<h2 id="添加新表情包">添加新表情包</h2>
+<ol>
+<li>将GIF文件放入 <code>gif/</code> 文件夹</li>
+<li>在 <code>index.html</code> 中的 <code>memeData</code> 数组添加新条目：</li>
+</ol>
+<pre data-lang="javascript" class="language-javascript "><code class="language-javascript" data-lang="javascript">const memeData = [
+    &#x2F;&#x2F; 现有表情包...
+    { name: &quot;新表情&quot;, url: &quot;&#x2F;gif&#x2F;新文件名.gif&quot; }
+];
+</code></pre>
+<ol start="3">
+<li>推送到GitHub后，Actions会自动创建新的打包版本</li>
+</ol>
+<h2 id="修改样式主题">修改样式主题</h2>
+<p>在CSS中修改以下变量来改变主题色彩：</p>
+<ul>
+<li>背景渐变：<code>body</code> 的 <code>background</code></li>
+<li>头部颜色：<code>header</code> 的 <code>background</code></li>
+<li>卡片样式：<code>.meme-item</code> 相关样式</li>
+</ul>
+<hr />
+<h1 id="浏览器兼容性">浏览器兼容性</h1>
+<ul>
+<li>✅ Chrome 60+</li>
+<li>✅ Firefox 55+</li>
+<li>✅ Safari 12+</li>
+<li>✅ Edge 79+</li>
+<li>✅ 移动端浏览器</li>
+</ul>
+<hr />
+<h1 id="开源协议">开源协议</h1>
+<p>本项目采用 MIT 协议开源，欢迎 Fork 和贡献代码。</p>
+<hr />
+<h1 id="特别说明">特别说明</h1>
+<ul>
+<li>本网站仅提供表情包预览与下载，版权归原作者所有</li>
+<li>如有侵权，请通过 GitHub Issues 联系我们</li>
+<li>欢迎通过 Pull Request 贡献更多表情包内容</li>
+</ul>
+
+    </article>
+
+    <!-- License -->
+    <div class="mt-8 p-6 bg-gray-50 dark:bg-gray-700/50 rounded-2xl text-sm text-gray-600 dark:text-gray-400">
+        <div class="flex flex-col gap-2">
+            <p class="font-medium text-gray-900 dark:text-white">版权声明</p>
+            <p>
+                本文由 <span class="font-medium">二叉树树</span> 创作，采用 
+                <a href="https:&#x2F;&#x2F;creativecommons.org&#x2F;licenses&#x2F;by-nc-sa&#x2F;4.0&#x2F;" target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-blue-400 hover:underline">CC BY-NC-SA 4.0</a> 
+                许可协议。
+            </p>
+            <p>
+                转载请注明出处：<a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;posts&#x2F;paoshoushou&#x2F;" class="text-blue-600 dark:text-blue-400 hover:underline break-all">AcoFork Blog - Ciallo～(∠・ω&lt; )⌒★: https:&#x2F;&#x2F;blog.acofork.com&#x2F;posts&#x2F;paoshoushou&#x2F;</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Help & Edit -->
+    <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-sm">
+            <h3 class="font-bold text-gray-900 dark:text-white mb-2">这篇文章是否对你有帮助？</h3>
+            <div class="flex space-x-4">
+                <a href="&#x2F;posts&#x2F;pin" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline">联系</a>
+                <a href="&#x2F;sponsors" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline">赞助</a>
+            </div>
+        </div>
+        <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-sm">
+            <h3 class="font-bold text-gray-900 dark:text-white mb-2">发现错误或想要改进这篇文章？</h3>
+            <a href="https:&#x2F;&#x2F;github.com&#x2F;afoim&#x2F;AcoFork_Blog_Zola/blob/main/content/posts&#x2F;paoshoushou.md" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline flex items-center">
+                <span>在 GitHub 上编辑此页</span>
+                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+            </a>
+        </div>
+    </div>
+
+    <!-- Post Footer -->
+    <footer class="mt-8 flex flex-wrap gap-2 justify-center">
+        
+    </footer>
+
+    <!-- Comments (Giscus) -->
+    <div class="mt-12 bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-sm">
+<script src="https://giscus.app/client.js"
+        data-repo="afoim/giscus-fuwari"
+        data-repo-id="R_kgDOOi8quw"
+        data-category="Announcements"
+        data-category-id="DIC_kwDOOi8qu84CprDV"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="preferred_color_scheme"
+        data-lang="zh-CN"
+        crossorigin="anonymous"
+        async>
+</script>
+    </div>
+</div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col items-center justify-center space-y-2">
+                <p class="text-gray-500 dark:text-gray-400 text-sm">
+                    &copy; 2026 二叉树树. 
+                    <a href="https:&#x2F;&#x2F;creativecommons.org&#x2F;licenses&#x2F;by-nc-sa&#x2F;4.0&#x2F;" target="_blank" class="hover:underline">CC BY-NC-SA 4.0</a>
+                </p>
+                <p class="text-gray-400 dark:text-gray-500 text-xs">
+                    Powered by <a href="https://www.getzola.org" target="_blank" class="hover:text-gray-300">Zola</a>
+                     · <a href="https://github.com/afoim/AcoFork_Blog_Zola" target="_blank" class="hover:text-gray-300">Source Code</a>
+                </p>
+                <a href="https://blog.acofork.com/rss.xml" target="_blank" class="text-gray-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors p-2">
+                    <span class="sr-only">RSS</span>
+                    <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                        <path d="M5 3a1 1 0 000 2c5.523 0 10 4.477 10 10a1 1 0 102 0C17 8.373 11.627 3 5 3z"></path>
+                        <path d="M4 9a1 1 0 011-1 7 7 0 017 7 1 1 0 11-2 0 5 5 0 00-5-5 1 1 0 01-1-1zM3 15a2 2 0 114 0 2 2 0 01-4 0z"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/elasticlunr/0.9.6/elasticlunr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+    <script src="/js/umami-share.js"></script>
+    <script src="/js/search.js"></script>
+    <script src="/js/gfm-alerts.js"></script>
+    <script src="/js/anchor-fix.js"></script>
+    <script>
+        // Umami script needs to be loaded if it's not already
+        // This is a workaround since we removed the original script tag
+        (function() {
+            var el = document.createElement('script');
+            el.setAttribute('src', 'https://umami.acofork.com/script.js');
+            el.setAttribute('data-website-id', '5d710dbd-3a2e-43e3-a553-97b415090c63');
+            el.setAttribute('defer', '');
+            document.body.appendChild(el);
+        })();
+    </script>
+</body>
+</html>

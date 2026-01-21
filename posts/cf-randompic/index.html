@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="zh" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloudflare R2+Workers！马上搭建自己的云上图床！ - AcoFork Blog</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css"/>
+    <link rel="icon" href="https://q2.qlogo.cn/headimg_dl?dst_uin=2726730791&amp;spec=0">
+    <script src="https://pic1.acofork.com/random.js"></script>
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.acofork.com/rss.xml">
+    <script src="/js/main.js"></script>
+</head>
+<body class="bg-[var(--page-bg)] text-gray-900 dark:text-gray-100 transition-colors duration-300 min-h-screen flex flex-col">
+
+    <!-- Navbar -->
+    <nav class="sticky top-0 z-50 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md shadow-sm dark:border-b dark:border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="/" class="text-xl font-bold text-blue-600 dark:text-blue-400">AcoFork Blog</a>
+                    </div>
+                    <!-- Desktop Menu -->
+                    <div class="hidden md:ml-6 md:flex md:space-x-8">
+                        
+                        <a href="&#x2F;" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            首页
+                        </a>
+                        
+                        <a href="&#x2F;posts" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            归档
+                        </a>
+                        
+                        <a href="&#x2F;friends" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            友链
+                        </a>
+                        
+                        <a href="&#x2F;sponsors" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            赞助
+                        </a>
+                        
+                        <a href="https:&#x2F;&#x2F;umami.acofork.com&#x2F;share&#x2F;CdkXbGgZr6ECKOyK" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           target="_blank">
+                            统计
+                        </a>
+                        
+                        <a href="https:&#x2F;&#x2F;status.acofork.com" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           target="_blank">
+                            监控
+                        </a>
+                        
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <!-- Mobile Menu Button -->
+                    <button type="button" onclick="toggleMobileMenu()" class="md:hidden p-2 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
+                        <span class="sr-only">Open menu</span>
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                    <!-- Search Button -->
+                    <button onclick="toggleSearch()" class="p-2 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </button>
+                    <!-- Theme Toggle -->
+                    <button onclick="toggleTheme()" class="p-2 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
+                        <svg id="sun-icon" class="h-6 w-6 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                        <svg id="moon-icon" class="h-6 w-6 block dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                
+                <a href="&#x2F;" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    首页
+                </a>
+                
+                <a href="&#x2F;posts" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    归档
+                </a>
+                
+                <a href="&#x2F;friends" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    友链
+                </a>
+                
+                <a href="&#x2F;sponsors" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    赞助
+                </a>
+                
+                <a href="https:&#x2F;&#x2F;umami.acofork.com&#x2F;share&#x2F;CdkXbGgZr6ECKOyK" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   target="_blank">
+                    统计
+                </a>
+                
+                <a href="https:&#x2F;&#x2F;status.acofork.com" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   target="_blank">
+                    监控
+                </a>
+                
+            </div>
+        </div>
+    </nav>
+
+    <!-- Search Modal -->
+    <div id="search-modal" class="fixed inset-0 z-50 hidden" role="dialog" aria-modal="true">
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" onclick="toggleSearch()"></div>
+        <div class="fixed inset-0 z-10 overflow-y-auto p-4 sm:p-6 md:p-20" onclick="if(event.target === this) toggleSearch()">
+            <div class="mx-auto max-w-xl transform rounded-xl bg-white dark:bg-gray-800 p-2 shadow-2xl transition-all">
+                <input type="text" id="search-input" 
+                       class="w-full rounded-md border-0 bg-gray-100 dark:bg-gray-700 px-4 py-2.5 text-gray-900 dark:text-white placeholder-gray-500 focus:ring-0 sm:text-sm" 
+                       placeholder="搜索文章..." autocomplete="off">
+                <ul id="search-results" class="max-h-96 scroll-py-3 overflow-y-auto p-3"></ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+<div class="max-w-4xl mx-auto">
+    <!-- Post Header -->
+    <header class="mb-8 text-center">
+        <div class="flex items-center justify-center space-x-2 text-sm text-gray-500 dark:text-gray-400 mb-4">
+            <time datetime="2025-03-05">2025-03-05</time>
+            <span>•</span>
+            <span>6 分钟阅读</span>
+            <span id="views-separator" style="display: none">•</span>
+            <span id="page-views" style="display: none"></span>
+        </div>
+        <h1 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">Cloudflare R2+Workers！马上搭建自己的云上图床！</h1>
+        
+        <p class="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">使用R2存储图片，通过Workers连接，最后使用a标签或img标签在网页中嵌入展示，全链路上云</p>
+        
+        
+        <div class="w-full rounded-2xl overflow-hidden shadow-sm mb-8">
+            <img src="&#x2F;img&#x2F;65214c3b70c0d5d04acb655098e92ab9.webp" alt="Cloudflare R2+Workers！马上搭建自己的云上图床！" class="w-full h-auto">
+        </div>
+        
+    </header>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const baseUrl = 'https://umami.acofork.com';
+                const shareId = 'CdkXbGgZr6ECKOyK';
+                // Current page path
+                const urlPath = window.location.pathname;
+                
+                const stats = await window.fetchUmamiStats(baseUrl, shareId, {
+                    url: urlPath
+                });
+                
+                // Check for both 'visits' (new preference) or 'pageviews' (fallback)
+                const metric = (stats && (stats.visits || stats.pageviews));
+                
+                let views = 0;
+                let hasData = false;
+
+                if (metric && typeof metric.value !== 'undefined') {
+                    views = metric.value;
+                    hasData = true;
+                } else if (stats && (typeof stats.visits === 'number' || typeof stats.pageviews === 'number')) {
+                        // Fallback for flat structure
+                        views = stats.visits || stats.pageviews;
+                        hasData = true;
+                }
+
+                if (hasData) {
+                    const viewEl = document.getElementById('page-views');
+                    viewEl.textContent = views + ' 次访问';
+                    viewEl.style.display = 'inline';
+                    document.getElementById('views-separator').style.display = 'inline';
+                }
+            } catch (e) {
+                console.error('Failed to load page views:', e);
+            }
+        });
+    </script>
+
+    <!-- Post Content -->
+    <article class="prose prose-lg dark:prose-invert max-w-none bg-white dark:bg-gray-800 p-8 md:p-12 rounded-2xl shadow-sm">
+        <h3 id="结果图"><strong>结果图</strong></h3>
+<p><img src="/img/ab8ef86c1e504b6075c34e615d3cd647.webp" alt="QmVgqgoC7G8NLS21WvR8j9gf5amu33XvuV68ZrgM5B9iFf.webp" /></p>
+<h3 id="原理"><strong>原理</strong></h3>
+<p>图源由 Cloudflare R2 托管，通过两个 Workers 连接 R2 以展示随机横屏/竖屏图片，静态页面引用 Workers 的 URL 以实现以上界面</p>
+<h3 id="创建_Cloudflare_R2_存储桶"><strong>创建 Cloudflare R2 存储桶</strong></h3>
+<p>R2 实际上是一个对象存储。Cloudflare 提供 10G 的免费存储和每月 1000 万次的免费访问</p>
+<ol>
+<li>
+<p>进入<a rel="noopener nofollow" target="_blank" href="https://dash.cloudflare.com/">Cloudflare 仪表盘</a>，进入 R2 页面，如图</p>
+<p><img src="/img/fb24336ea699f545563ed0b10a090b7e.webp" alt="QmU7u2JHUcevyHnwsCdAZfs7X7Fcdh3KJhn6eoy24Q5dGC.webp" /></p>
+</li>
+<li>
+<p>选择创建存储桶<img src="/img/eeec09e9c2311c716d69e6c5bb43d6ca.webp" alt="QmX3eCaCVEgE8AN29D9t2VpQ5t5SrZGKb8EcZv9oKpCqf2.webp" /></p>
+</li>
+<li>
+<p>为你的存储桶起一个名字，然后单击创建<img src="/img/1cd7d46fa65fab030332fd1e366f59e9.webp" alt="QmVad5eoJCLpSNZ4HCvTPJfD8rpg4aePMzZ7j2DZATn1XD.webp" /></p>
+</li>
+<li>
+<p>进入如下页面就已经创建完毕了<img src="/img/12586ed23d75f73bf472af99e15793b3.webp" alt="QmSdzwBJpw2L4a8LJ3eM3VMJs3d5oV5iFCxCMtv69VZmYH.webp" /></p>
+</li>
+<li>
+<p>返回 R2 首页。因为在下文我们需要使用 API 来进行文件传输，所以需要创建你的 R2 API 令牌，单击管理 R2 API 令牌<img src="/img/3df921ac4fb0352bb267b79e45b9e836.webp" alt="QmbS8zjJTESwsmycKBSC9kmabAA9dtSCUX8nbUDWg4BWRX.webp" /></p>
+</li>
+<li>
+<p>单击创建 API 令牌，如图<img src="/img/9ec1b3a1150b168e3a9af948ba388192.webp" alt="QmPzJEHVAm4z3S1SHY4k99TugrPyTB9DXpyRR8Loj22bz3.webp" /></p>
+</li>
+<li>
+<p>因为我们需要该 API 来管理单个 R2 存储桶，所以选择<strong>对象读和写</strong>，详细配置如图<img src="/img/9e5183b14cd47c274164c9c9c4129df4.webp" alt="QmNY9p8hksi18B9R8TVfdGgu336oQ3cPmghyfYXE9CDGD4.webp" /></p>
+</li>
+<li>
+<p>创建 API 令牌后，新页面会展示令牌的详细信息，<strong>仅会展示一次！！！</strong> 保持这个页面，直到你将该页面的所有信息都已经妥善保存，不要关闭界面，否则，你需要轮转 API 令牌以禁用之前的旧密钥，如图<img src="/img/d7606410a3ea0384ceb4ee7eeaf8324f.webp" alt="QmZTUwbycqbJhVP6PatD3psYy7ej9PDDoiXbmDWoakPhwx.webp" /></p>
+</li>
+<li>
+<p>确保你已经妥善保存你的 R2 API 令牌，然后进行下一步</p>
+</li>
+</ol>
+<h3 id="为你的存储桶添加文件"><strong>为你的存储桶添加文件</strong></h3>
+<p>因为 Web 界面传输文件较慢且不支持传输大于 300MB 的文件。这里使用本地部署 AList 然后连接你的 R2 存储桶实现高速上传</p>
+<ol>
+<li>
+<p>笔者使用 Windows。前往<a rel="noopener nofollow" target="_blank" href="https://github.com/alist-org/alist/releases">AList - Github Release</a>下载适用于 Windows 的最新可执行文件，如图<img src="/img/54115d2c329dd67cfd71885a2524c2ba.webp" alt="QmPDRDJGeGStreyZMXVYofbE9FCs1T1MyDek3KUbB3Kk5b.webp" /></p>
+</li>
+<li>
+<p>将下载的压缩包解压，并将其中的<code>alist.exe</code>放入一个空文件夹</p>
+</li>
+<li>
+<p>单击搜索框，输入 cmd 并回车，如图</p>
+</li>
+<li>
+<p><img src="/img/ac9c9533ce0d29c4aa1f22d157c3b4da.webp" alt="QmSt8aFtaeEprJHASEiNPB67UHcHoSxsbhhHUPxW6QkWSo.webp" /></p>
+<p><img src="/img/30911beff312a024f1d57b788ee93536.webp" alt="QmNkMhDhpPLkYCpVhE1ov7Q6A34uWDvraCqNvuTqaCkujT.webp" /></p>
+<p>在 cmd 中输入<code>alist.exe server</code>并且不要关闭窗口，运行成功后如图<img src="/img/5ce9fe240a38e0738608eb3bddd7d4bd.webp" alt="QmdzyY8xbic8jdnZEXegefoZPeizqHa4ZkdMnRKoguBMkf.webp" /></p>
+</li>
+<li>
+<p>打开浏览器，输入<code>localhost:5244</code>即可进入 AList 控制台，如图<img src="/img/f4a6a5cfef761652501110ec846aed41.webp" alt="QmUBFKu7mCiRneCrsTNPxTH6S4gxwtXf9cwLzf4dKW9LLR.webp" /></p>
+</li>
+<li>
+<p>用户名：<code>admin</code>密码：<code>在cmd窗口中，如图</code>。你可以使用鼠标左键在终端中框选内容然后单击鼠标右键进行复制操作<img src="/img/4488a84b497810d9e61051503be0b9d8.webp" alt="QmVH3qZYo3QE6anNHymwkikq5MSeJphrZNR7RCH5jpP3wn.webp" /></p>
+</li>
+<li>
+<p>注意，在 cmd 中，鼠标左键点击或拖动 cmd 的终端界面会导致进入选择状态，程序将会被系统阻塞，<strong>需要在终端界面点按鼠标右键解除</strong>。若进程被阻塞，cmd 的进程名会多一个<strong>选择</strong>，请注意。如图是程序被阻塞的例子，<strong>在终端界面点按鼠标右键即可解除</strong>
+<img src="/img/6c19398e3ad0b616e032710ae7a1935a.webp" alt="QmapESiqSEvbYq3AJs15yYvhemRxSHrJaccjTFr99muX6Z.webp" /></p>
+</li>
+<li>
+<p>现在，你已经成功以管理员身份登入了 AList单击最下面的<strong>管理</strong><img src="/img/85346c18ee233a380a52af6d1763432f.webp" alt="QmfNE53GThdjVrh4q64MJcZqwcGPD7UtcYTNw9bVBaSEaF.webp" /></p>
+</li>
+<li>
+<p>你会进入到如图界面。尽管 AList 运行在本地，也建议更改你的用户名和密码<img src="/img/56766f6d80e0fd8a9e217f8a2c517656.webp" alt="QmNdD8UU8fkVDBz5dXdJhCF2fZg8P1FwrcMaaTsG6a7ENy.webp" /></p>
+</li>
+<li>
+<p>更改账密，重新以新账密登录<img src="/img/faaf8b91c4f02ccf4c44685e03386a6e.webp" alt="Qmas7pMiPR2FNTXheBT1xGNUpzDiSzv7J7yd6oCuT17yad.webp" /></p>
+</li>
+<li>
+<p>进入控制台，然后单击存储，如图<img src="/img/81bdfff4e8a2afdfb95bf7d3c80229de.webp" alt="QmS4gGyCM1j3RXgHEPuZ1zTbLAvGtVBEiPXJe9QMF3dD2D.webp" /></p>
+</li>
+<li>
+<p>选择添加，如图<img src="/img/df727540a560f91855c489b5c0a21eb1.webp" alt="QmRDVxt8WbrVkHavgFNXj3qC86ysw6sSZhPy3Uf2ixKp2E.webp" /></p>
+</li>
+<li>
+<p>详细配置如图。挂载路径即 AList 展示路径，推荐使用<code>/R2/你的存储桶名字</code>，地区为<code>auto</code><img src="/img/14f5b4681b060aac64f224bca17de4b2.webp" alt="" />回到主页，如图<img src="/img/41571f4a7f06a89b78e5d4fe260889d1.webp" alt="QmSnR9Ptrssx4nqk9qCvhFUNKQyQqJiN7GRscwoj4Dczgj.webp" /></p>
+</li>
+<li>
+<p>尝试上传文件，如图<img src="/img/91075044033b7802e454562c803cbdac.webp" alt="QmPqFsmZNNnh4jNyLS7X3h8Zr6ZCVqTqGVwTxmPDdbmrGW.webp" /></p>
+</li>
+<li>
+<p>可以看到，速度非常快<img src="/img/18eb22d7aa9fc7da313a96a084b4c1ae.webp" alt="QmXfGK6aZjz741GrY8RfFfKMkUzDMB3xhx93PGZ9S1QycT.webp" /></p>
+</li>
+<li>
+<p>为你的图床创建目录以分类横屏和竖屏图等，以便下文使用 Workers 连接 R2 来调用。后文我将使用R2的<code>/ri/h</code> 路径作为横屏随机图目录、<code>/ri/v</code> 路径作为竖屏随机图目录</p>
+</li>
+</ol>
+<p><img src="/img/56766f6d80e0fd8a9e217f8a2c517656.webp" alt="QmNdD8UU8fkVDBz5dXdJhCF2fZg8P1FwrcMaaTsG6a7ENy.webp" /></p>
+<h3 id="创建_Workers，连接_R2"><strong>创建 Workers，连接 R2</strong></h3>
+<ol>
+<li>
+<p>进入<a rel="noopener nofollow" target="_blank" href="https://dash.cloudflare.com/">Cloudflare 仪表盘</a>，进入 Workers 和 Pages 页面，如图<img src="/img/3dae72cae85533d3ce487750d7571d6c.webp" alt="QmW5UaUap8T2R37u5dzmKGLmUgk4qKnSMFwHBVHqvVbkVA.webp" /></p>
+</li>
+<li>
+<p>单击创建，选择创建 Workers，名称自取，单击部署<img src="/img/765c9e97222ac0c18f064cbd10e98206.webp" alt="QmVvLv5n41QQfDfYiVWYRpsfw7TVNGy1BYuv5e8vBRhKLA.webp" /></p>
+</li>
+<li>
+<p>选择编辑代码<img src="/img/16fba709388804986153f7395827200b.webp" alt="QmTbRifzXQ593DGyjFQMbA9exyNp2iAeAg4zbVrfFimQc4.webp" /></p>
+</li>
+<li>
+<p>粘贴代码（创建随机横屏图）：</p>
+</li>
+</ol>
+<p>新代码：</p>
+<pre><code>export default {
+  async fetch(request, env, ctx) {
+    const bucket = env.MY_BUCKET;
+    const url = new URL(request.url);
+    const hostname = url.hostname;
+
+    &#x2F;&#x2F; 初始化prefix
+    let prefix = &#x27;&#x27;;
+    
+    &#x2F;&#x2F; 根据域名判断prefix
+    if (hostname === &#x27;hpic.072103.xyz&#x27; || hostname === &#x27;api-hpic.072103.xyz&#x27;) {
+      prefix = &#x27;ri&#x2F;h&#x2F;&#x27;;
+    } else if (hostname === &#x27;vpic.072103.xyz&#x27; || hostname === &#x27;api-vpic.072103.xyz&#x27;) {
+      prefix = &#x27;ri&#x2F;v&#x2F;&#x27;;
+    } else {
+      return new Response(&#x27;Invalid domain&#x27;, { status: 400 });
+    }
+
+    try {
+      &#x2F;&#x2F; 如果是API域名，只返回数量
+      if (hostname.startsWith(&#x27;api-&#x27;)) {
+        const objects = await bucket.list({ prefix: prefix });
+        const count = objects.objects.length;
+        const headers = new Headers({
+          &#x27;Access-Control-Allow-Origin&#x27;: &#x27;*&#x27;,
+          &#x27;Content-Type&#x27;: &#x27;text&#x2F;plain&#x27;
+        });
+        return new Response(count.toString(), { headers });
+      }
+
+      &#x2F;&#x2F; 原有的随机图片逻辑
+      const objects = await bucket.list({ prefix: prefix });
+      const items = objects.objects;
+      
+      if (items.length === 0) {
+        return new Response(&#x27;No images found&#x27;, { status: 404 });
+      }
+      
+      const randomItem = items[Math.floor(Math.random() * items.length)];
+      const object = await bucket.get(randomItem.key);
+
+      if (!object) {
+        return new Response(&#x27;Image not found&#x27;, { status: 404 });
+      }
+
+      const headers = new Headers();
+      headers.set(&#x27;Content-Type&#x27;, object.httpMetadata.contentType || &#x27;image&#x2F;jpeg&#x27;);
+
+      return new Response(object.body, { headers });
+    } catch (error) {
+      console.error(&#x27;Error:&#x27;, error);
+      return new Response(&#x27;Internal Server Error&#x27;, { status: 500 });
+    }
+  },
+};
+</code></pre>
+<p>旧代码：</p>
+<pre><code>export default {
+  async fetch(request, env, ctx) {
+    &#x2F;&#x2F; R2 bucket 配置
+    const bucket = env.MY_BUCKET;
+
+    try {
+      &#x2F;&#x2F; 列出 &#x2F;ri&#x2F;h 目录下的所有对象
+      const objects = await bucket.list({ prefix: &#x27;ri&#x2F;h&#x2F;&#x27; });
+
+      &#x2F;&#x2F; 从列表中随机选择一个对象
+      const items = objects.objects;
+      if (items.length === 0) {
+        return new Response(&#x27;No images found&#x27;, { status: 404 });
+      }
+      const randomItem = items[Math.floor(Math.random() * items.length)];
+
+      &#x2F;&#x2F; 获取选中对象
+      const object = await bucket.get(randomItem.key);
+
+      if (!object) {
+        return new Response(&#x27;Image not found&#x27;, { status: 404 });
+      }
+
+      &#x2F;&#x2F; 设置适当的 Content-Type
+      const headers = new Headers();
+      headers.set(&#x27;Content-Type&#x27;, object.httpMetadata.contentType || &#x27;image&#x2F;jpeg&#x27;);
+
+      &#x2F;&#x2F; 返回图片内容
+      return new Response(object.body, { headers });
+    } catch (error) {
+      console.error(&#x27;Error:&#x27;, error);
+      return new Response(&#x27;Internal Server Error&#x27;, { status: 500 });
+    }
+  },
+};
+</code></pre>
+<ol start="5">
+<li>
+<p>点击左侧的文件图标<img src="/img/c13584250041c04ee8b67ec9a5e60ce4.webp" alt="QmQGQTiTXSESU2TSJ6tc3KrzWU4KABKqn6QZ1GdWqKnWmc.webp" /></p>
+</li>
+<li>
+<p>在<code>wrangler.toml</code>中填入：</p>
+</li>
+</ol>
+<pre><code>[[r2_buckets]]
+binding = &quot;MY_BUCKET&quot;
+bucket_name = &quot;114514&quot;
+</code></pre>
+<ol start="7">
+<li>
+<p>保存修改，点击右上角的部署<img src="/img/c422388bc329aa2d7187cec8c13b0b70.webp" alt="QmP7hXdtenrJrzJRRePHQATGtyAsZEr5MkMsboXvmNUxTx.webp" /></p>
+</li>
+<li>
+<p>在设置 - 变量找到 R2 存储桶绑定，添加你的存储桶，变量名即上文的<code>MY_BUCKET</code><img src="/img/6438fb3de0a2a66fccf00532f5e43e52.webp" alt="QmStitSyATnA8sY9tTgZaXXqmqkGPUtZmMxn9KjbFQzgTc.webp" /></p>
+</li>
+<li>
+<p>在设置 - 触发器添加你的自定义域名以便访问<img src="/img/21c6a3f5688210417815c49a9d210efb.webp" alt="QmUMxtkCiKsgFw8afRUGREFztXE9D5W6FmCbAUB7DaVH5o.webp" /></p>
+<p><img src="/img/feab68604949242e0e520a527d0105b1.webp" alt="QmPF9iCoq6n8Jj2Z6kPkdJSCm45VJystZoYcir55yceCQo.webp" /></p>
+</li>
+<li>
+<p>访问效果，每次刷新都不一样<img src="/img/38f0fdc8ed16aa3bcc8a428c1d2fa149.webp" alt="QmQgEdjXxF9oph2jYKzFMJToX9WfG11jUmPiNJnjhYVN4N.webp" /></p>
+</li>
+</ol>
+<h3 id="通过使用_HTML_的_&lt;img&gt;_标签引用即可达到开头的效果"><strong>通过使用 HTML 的 <code>&lt;img&gt;</code> 标签引用即可达到开头的效果</strong></h3>
+<p>如：<code>&lt;img src="你的域名" alt=""&gt;</code>
+<img title="" src="https://hpic.072103.xyz" alt="loading-ag-4760"></p>
+
+    </article>
+
+    <!-- License -->
+    <div class="mt-8 p-6 bg-gray-50 dark:bg-gray-700/50 rounded-2xl text-sm text-gray-600 dark:text-gray-400">
+        <div class="flex flex-col gap-2">
+            <p class="font-medium text-gray-900 dark:text-white">版权声明</p>
+            <p>
+                本文由 <span class="font-medium">二叉树树</span> 创作，采用 
+                <a href="https:&#x2F;&#x2F;creativecommons.org&#x2F;licenses&#x2F;by-nc-sa&#x2F;4.0&#x2F;" target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-blue-400 hover:underline">CC BY-NC-SA 4.0</a> 
+                许可协议。
+            </p>
+            <p>
+                转载请注明出处：<a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;posts&#x2F;cf-randompic&#x2F;" class="text-blue-600 dark:text-blue-400 hover:underline break-all">AcoFork Blog - Cloudflare R2+Workers！马上搭建自己的云上图床！: https:&#x2F;&#x2F;blog.acofork.com&#x2F;posts&#x2F;cf-randompic&#x2F;</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Help & Edit -->
+    <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-sm">
+            <h3 class="font-bold text-gray-900 dark:text-white mb-2">这篇文章是否对你有帮助？</h3>
+            <div class="flex space-x-4">
+                <a href="&#x2F;posts&#x2F;pin" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline">联系</a>
+                <a href="&#x2F;sponsors" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline">赞助</a>
+            </div>
+        </div>
+        <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-sm">
+            <h3 class="font-bold text-gray-900 dark:text-white mb-2">发现错误或想要改进这篇文章？</h3>
+            <a href="https:&#x2F;&#x2F;github.com&#x2F;afoim&#x2F;AcoFork_Blog_Zola/blob/main/content/posts&#x2F;cf-randompic.md" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline flex items-center">
+                <span>在 GitHub 上编辑此页</span>
+                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+            </a>
+        </div>
+    </div>
+
+    <!-- Post Footer -->
+    <footer class="mt-8 flex flex-wrap gap-2 justify-center">
+        
+        
+        <a href="https://blog.acofork.com/tags/cloudflare-r2/" class="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-full text-sm hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">#Cloudflare R2</a>
+        
+        <a href="https://blog.acofork.com/tags/cloudflare-workers/" class="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-full text-sm hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">#Cloudflare Workers</a>
+        
+        
+    </footer>
+
+    <!-- Comments (Giscus) -->
+    <div class="mt-12 bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-sm">
+<script src="https://giscus.app/client.js"
+        data-repo="afoim/giscus-fuwari"
+        data-repo-id="R_kgDOOi8quw"
+        data-category="Announcements"
+        data-category-id="DIC_kwDOOi8qu84CprDV"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="preferred_color_scheme"
+        data-lang="zh-CN"
+        crossorigin="anonymous"
+        async>
+</script>
+    </div>
+</div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col items-center justify-center space-y-2">
+                <p class="text-gray-500 dark:text-gray-400 text-sm">
+                    &copy; 2026 二叉树树. 
+                    <a href="https:&#x2F;&#x2F;creativecommons.org&#x2F;licenses&#x2F;by-nc-sa&#x2F;4.0&#x2F;" target="_blank" class="hover:underline">CC BY-NC-SA 4.0</a>
+                </p>
+                <p class="text-gray-400 dark:text-gray-500 text-xs">
+                    Powered by <a href="https://www.getzola.org" target="_blank" class="hover:text-gray-300">Zola</a>
+                     · <a href="https://github.com/afoim/AcoFork_Blog_Zola" target="_blank" class="hover:text-gray-300">Source Code</a>
+                </p>
+                <a href="https://blog.acofork.com/rss.xml" target="_blank" class="text-gray-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors p-2">
+                    <span class="sr-only">RSS</span>
+                    <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                        <path d="M5 3a1 1 0 000 2c5.523 0 10 4.477 10 10a1 1 0 102 0C17 8.373 11.627 3 5 3z"></path>
+                        <path d="M4 9a1 1 0 011-1 7 7 0 017 7 1 1 0 11-2 0 5 5 0 00-5-5 1 1 0 01-1-1zM3 15a2 2 0 114 0 2 2 0 01-4 0z"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/elasticlunr/0.9.6/elasticlunr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+    <script src="/js/umami-share.js"></script>
+    <script src="/js/search.js"></script>
+    <script src="/js/gfm-alerts.js"></script>
+    <script src="/js/anchor-fix.js"></script>
+    <script>
+        // Umami script needs to be loaded if it's not already
+        // This is a workaround since we removed the original script tag
+        (function() {
+            var el = document.createElement('script');
+            el.setAttribute('src', 'https://umami.acofork.com/script.js');
+            el.setAttribute('data-website-id', '5d710dbd-3a2e-43e3-a553-97b415090c63');
+            el.setAttribute('defer', '');
+            document.body.appendChild(el);
+        })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="zh" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>试试Cloudflare IP优选！让Cloudflare在国内再也不是减速器！ - AcoFork Blog</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css"/>
+    <link rel="icon" href="https://q2.qlogo.cn/headimg_dl?dst_uin=2726730791&amp;spec=0">
+    <script src="https://pic1.acofork.com/random.js"></script>
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.acofork.com/rss.xml">
+    <script src="/js/main.js"></script>
+</head>
+<body class="bg-[var(--page-bg)] text-gray-900 dark:text-gray-100 transition-colors duration-300 min-h-screen flex flex-col">
+
+    <!-- Navbar -->
+    <nav class="sticky top-0 z-50 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md shadow-sm dark:border-b dark:border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="/" class="text-xl font-bold text-blue-600 dark:text-blue-400">AcoFork Blog</a>
+                    </div>
+                    <!-- Desktop Menu -->
+                    <div class="hidden md:ml-6 md:flex md:space-x-8">
+                        
+                        <a href="&#x2F;" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            首页
+                        </a>
+                        
+                        <a href="&#x2F;posts" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            归档
+                        </a>
+                        
+                        <a href="&#x2F;friends" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            友链
+                        </a>
+                        
+                        <a href="&#x2F;sponsors" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            赞助
+                        </a>
+                        
+                        <a href="https:&#x2F;&#x2F;umami.acofork.com&#x2F;share&#x2F;CdkXbGgZr6ECKOyK" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           target="_blank">
+                            统计
+                        </a>
+                        
+                        <a href="https:&#x2F;&#x2F;status.acofork.com" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           target="_blank">
+                            监控
+                        </a>
+                        
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <!-- Mobile Menu Button -->
+                    <button type="button" onclick="toggleMobileMenu()" class="md:hidden p-2 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
+                        <span class="sr-only">Open menu</span>
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                    <!-- Search Button -->
+                    <button onclick="toggleSearch()" class="p-2 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </button>
+                    <!-- Theme Toggle -->
+                    <button onclick="toggleTheme()" class="p-2 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
+                        <svg id="sun-icon" class="h-6 w-6 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                        <svg id="moon-icon" class="h-6 w-6 block dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                
+                <a href="&#x2F;" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    首页
+                </a>
+                
+                <a href="&#x2F;posts" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    归档
+                </a>
+                
+                <a href="&#x2F;friends" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    友链
+                </a>
+                
+                <a href="&#x2F;sponsors" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    赞助
+                </a>
+                
+                <a href="https:&#x2F;&#x2F;umami.acofork.com&#x2F;share&#x2F;CdkXbGgZr6ECKOyK" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   target="_blank">
+                    统计
+                </a>
+                
+                <a href="https:&#x2F;&#x2F;status.acofork.com" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   target="_blank">
+                    监控
+                </a>
+                
+            </div>
+        </div>
+    </nav>
+
+    <!-- Search Modal -->
+    <div id="search-modal" class="fixed inset-0 z-50 hidden" role="dialog" aria-modal="true">
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" onclick="toggleSearch()"></div>
+        <div class="fixed inset-0 z-10 overflow-y-auto p-4 sm:p-6 md:p-20" onclick="if(event.target === this) toggleSearch()">
+            <div class="mx-auto max-w-xl transform rounded-xl bg-white dark:bg-gray-800 p-2 shadow-2xl transition-all">
+                <input type="text" id="search-input" 
+                       class="w-full rounded-md border-0 bg-gray-100 dark:bg-gray-700 px-4 py-2.5 text-gray-900 dark:text-white placeholder-gray-500 focus:ring-0 sm:text-sm" 
+                       placeholder="搜索文章..." autocomplete="off">
+                <ul id="search-results" class="max-h-96 scroll-py-3 overflow-y-auto p-3"></ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+<div class="max-w-4xl mx-auto">
+    <!-- Post Header -->
+    <header class="mb-8 text-center">
+        <div class="flex items-center justify-center space-x-2 text-sm text-gray-500 dark:text-gray-400 mb-4">
+            <time datetime="2026-01-11">2026-01-11</time>
+            <span>•</span>
+            <span>7 分钟阅读</span>
+            <span id="views-separator" style="display: none">•</span>
+            <span id="page-views" style="display: none"></span>
+        </div>
+        <h1 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">试试Cloudflare IP优选！让Cloudflare在国内再也不是减速器！</h1>
+        
+        <p class="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">使用SaaS、Worker以及各种奇技淫巧来让你的网站解析的IP进行分流优选，提高网站可用性和速度</p>
+        
+        
+        <div class="w-full rounded-2xl overflow-hidden shadow-sm mb-8">
+            <img src="&#x2F;img&#x2F;d322743388a4eb1c8d4fe5180038e20d.png" alt="试试Cloudflare IP优选！让Cloudflare在国内再也不是减速器！" class="w-full h-auto">
+        </div>
+        
+    </header>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const baseUrl = 'https://umami.acofork.com';
+                const shareId = 'CdkXbGgZr6ECKOyK';
+                // Current page path
+                const urlPath = window.location.pathname;
+                
+                const stats = await window.fetchUmamiStats(baseUrl, shareId, {
+                    url: urlPath
+                });
+                
+                // Check for both 'visits' (new preference) or 'pageviews' (fallback)
+                const metric = (stats && (stats.visits || stats.pageviews));
+                
+                let views = 0;
+                let hasData = false;
+
+                if (metric && typeof metric.value !== 'undefined') {
+                    views = metric.value;
+                    hasData = true;
+                } else if (stats && (typeof stats.visits === 'number' || typeof stats.pageviews === 'number')) {
+                        // Fallback for flat structure
+                        views = stats.visits || stats.pageviews;
+                        hasData = true;
+                }
+
+                if (hasData) {
+                    const viewEl = document.getElementById('page-views');
+                    viewEl.textContent = views + ' 次访问';
+                    viewEl.style.display = 'inline';
+                    document.getElementById('views-separator').style.display = 'inline';
+                }
+            } catch (e) {
+                console.error('Failed to load page views:', e);
+            }
+        });
+    </script>
+
+    <!-- Post Content -->
+    <article class="prose prose-lg dark:prose-invert max-w-none bg-white dark:bg-gray-800 p-8 md:p-12 rounded-2xl shadow-sm">
+        <blockquote>
+<p>本教程初始发布时间为 25年6月</p>
+</blockquote>
+<h4 id="未优选">未优选</h4>
+<p><img src="/img/3a85da616bfa2db51625b22601bee040.webp" alt="QmZoinxZgAzu7Skh7BqsxmDQGU1sXtLLskJcyQuRAQNKww.webp" /></p>
+<h4 id="已优选">已优选</h4>
+<p><img src="/img/d322743388a4eb1c8d4fe5180038e20d.png" alt="" /></p>
+<hr />
+<p>结论：可见，优选过的网站响应速度有很大提升，并且出口IP也变多了。这能让你的网站可用性大大提高，并且加载速度显著变快。</p>
+<h3 id="Cloudflare优选域名：_https://cf.090227.xyz">Cloudflare优选域名： <a rel="noopener nofollow" target="_blank" href="https://cf.090227.xyz">https://cf.090227.xyz</a></h3>
+<hr />
+<h1 id="Worker路由反代全球并优选（新）">Worker路由反代全球并优选（新）</h1>
+<blockquote>
+<p>本方法的原理为通过Worker反代你的源站，然后将Worker的入口节点进行优选。此方法不是传统的优选，源站接收到的Hosts头仍然是直接指向源站的解析</p>
+<p>以下代码是原Github全站反代代码的二改以实现Worker路由接入优选，可能有多余逻辑或者不完全适配于优选需求</p>
+</blockquote>
+<p>创建一个Cloudflare Worker，写入代码</p>
+<pre data-lang="js" class="language-js "><code class="language-js" data-lang="js">&#x2F;&#x2F; 域名前缀映射配置
+const domain_mappings = {
+  &#x27;源站.com&#x27;: &#x27;最终访问头.&#x27;,
+&#x2F;&#x2F;例如：
+&#x2F;&#x2F;&#x27;gitea.072103.xyz&#x27;: &#x27;gitea.&#x27;,
+&#x2F;&#x2F;则你设置Worker路由为gitea.*都将会反代到gitea.072103.xyz
+};
+
+addEventListener(&#x27;fetch&#x27;, event =&gt; {
+  event.respondWith(handleRequest(event.request));
+});
+
+async function handleRequest(request) {
+  const url = new URL(request.url);
+  const current_host = url.host;
+
+  &#x2F;&#x2F; 强制使用 HTTPS
+  if (url.protocol === &#x27;http:&#x27;) {
+    url.protocol = &#x27;https:&#x27;;
+    return Response.redirect(url.href, 301);
+  }
+
+  const host_prefix = getProxyPrefix(current_host);
+  if (!host_prefix) {
+    return new Response(&#x27;Proxy prefix not matched&#x27;, { status: 404 });
+  }
+
+  &#x2F;&#x2F; 查找对应目标域名
+  let target_host = null;
+  for (const [origin_domain, prefix] of Object.entries(domain_mappings)) {
+    if (host_prefix === prefix) {
+      target_host = origin_domain;
+      break;
+    }
+  }
+
+  if (!target_host) {
+    return new Response(&#x27;No matching target host for prefix&#x27;, { status: 404 });
+  }
+
+  &#x2F;&#x2F; 构造目标 URL
+  const new_url = new URL(request.url);
+  new_url.protocol = &#x27;https:&#x27;;
+  new_url.host = target_host;
+
+  &#x2F;&#x2F; 创建新请求
+  const new_headers = new Headers(request.headers);
+  new_headers.set(&#x27;Host&#x27;, target_host);
+  new_headers.set(&#x27;Referer&#x27;, new_url.href);
+
+  try {
+    const response = await fetch(new_url.href, {
+      method: request.method,
+      headers: new_headers,
+      body: request.method !== &#x27;GET&#x27; &amp;&amp; request.method !== &#x27;HEAD&#x27; ? request.body : undefined,
+      redirect: &#x27;manual&#x27;
+    });
+
+    &#x2F;&#x2F; 复制响应头并添加CORS
+    const response_headers = new Headers(response.headers);
+    response_headers.set(&#x27;access-control-allow-origin&#x27;, &#x27;*&#x27;);
+    response_headers.set(&#x27;access-control-allow-credentials&#x27;, &#x27;true&#x27;);
+    response_headers.set(&#x27;cache-control&#x27;, &#x27;public, max-age=600&#x27;);
+    response_headers.delete(&#x27;content-security-policy&#x27;);
+    response_headers.delete(&#x27;content-security-policy-report-only&#x27;);
+
+    return new Response(response.body, {
+      status: response.status,
+      statusText: response.statusText,
+      headers: response_headers
+    });
+  } catch (err) {
+    return new Response(`Proxy Error: ${err.message}`, { status: 502 });
+  }
+}
+
+function getProxyPrefix(hostname) {
+  for (const prefix of Object.values(domain_mappings)) {
+    if (hostname.startsWith(prefix)) {
+      return prefix;
+    }
+  }
+  return null;
+}
+</code></pre>
+<p>创建路由</p>
+<p><img src="/img/6b4484770910d01fc6487b985328a6d8.webp" alt="" /></p>
+<p>类似这样填写</p>
+<p><img src="/img/c4fdf0763e875de938b6f5d5a8689d6c.webp" alt="" /></p>
+<p>最后写一条DNS解析 <code>CNAME gitea.afo.im --&gt; 社区优选域名，如 cf.090227.xyz</code> 即可</p>
+<h1 id="传统优选">传统优选</h1>
+<blockquote>
+<p>[!WARNING]
+Cloudflare最近将新接入的域名SSL默认设为了完全，记得将 SSL 改为灵活。
+<img src="/img/e884bec1a2c3d3a76a12ca808083163c.png" alt="" /></p>
+</blockquote>
+<blockquote>
+<p>我们需要<strong>一个域名或两个域名</strong>（单域名直接用子域名即可。双域名比如：onani.cn和acofork.cn）。</p>
+<p><strong>如果在同一CF账号下不可用，请尝试将俩域名放置在不同账号</strong></p>
+</blockquote>
+<p>这里我们让onani.cn成为主力域名，让acofork.cn成为辅助域名</p>
+<p>单域名效果
+<img src="/img/02f702bcb5caa17db26ed5f18074a17b.png" alt="" /></p>
+<hr />
+<ol>
+<li>
+<p>首先新建一个DNS解析，指向你的<strong>源站</strong>，<strong>开启cf代理</strong>
+<img src="/img/9e4256c6a873ca0d31bdcbbf91814d06.webp" alt="QmfBKgDe77SpkUpjGdmsxqwU2UabvrDAw4c3bgFiWkZCna.webp" /></p>
+</li>
+<li>
+<p>前往<strong>辅助域名</strong>的 SSL/TLS -&gt; 自定义主机名。设置回退源为你刚才的DNS解析的域名：xlog.acofork.cn（推荐 <strong>HTTP 验证</strong> ）</p>
+</li>
+<li>
+<p>点击添加自定义主机名。设置一个自定义主机名，比如 <code>onani.cn</code> ，然后选择<strong>自定义源服务器</strong>，填写第一步的域名，即 <code>xlog.acofork.cn</code> 。</p>
+<p>如果你想要创建多个优选也就这样添加，一个自定义主机名对应一个自定义源服务器。如果你将源服务器设为默认，则源服务器是回退源指定的服务器，即 <code>xlog.acofork.cn</code></p>
+<p><img src="/img/f0b83a83ca8e1973d3fcba24d6af4ff1.webp" alt="QmRYrwjeDMDQCj8G9RYkpjC3X4vpwE77wpNpbqKURwBber.webp" /></p>
+</li>
+<li>
+<p>继续在你的辅助域名添加一条解析。CNAME到优选节点：如cloudflare.182682.xyz，<strong>不开启cf代理</strong>
+<img src="/img/bab81f56a6c5c6d8be5e86a3fc6b00d4.webp" alt="QmNwkMqDEkCGMu5jsgE6fj6qpupiqMrqqQtWeAmAJNJbC4.webp" /></p>
+</li>
+<li>
+<p>最后在你的主力域名添加解析。域名为之前在辅助域名的自定义主机名（onani.cn），目标为刚才的cdn.acofork.cn，<strong>不开启cf代理</strong>
+<img src="/img/aa800bf5272b8a139339ce361d23ecd8.webp" alt="QmeK3AZghae4J4LcJdbPMxBcmoNEeF3hXNBmtJaDki8HYt.webp" /></p>
+</li>
+<li>
+<p>优选完毕，确保优选有效后尝试访问
+<img src="/img/7482fcb806acd0140f11751379f69a79.png" alt="" /></p>
+</li>
+<li>
+<p>（可选）你也可以将cdn子域的NS服务器更改为阿里云\华为云\腾讯云云解析做线路分流解析</p>
+<blockquote>
+<p>优选工作流：用户访问 -&gt; 由于最终访问的域名设置了CNAME解析，所以实际上访问了cdn.acofork.cn，并且携带 <strong>源主机名：onani.cn</strong> -&gt; 到达cloudflare.182682.xyz进行优选 -&gt; 优选结束，cf边缘节点识别到了携带的 <strong>源主机名：onani.cn</strong> 查询发现了回退源 -&gt; 回退到回退源内容（xlog.acofork.cn） -&gt; 访问成功</p>
+</blockquote>
+</li>
+</ol>
+<h1 id="针对于Cloudflare_Page">针对于Cloudflare Page</h1>
+<ol>
+<li>
+<p>你可以直接将你绑定到Page的子域名直接更改NS服务器到阿里云\华为云\腾讯云云解析做线路分流解析</p>
+</li>
+<li>
+<p>将您的Page项目升级为Worker项目，使用下面的Worker优选方案（更简单）。详细方法见： 【CF Page一键迁移到Worker？好处都有啥？-哔哩哔哩】 <a rel="noopener nofollow" target="_blank" href="https://b23.tv/t5Bfaq1">https://b23.tv/t5Bfaq1</a></p>
+</li>
+</ol>
+<h1 id="针对于Cloudflare_Workers">针对于Cloudflare Workers</h1>
+<ol>
+<li>在Workers中添加路由，然后直接将你的路由域名从指向<code>xxx.worker.dev</code>改为<code>cloudflare.182682.xyz</code>等优选域名即可</li>
+<li>如果是外域，SaaS后再添加路由即可，就像
+<img src="/img/65bb77c23f1d7f39e961fc16a0f18840.png" alt="" />
+<img src="/img/1e9d0329110548ac8382ebf404363a33.png" alt="" /></li>
+</ol>
+<h1 id="针对于Cloudflare_Tunnel（ZeroTrust）">针对于Cloudflare Tunnel（ZeroTrust）</h1>
+<p>请先参照 <a href="https://blog.acofork.com/posts/cf-fastip/#%E4%BC%A0%E7%BB%9F%E4%BC%98%E9%80%89">常规SaaS优选</a> 设置完毕，源站即为 Cloudflare Tunnel。正常做完SaaS接入即可
+<img src="/img/5380664f7aec3fc4beb9edfce677210f.png" alt="" />
+<img src="/img/4c332644f49be9c7be95b88232b6ab22.png" alt="" /></p>
+<p>接下来我们需要让打到 Cloudflare Tunnel 的流量正确路由，否则访问时主机名不在Tunnel中，会触发 <strong>catch: all</strong> 规则，总之就是没法访问。首先随便点开一个隧道编辑
+<img src="/img/b71ecd591c73edf63be6a2cc59753cea.png" alt="" /></p>
+<p>打开浏览器F12，直接保存，抓包请求
+<img src="/img/8d43bfa1e83acf01b5bd5549c8b3d0e6.png" alt="" /></p>
+<p>抓包 <strong>PUT</strong> 请求，右键复制为 <strong>cURL</strong>
+<img src="/img/ca0efafa3a9ed6588db68c2485c34964.png" alt="" /></p>
+<p><img src="/img/8a5a97ceaa7b0cd16652d6ed2f0d5448.png" alt="" /></p>
+<p>打开 <strong>Postman</strong> 粘贴整个请求，导航到 <strong>Body</strong> 页，添加一个新项目， <strong>hostname</strong> 为你优选后（最终访问）的域名， <strong>service</strong> 为一个正确的源。然后 <strong>Send</strong> ！
+<img src="/img/8de8395b013d5e40de8db071b7429d06.png" alt="" /></p>
+<p>接下来，控制台会自动多出来一个新的域名，再次访问就正常了</p>
+<p><em>至于为什么要这么做，因为你要添加的域名可能并不在你的 Cloudflare 账户中，而控制台的添加仅能添加CF账户内的域名，所以需要抓包曲线救国</em></p>
+<p><img src="/img/d881964b786e79cc140fe2c213b84f5a.png" alt="" /></p>
+<hr />
+<h1 id="针对于使用了各种CF规则的网站">针对于使用了各种CF规则的网站</h1>
+<p>你只需要让规则针对于你的最终访问域名，因为CF的规则是看主机名的，而不是看是由谁提供的</p>
+<h1 id="针对于虚拟主机">针对于虚拟主机</h1>
+<p>保险起见，建议将源站和优选域名同时绑定到你的虚拟主机，保证能通再一个个删</p>
+
+    </article>
+
+    <!-- License -->
+    <div class="mt-8 p-6 bg-gray-50 dark:bg-gray-700/50 rounded-2xl text-sm text-gray-600 dark:text-gray-400">
+        <div class="flex flex-col gap-2">
+            <p class="font-medium text-gray-900 dark:text-white">版权声明</p>
+            <p>
+                本文由 <span class="font-medium">二叉树树</span> 创作，采用 
+                <a href="https:&#x2F;&#x2F;creativecommons.org&#x2F;licenses&#x2F;by-nc-sa&#x2F;4.0&#x2F;" target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-blue-400 hover:underline">CC BY-NC-SA 4.0</a> 
+                许可协议。
+            </p>
+            <p>
+                转载请注明出处：<a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;posts&#x2F;cf-fastip&#x2F;" class="text-blue-600 dark:text-blue-400 hover:underline break-all">AcoFork Blog - 试试Cloudflare IP优选！让Cloudflare在国内再也不是减速器！: https:&#x2F;&#x2F;blog.acofork.com&#x2F;posts&#x2F;cf-fastip&#x2F;</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Help & Edit -->
+    <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-sm">
+            <h3 class="font-bold text-gray-900 dark:text-white mb-2">这篇文章是否对你有帮助？</h3>
+            <div class="flex space-x-4">
+                <a href="&#x2F;posts&#x2F;pin" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline">联系</a>
+                <a href="&#x2F;sponsors" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline">赞助</a>
+            </div>
+        </div>
+        <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-sm">
+            <h3 class="font-bold text-gray-900 dark:text-white mb-2">发现错误或想要改进这篇文章？</h3>
+            <a href="https:&#x2F;&#x2F;github.com&#x2F;afoim&#x2F;AcoFork_Blog_Zola/blob/main/content/posts&#x2F;cf-fastip.md" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline flex items-center">
+                <span>在 GitHub 上编辑此页</span>
+                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+            </a>
+        </div>
+    </div>
+
+    <!-- Post Footer -->
+    <footer class="mt-8 flex flex-wrap gap-2 justify-center">
+        
+    </footer>
+
+    <!-- Comments (Giscus) -->
+    <div class="mt-12 bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-sm">
+<script src="https://giscus.app/client.js"
+        data-repo="afoim/giscus-fuwari"
+        data-repo-id="R_kgDOOi8quw"
+        data-category="Announcements"
+        data-category-id="DIC_kwDOOi8qu84CprDV"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="preferred_color_scheme"
+        data-lang="zh-CN"
+        crossorigin="anonymous"
+        async>
+</script>
+    </div>
+</div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col items-center justify-center space-y-2">
+                <p class="text-gray-500 dark:text-gray-400 text-sm">
+                    &copy; 2026 二叉树树. 
+                    <a href="https:&#x2F;&#x2F;creativecommons.org&#x2F;licenses&#x2F;by-nc-sa&#x2F;4.0&#x2F;" target="_blank" class="hover:underline">CC BY-NC-SA 4.0</a>
+                </p>
+                <p class="text-gray-400 dark:text-gray-500 text-xs">
+                    Powered by <a href="https://www.getzola.org" target="_blank" class="hover:text-gray-300">Zola</a>
+                     · <a href="https://github.com/afoim/AcoFork_Blog_Zola" target="_blank" class="hover:text-gray-300">Source Code</a>
+                </p>
+                <a href="https://blog.acofork.com/rss.xml" target="_blank" class="text-gray-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors p-2">
+                    <span class="sr-only">RSS</span>
+                    <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                        <path d="M5 3a1 1 0 000 2c5.523 0 10 4.477 10 10a1 1 0 102 0C17 8.373 11.627 3 5 3z"></path>
+                        <path d="M4 9a1 1 0 011-1 7 7 0 017 7 1 1 0 11-2 0 5 5 0 00-5-5 1 1 0 01-1-1zM3 15a2 2 0 114 0 2 2 0 01-4 0z"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/elasticlunr/0.9.6/elasticlunr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+    <script src="/js/umami-share.js"></script>
+    <script src="/js/search.js"></script>
+    <script src="/js/gfm-alerts.js"></script>
+    <script src="/js/anchor-fix.js"></script>
+    <script>
+        // Umami script needs to be loaded if it's not already
+        // This is a workaround since we removed the original script tag
+        (function() {
+            var el = document.createElement('script');
+            el.setAttribute('src', 'https://umami.acofork.com/script.js');
+            el.setAttribute('data-website-id', '5d710dbd-3a2e-43e3-a553-97b415090c63');
+            el.setAttribute('defer', '');
+            document.body.appendChild(el);
+        })();
+    </script>
+</body>
+</html>

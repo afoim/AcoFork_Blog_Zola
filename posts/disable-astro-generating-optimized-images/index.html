@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="zh" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>禁用Astro跟弱智一般的静态构建图像优化 - AcoFork Blog</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css"/>
+    <link rel="icon" href="https://q2.qlogo.cn/headimg_dl?dst_uin=2726730791&amp;spec=0">
+    <script src="https://pic1.acofork.com/random.js"></script>
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.acofork.com/rss.xml">
+    <script src="/js/main.js"></script>
+</head>
+<body class="bg-[var(--page-bg)] text-gray-900 dark:text-gray-100 transition-colors duration-300 min-h-screen flex flex-col">
+
+    <!-- Navbar -->
+    <nav class="sticky top-0 z-50 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md shadow-sm dark:border-b dark:border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="/" class="text-xl font-bold text-blue-600 dark:text-blue-400">AcoFork Blog</a>
+                    </div>
+                    <!-- Desktop Menu -->
+                    <div class="hidden md:ml-6 md:flex md:space-x-8">
+                        
+                        <a href="&#x2F;" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            首页
+                        </a>
+                        
+                        <a href="&#x2F;posts" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            归档
+                        </a>
+                        
+                        <a href="&#x2F;friends" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            友链
+                        </a>
+                        
+                        <a href="&#x2F;sponsors" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            赞助
+                        </a>
+                        
+                        <a href="https:&#x2F;&#x2F;umami.acofork.com&#x2F;share&#x2F;CdkXbGgZr6ECKOyK" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           target="_blank">
+                            统计
+                        </a>
+                        
+                        <a href="https:&#x2F;&#x2F;status.acofork.com" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           target="_blank">
+                            监控
+                        </a>
+                        
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <!-- Mobile Menu Button -->
+                    <button type="button" onclick="toggleMobileMenu()" class="md:hidden p-2 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
+                        <span class="sr-only">Open menu</span>
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                    <!-- Search Button -->
+                    <button onclick="toggleSearch()" class="p-2 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </button>
+                    <!-- Theme Toggle -->
+                    <button onclick="toggleTheme()" class="p-2 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
+                        <svg id="sun-icon" class="h-6 w-6 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                        <svg id="moon-icon" class="h-6 w-6 block dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                
+                <a href="&#x2F;" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    首页
+                </a>
+                
+                <a href="&#x2F;posts" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    归档
+                </a>
+                
+                <a href="&#x2F;friends" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    友链
+                </a>
+                
+                <a href="&#x2F;sponsors" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    赞助
+                </a>
+                
+                <a href="https:&#x2F;&#x2F;umami.acofork.com&#x2F;share&#x2F;CdkXbGgZr6ECKOyK" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   target="_blank">
+                    统计
+                </a>
+                
+                <a href="https:&#x2F;&#x2F;status.acofork.com" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   target="_blank">
+                    监控
+                </a>
+                
+            </div>
+        </div>
+    </nav>
+
+    <!-- Search Modal -->
+    <div id="search-modal" class="fixed inset-0 z-50 hidden" role="dialog" aria-modal="true">
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" onclick="toggleSearch()"></div>
+        <div class="fixed inset-0 z-10 overflow-y-auto p-4 sm:p-6 md:p-20" onclick="if(event.target === this) toggleSearch()">
+            <div class="mx-auto max-w-xl transform rounded-xl bg-white dark:bg-gray-800 p-2 shadow-2xl transition-all">
+                <input type="text" id="search-input" 
+                       class="w-full rounded-md border-0 bg-gray-100 dark:bg-gray-700 px-4 py-2.5 text-gray-900 dark:text-white placeholder-gray-500 focus:ring-0 sm:text-sm" 
+                       placeholder="搜索文章..." autocomplete="off">
+                <ul id="search-results" class="max-h-96 scroll-py-3 overflow-y-auto p-3"></ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+<div class="max-w-4xl mx-auto">
+    <!-- Post Header -->
+    <header class="mb-8 text-center">
+        <div class="flex items-center justify-center space-x-2 text-sm text-gray-500 dark:text-gray-400 mb-4">
+            <time datetime="2025-09-10">2025-09-10</time>
+            <span>•</span>
+            <span>7 分钟阅读</span>
+            <span id="views-separator" style="display: none">•</span>
+            <span id="page-views" style="display: none"></span>
+        </div>
+        <h1 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">禁用Astro跟弱智一般的静态构建图像优化</h1>
+        
+        <p class="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">折腾了整整一天，终于解决了这傻逼Astro对于静态构建自作聪明的图片优化了，这不仅能提高构建速度，还可以减少无谓的CPU资源消耗，更环保，也更符合Unix哲学</p>
+        
+        
+        <div class="w-full rounded-2xl overflow-hidden shadow-sm mb-8">
+            <img src="&#x2F;img&#x2F;456e85e999aea199704b788fcff77fc0.png" alt="禁用Astro跟弱智一般的静态构建图像优化" class="w-full h-auto">
+        </div>
+        
+    </header>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const baseUrl = 'https://umami.acofork.com';
+                const shareId = 'CdkXbGgZr6ECKOyK';
+                // Current page path
+                const urlPath = window.location.pathname;
+                
+                const stats = await window.fetchUmamiStats(baseUrl, shareId, {
+                    url: urlPath
+                });
+                
+                // Check for both 'visits' (new preference) or 'pageviews' (fallback)
+                const metric = (stats && (stats.visits || stats.pageviews));
+                
+                let views = 0;
+                let hasData = false;
+
+                if (metric && typeof metric.value !== 'undefined') {
+                    views = metric.value;
+                    hasData = true;
+                } else if (stats && (typeof stats.visits === 'number' || typeof stats.pageviews === 'number')) {
+                        // Fallback for flat structure
+                        views = stats.visits || stats.pageviews;
+                        hasData = true;
+                }
+
+                if (hasData) {
+                    const viewEl = document.getElementById('page-views');
+                    viewEl.textContent = views + ' 次访问';
+                    viewEl.style.display = 'inline';
+                    document.getElementById('views-separator').style.display = 'inline';
+                }
+            } catch (e) {
+                console.error('Failed to load page views:', e);
+            }
+        });
+    </script>
+
+    <!-- Post Content -->
+    <article class="prose prose-lg dark:prose-invert max-w-none bg-white dark:bg-gray-800 p-8 md:p-12 rounded-2xl shadow-sm">
+        <blockquote>
+<p>视频： <a rel="noopener nofollow" target="_blank" href="https://www.bilibili.com/video/BV12VH2z1EDb">禁用Astro跟弱智一般的静态构建图像优化_哔哩哔哩_bilibili</a></p>
+</blockquote>
+<h1 id="为什么要禁用图片优化？">为什么要禁用图片优化？</h1>
+<p>下图是一个默认的Astro静态构建，也就是 <code>astro build</code> 的输出，输出中记录了每张图片是如何被Astro “优化” 的。我们不难发现问题所在：</p>
+<p>压缩效果微乎其微，甚至有反向压缩。大部分图片仅压缩了几kb，但是为此需要花费 <strong>100-1000ms</strong> 不等，甚至第12行出现了 <code>before: 26kb, after: 28kb</code> 这样的反向压缩</p>
+<p><em>为什么要浪费这么多的时间来进行±10kb左右的图片压缩呢？</em></p>
+<p><img src="/img/fb692a0b81cdfbff9021c50f6a58dcdd.png" alt="" /></p>
+<h1 id="如何让Astro不”优化“图片？">如何让Astro不”优化“图片？</h1>
+<blockquote>
+<p><a rel="noopener nofollow" target="_blank" href="https://docs.astro.build/zh-cn/guides/images/">图像 | Docs</a></p>
+</blockquote>
+<p>查阅 Astro 文档可知</p>
+<p>会被优化的情况：</p>
+<ul>
+<li>
+<p>非 <code>/public</code> 目录下的图片</p>
+</li>
+<li>
+<p>使用 <code>&lt;Image /&gt;</code> 等Astro图片组件</p>
+</li>
+<li>
+<p>任何MarkDown内的图片，除非你不走Astro内部的 MarkDown -&gt; HTML 转换</p>
+</li>
+</ul>
+<p>不难发现，我们似乎已经找到了一个折中的解决方案： <strong>将图片放置到 /public 目录</strong></p>
+<h1 id="尝试将图片放置到_/public_目录（不完美）">尝试将图片放置到 /public 目录（不完美）</h1>
+<p>这会遇到一个经典问题，这是我询问 OpenAI ChatGPT 的原话</p>
+<p><em>我遇到了一个两难的问题 我使用Astro 我的文章在./src/content/posts/xxx.md 我的图片之前在./src/content/assets/images/xxx.png 由于我不想要Astro默认的图片优化，因为构建太慢了，于是我将图片放到了./public/assets/images/xxx.png 然后我将MarkDown引用的图片从 ../assets/images/xxx.png 改为了 ./public/assets/images/xxx.png 但是现在新的问题出现了，我的MarkText（一个MarkDown编辑器）去寻找了 ./src/content/posts/public/assets/images/xxx.png 导致我在编辑器中看不到任何图片 有没有什么好的解决方案？</em></p>
+<p>如果反其道而行之，使用类似 <code>../../../assets/images/xxx.png</code> 会导致部分组件无法获得真实图片，导致 <code>astro build</code> 直接报错退出，比如每篇文章开头的 YAML 元数据中的 <code>image</code> 字段</p>
+<p><strong>结论：</strong> 该方案并不完美。要不无法即写即看，要不构建失败</p>
+<h1 id="尝试使用Astro官方提供的配置禁用图片优化（失败）">尝试使用Astro官方提供的配置禁用图片优化（失败）</h1>
+<p>遇到Astro上的问题，首先就应该查询官方文档了解是否已有解决方案。通过文档查询，我找到了 <a rel="noopener nofollow" target="_blank" href="https://docs.astro.build/zh-cn/guides/images/#%E9%85%8D%E7%BD%AE-no-op-%E9%80%8F%E4%BC%A0%E6%9C%8D%E5%8A%A1">图像 | Docs</a> 中的 <strong>配置 no-op 透传服务</strong> ，尝试配置，但是无用，不管是本地运行构建或Cloudflare Worker云端构建，仍然会触发 <strong>generating optimized images</strong> 步骤</p>
+<p><em>如果您了解如何在Astro的配置层面直接禁用图片优化，请联系我！我很乐意与您交流！</em></p>
+<p><img src="/img/4a7224311fcae6ab5b23557728cfda50.png" alt="" /></p>
+<h1 id="尝试直接更改Astro源码来禁用图片优化（成功）">尝试直接更改Astro源码来禁用图片优化（成功）</h1>
+<p>研究到这，大半天已经过去了，我已经没有精力去研究怎么 <strong>合法</strong> 禁用Astro的图片优化了，不如单刀直入，直接改源码，使用 <strong>非法操作</strong> 吧</p>
+<p>大致步骤，直接改Astro包的源码，然后用 <code>pnpm patch</code> 为它打个补丁，下面是完整、可用的 <code>astro.patch</code> 。全局禁用图片优化</p>
+<pre data-lang="diff" class="language-diff "><code class="language-diff" data-lang="diff">diff --git a&#x2F;dist&#x2F;assets&#x2F;utils&#x2F;transformToPath.js b&#x2F;dist&#x2F;assets&#x2F;utils&#x2F;transformToPath.js
+index cca8548dec42090b0621d1f21c86f503d5bba1be..8b0a3cfcea73abc4d63592709bb9ba2b2f83989a 100644
+--- a&#x2F;dist&#x2F;assets&#x2F;utils&#x2F;transformToPath.js
++++ b&#x2F;dist&#x2F;assets&#x2F;utils&#x2F;transformToPath.js
+@@ -13,7 +13,9 @@ function propsToFilename(filePath, transform, hash) {
+   }
+   const prefixDirname = isESMImportedImage(transform.src) ? dirname(filePath) : &quot;&quot;;
+   let outputExt = transform.format ? `.${transform.format}` : ext;
+-  return decodeURIComponent(`${prefixDirname}&#x2F;${filename}_${hash}${outputExt}`);
++  
++  &#x2F;&#x2F; Force disable image optimization - return original path without hash and format conversion
++  return decodeURIComponent(`${prefixDirname}&#x2F;${filename}${ext}`);
+ }
+ function hashTransform(transform, imageService, propertiesToHash) {
+   const hashFields = propertiesToHash.reduce(
+diff --git a&#x2F;dist&#x2F;core&#x2F;build&#x2F;generate.js b&#x2F;dist&#x2F;core&#x2F;build&#x2F;generate.js
+index 3144f4c058b161b9e6eb3c8d891b743b34783653..0ba275b320204e154307c6aff75452e9dcb2300d 100644
+--- a&#x2F;dist&#x2F;core&#x2F;build&#x2F;generate.js
++++ b&#x2F;dist&#x2F;core&#x2F;build&#x2F;generate.js
+@@ -91,7 +91,8 @@ ${bgGreen(black(` ${verb} static routes `))}`);
+ `)
+   );
+   const staticImageList = getStaticImageList();
+-  if (staticImageList.size) {
++  &#x2F;&#x2F; Force disable image optimization - hardcoded
++  if (false) {
+     logger.info(&quot;SKIP_FORMAT&quot;, `${bgGreen(black(` generating optimized images `))}`);
+     const totalCount = Array.from(staticImageList.values()).map((x) =&gt; x.transforms.size).reduce((a, b) =&gt; a + b, 0);
+     const cpuCount = os.cpus().length;
+</code></pre>
+<p>下文为我让OpenAI ChatGPT 5解释的已经禁用图片优化的补丁（<code>astro.patch</code>）具体做了什么</p>
+<h3 id="修改点_1：dist/assets/utils/transformToPath.js">修改点 1：<code>dist/assets/utils/transformToPath.js</code></h3>
+<pre data-lang="diff" class="language-diff "><code class="language-diff" data-lang="diff">-  return decodeURIComponent(`${prefixDirname}&#x2F;${filename}_${hash}${outputExt}`);
++  
++  &#x2F;&#x2F; Force disable image optimization - return original path without hash and format conversion
++  return decodeURIComponent(`${prefixDirname}&#x2F;${filename}${ext}`);
+</code></pre>
+<h4 id="原逻辑">原逻辑</h4>
+<ul>
+<li>
+<p>原本的返回路径是：</p>
+<pre data-lang="bash" class="language-bash "><code class="language-bash" data-lang="bash">{prefixDirname}&#x2F;{filename}_{hash}.{format or ext}
+</code></pre>
+<ul>
+<li>
+<p><code>prefixDirname</code>：如果图片是通过 ESM import 进来的，会带上所在目录，否则为空。</p>
+</li>
+<li>
+<p><code>filename</code>：文件名。</p>
+</li>
+<li>
+<p><code>hash</code>：基于图片参数生成的 hash，用于区分不同尺寸/格式。</p>
+</li>
+<li>
+<p><code>outputExt</code>：可能是 <code>webp</code>、<code>avif</code> 等格式。</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>👉 这样 Astro 会给图片文件生成带 hash 的路径，并且可能修改格式。</p>
+<h4 id="修改后逻辑">修改后逻辑</h4>
+<ul>
+<li>返回路径改成了：</li>
+</ul>
+<pre data-lang="bash" class="language-bash "><code class="language-bash" data-lang="bash">{prefixDirname}&#x2F;{filename}{ext}
+</code></pre>
+<ul>
+<li>直接使用原始扩展名，不带 hash，也不做格式转换。</li>
+</ul>
+<p>✅ 作用：完全禁用图片优化的文件名规则，保留原始文件路径。</p>
+<hr />
+<h3 id="修改点_2：dist/core/build/generate.js">修改点 2：<code>dist/core/build/generate.js</code></h3>
+<pre data-lang="diff" class="language-diff "><code class="language-diff" data-lang="diff">-  if (staticImageList.size) {
++  &#x2F;&#x2F; Force disable image optimization - hardcoded
++  if (false) {
+</code></pre>
+<h4 id="原逻辑-1">原逻辑</h4>
+<ul>
+<li>
+<p><code>staticImageList</code> 存放了 Astro build 时需要优化的所有静态图片。</p>
+</li>
+<li>
+<p>如果有图片，Astro 会启动优化逻辑：</p>
+<ul>
+<li>
+<p>打印日志 <code>"generating optimized images"</code></p>
+</li>
+<li>
+<p>遍历 <code>staticImageList</code>，并调用 image service 去生成不同尺寸和格式。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="修改后逻辑-1">修改后逻辑</h4>
+<ul>
+<li>
+<p>把 <code>if (staticImageList.size)</code> 改成了 <code>if (false)</code>。</p>
+</li>
+<li>
+<p>这意味着 <strong>Astro 永远不会进入优化图片的流程</strong>。</p>
+</li>
+</ul>
+<p>✅ 作用：强制跳过所有图片优化步骤。</p>
+<hr />
+<h3 id="总结">总结</h3>
+<p>你的这个 patch 做了两件事：</p>
+<ol>
+<li>
+<p><strong>绕过文件名 hash 和格式转换</strong> → 保证生成的图片路径就是原始路径。</p>
+</li>
+<li>
+<p><strong>完全禁用构建时图片优化</strong> → Astro build 时不再生成任何衍生格式或多尺寸图片。</p>
+</li>
+</ol>
+<p>等价于 <strong>彻底关闭 Astro 的图片优化功能</strong>，构建出来的就是你原始的图片。</p>
+<h1 id="最终效果">最终效果</h1>
+<p>任何情况下使用 <code>astro build</code> 都会跳过图片优化，Cloudflare Worker的构建时间从 3分钟下降到2分钟</p>
+<p><img src="/img/3b2225a40a1f80da37cd31367465ed0a.png" alt="" /></p>
+<p><img src="/img/2c2d3f96732dac8a0b20fd1603c10491.png" alt="" /></p>
+<p>构建后的页面不再为全局webp，透传原始文件名、扩展名。但仍然保留了 <code>/_astro</code> 路径，依旧支持相对路径粘贴图片</p>
+<p><img src="/img/87b7ed16c4ac08bd4f2f24272f96ccc3.png" alt="" /></p>
+<p><img src="/img/667fdec32ab6df918654b8021b73fcc2.png" alt="" /></p>
+
+    </article>
+
+    <!-- License -->
+    <div class="mt-8 p-6 bg-gray-50 dark:bg-gray-700/50 rounded-2xl text-sm text-gray-600 dark:text-gray-400">
+        <div class="flex flex-col gap-2">
+            <p class="font-medium text-gray-900 dark:text-white">版权声明</p>
+            <p>
+                本文由 <span class="font-medium">二叉树树</span> 创作，采用 
+                <a href="https:&#x2F;&#x2F;creativecommons.org&#x2F;licenses&#x2F;by-nc-sa&#x2F;4.0&#x2F;" target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-blue-400 hover:underline">CC BY-NC-SA 4.0</a> 
+                许可协议。
+            </p>
+            <p>
+                转载请注明出处：<a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;posts&#x2F;disable-astro-generating-optimized-images&#x2F;" class="text-blue-600 dark:text-blue-400 hover:underline break-all">AcoFork Blog - 禁用Astro跟弱智一般的静态构建图像优化: https:&#x2F;&#x2F;blog.acofork.com&#x2F;posts&#x2F;disable-astro-generating-optimized-images&#x2F;</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Help & Edit -->
+    <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-sm">
+            <h3 class="font-bold text-gray-900 dark:text-white mb-2">这篇文章是否对你有帮助？</h3>
+            <div class="flex space-x-4">
+                <a href="&#x2F;posts&#x2F;pin" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline">联系</a>
+                <a href="&#x2F;sponsors" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline">赞助</a>
+            </div>
+        </div>
+        <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-sm">
+            <h3 class="font-bold text-gray-900 dark:text-white mb-2">发现错误或想要改进这篇文章？</h3>
+            <a href="https:&#x2F;&#x2F;github.com&#x2F;afoim&#x2F;AcoFork_Blog_Zola/blob/main/content/posts&#x2F;disable-astro-generating-optimized-images.md" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline flex items-center">
+                <span>在 GitHub 上编辑此页</span>
+                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+            </a>
+        </div>
+    </div>
+
+    <!-- Post Footer -->
+    <footer class="mt-8 flex flex-wrap gap-2 justify-center">
+        
+        
+        <a href="https://blog.acofork.com/tags/astro/" class="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-full text-sm hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">#Astro</a>
+        
+        
+    </footer>
+
+    <!-- Comments (Giscus) -->
+    <div class="mt-12 bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-sm">
+<script src="https://giscus.app/client.js"
+        data-repo="afoim/giscus-fuwari"
+        data-repo-id="R_kgDOOi8quw"
+        data-category="Announcements"
+        data-category-id="DIC_kwDOOi8qu84CprDV"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="preferred_color_scheme"
+        data-lang="zh-CN"
+        crossorigin="anonymous"
+        async>
+</script>
+    </div>
+</div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col items-center justify-center space-y-2">
+                <p class="text-gray-500 dark:text-gray-400 text-sm">
+                    &copy; 2026 二叉树树. 
+                    <a href="https:&#x2F;&#x2F;creativecommons.org&#x2F;licenses&#x2F;by-nc-sa&#x2F;4.0&#x2F;" target="_blank" class="hover:underline">CC BY-NC-SA 4.0</a>
+                </p>
+                <p class="text-gray-400 dark:text-gray-500 text-xs">
+                    Powered by <a href="https://www.getzola.org" target="_blank" class="hover:text-gray-300">Zola</a>
+                     · <a href="https://github.com/afoim/AcoFork_Blog_Zola" target="_blank" class="hover:text-gray-300">Source Code</a>
+                </p>
+                <a href="https://blog.acofork.com/rss.xml" target="_blank" class="text-gray-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors p-2">
+                    <span class="sr-only">RSS</span>
+                    <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                        <path d="M5 3a1 1 0 000 2c5.523 0 10 4.477 10 10a1 1 0 102 0C17 8.373 11.627 3 5 3z"></path>
+                        <path d="M4 9a1 1 0 011-1 7 7 0 017 7 1 1 0 11-2 0 5 5 0 00-5-5 1 1 0 01-1-1zM3 15a2 2 0 114 0 2 2 0 01-4 0z"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/elasticlunr/0.9.6/elasticlunr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+    <script src="/js/umami-share.js"></script>
+    <script src="/js/search.js"></script>
+    <script src="/js/gfm-alerts.js"></script>
+    <script src="/js/anchor-fix.js"></script>
+    <script>
+        // Umami script needs to be loaded if it's not already
+        // This is a workaround since we removed the original script tag
+        (function() {
+            var el = document.createElement('script');
+            el.setAttribute('src', 'https://umami.acofork.com/script.js');
+            el.setAttribute('data-website-id', '5d710dbd-3a2e-43e3-a553-97b415090c63');
+            el.setAttribute('defer', '');
+            document.body.appendChild(el);
+        })();
+    </script>
+</body>
+</html>

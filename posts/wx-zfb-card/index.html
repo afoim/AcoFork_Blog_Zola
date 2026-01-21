@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="zh" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>微信，支付宝，储蓄卡与信用卡的爱恨情仇 - AcoFork Blog</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css"/>
+    <link rel="icon" href="https://q2.qlogo.cn/headimg_dl?dst_uin=2726730791&amp;spec=0">
+    <script src="https://pic1.acofork.com/random.js"></script>
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.acofork.com/rss.xml">
+    <script src="/js/main.js"></script>
+</head>
+<body class="bg-[var(--page-bg)] text-gray-900 dark:text-gray-100 transition-colors duration-300 min-h-screen flex flex-col">
+
+    <!-- Navbar -->
+    <nav class="sticky top-0 z-50 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md shadow-sm dark:border-b dark:border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="/" class="text-xl font-bold text-blue-600 dark:text-blue-400">AcoFork Blog</a>
+                    </div>
+                    <!-- Desktop Menu -->
+                    <div class="hidden md:ml-6 md:flex md:space-x-8">
+                        
+                        <a href="&#x2F;" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            首页
+                        </a>
+                        
+                        <a href="&#x2F;posts" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            归档
+                        </a>
+                        
+                        <a href="&#x2F;friends" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            友链
+                        </a>
+                        
+                        <a href="&#x2F;sponsors" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            赞助
+                        </a>
+                        
+                        <a href="https:&#x2F;&#x2F;umami.acofork.com&#x2F;share&#x2F;CdkXbGgZr6ECKOyK" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           target="_blank">
+                            统计
+                        </a>
+                        
+                        <a href="https:&#x2F;&#x2F;status.acofork.com" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           target="_blank">
+                            监控
+                        </a>
+                        
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <!-- Mobile Menu Button -->
+                    <button type="button" onclick="toggleMobileMenu()" class="md:hidden p-2 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
+                        <span class="sr-only">Open menu</span>
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                    <!-- Search Button -->
+                    <button onclick="toggleSearch()" class="p-2 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </button>
+                    <!-- Theme Toggle -->
+                    <button onclick="toggleTheme()" class="p-2 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
+                        <svg id="sun-icon" class="h-6 w-6 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                        <svg id="moon-icon" class="h-6 w-6 block dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                
+                <a href="&#x2F;" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    首页
+                </a>
+                
+                <a href="&#x2F;posts" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    归档
+                </a>
+                
+                <a href="&#x2F;friends" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    友链
+                </a>
+                
+                <a href="&#x2F;sponsors" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    赞助
+                </a>
+                
+                <a href="https:&#x2F;&#x2F;umami.acofork.com&#x2F;share&#x2F;CdkXbGgZr6ECKOyK" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   target="_blank">
+                    统计
+                </a>
+                
+                <a href="https:&#x2F;&#x2F;status.acofork.com" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   target="_blank">
+                    监控
+                </a>
+                
+            </div>
+        </div>
+    </nav>
+
+    <!-- Search Modal -->
+    <div id="search-modal" class="fixed inset-0 z-50 hidden" role="dialog" aria-modal="true">
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" onclick="toggleSearch()"></div>
+        <div class="fixed inset-0 z-10 overflow-y-auto p-4 sm:p-6 md:p-20" onclick="if(event.target === this) toggleSearch()">
+            <div class="mx-auto max-w-xl transform rounded-xl bg-white dark:bg-gray-800 p-2 shadow-2xl transition-all">
+                <input type="text" id="search-input" 
+                       class="w-full rounded-md border-0 bg-gray-100 dark:bg-gray-700 px-4 py-2.5 text-gray-900 dark:text-white placeholder-gray-500 focus:ring-0 sm:text-sm" 
+                       placeholder="搜索文章..." autocomplete="off">
+                <ul id="search-results" class="max-h-96 scroll-py-3 overflow-y-auto p-3"></ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+<div class="max-w-4xl mx-auto">
+    <!-- Post Header -->
+    <header class="mb-8 text-center">
+        <div class="flex items-center justify-center space-x-2 text-sm text-gray-500 dark:text-gray-400 mb-4">
+            <time datetime="2025-11-11">2025-11-11</time>
+            <span>•</span>
+            <span>12 分钟阅读</span>
+            <span id="views-separator" style="display: none">•</span>
+            <span id="page-views" style="display: none"></span>
+        </div>
+        <h1 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">微信，支付宝，储蓄卡与信用卡的爱恨情仇</h1>
+        
+        <p class="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">在中国，一卡并不能通刷，鉴于二维码的普及，大部分商户使用扫码付款而不是刷卡付款，这可能会导致一些问题...</p>
+        
+        
+        <div class="w-full rounded-2xl overflow-hidden shadow-sm mb-8">
+            <img src="&#x2F;img&#x2F;10359477f54aded3fa1777142b8743bd.png" alt="微信，支付宝，储蓄卡与信用卡的爱恨情仇" class="w-full h-auto">
+        </div>
+        
+    </header>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const baseUrl = 'https://umami.acofork.com';
+                const shareId = 'CdkXbGgZr6ECKOyK';
+                // Current page path
+                const urlPath = window.location.pathname;
+                
+                const stats = await window.fetchUmamiStats(baseUrl, shareId, {
+                    url: urlPath
+                });
+                
+                // Check for both 'visits' (new preference) or 'pageviews' (fallback)
+                const metric = (stats && (stats.visits || stats.pageviews));
+                
+                let views = 0;
+                let hasData = false;
+
+                if (metric && typeof metric.value !== 'undefined') {
+                    views = metric.value;
+                    hasData = true;
+                } else if (stats && (typeof stats.visits === 'number' || typeof stats.pageviews === 'number')) {
+                        // Fallback for flat structure
+                        views = stats.visits || stats.pageviews;
+                        hasData = true;
+                }
+
+                if (hasData) {
+                    const viewEl = document.getElementById('page-views');
+                    viewEl.textContent = views + ' 次访问';
+                    viewEl.style.display = 'inline';
+                    document.getElementById('views-separator').style.display = 'inline';
+                }
+            } catch (e) {
+                console.error('Failed to load page views:', e);
+            }
+        });
+    </script>
+
+    <!-- Post Content -->
+    <article class="prose prose-lg dark:prose-invert max-w-none bg-white dark:bg-gray-800 p-8 md:p-12 rounded-2xl shadow-sm">
+        <h1 id="前言">前言</h1>
+<p>就像简介所说，中国并不像国外，一张信用卡通刷一切，在海外购物，一般都用POS机刷卡，或者NFC支付，在中国，得益于二维码和微信支付宝的推广，一般我们有两种方式支付，一种是商家挂一个二维码，你主动给商家付款，而另一种是你展示付款码，商家来扫你扣款。无论是方法一还是方法二，都不是直接从 <strong>银联</strong> 扣款的，要不，你用的是 <strong>支付宝</strong> ，要不就是 <strong>微信</strong></p>
+<h1 id="左右互搏的付款方式">左右互搏的付款方式</h1>
+<p>那么问题就渐渐浮现了，由于 <strong>支付宝</strong> 是阿里的，而 <strong>微信</strong> 是腾讯的，如果你想要在 <strong>淘宝</strong> 也就是 <strong>阿里系</strong> 软件付款，你是用不了微信的，反之，如果你想要在 <strong>腾讯系</strong> 软件消费，你也是用不了支付宝的</p>
+<p>那么，这种情况如何解决呢？</p>
+<p>没错，该银行卡出场了。在国外，银行卡是你的消费工具，在中国，银行卡是你在微信和支付宝两者的 <strong>兼容层</strong> 。假如，你的钱全部都存在微信，而你要付款的商户仅支持支付宝支付，那么这个时候，首先，你要将你的银行卡先绑定到微信和支付宝，你就需要先将款项从微信余额 <strong>提现</strong> 到你的银行卡，再打开支付宝，选择 <strong>充值</strong> ，将银行卡的钱充值到你的支付宝余额（当然，你也可以借助支付宝直接刷你银行卡里面的钱）</p>
+<p>问题好像完美的解决了！只要有银行卡这个兼容层，你的余额无关平台了！只是付款的时候有时需要转换一下平台而已！真的是这样吗？</p>
+<h1 id="银行中立，也严格">银行中立，也严格</h1>
+<p>因为银行既不隶属于 <strong>腾讯</strong> ，也不隶属于 <strong>阿里</strong> ，所以绝大部分银行卡可以很方便的绑定到微信支付宝进行消费</p>
+<p>但是，这种消费方式是否可用，好用则取决于你的发卡行</p>
+<p>说个题外话，你可能不知道的是，阿里实际上也有个银行，叫做 <strong>网商银行</strong> ，但是该卡 <strong>微信</strong> 不接受，反之，腾讯实际上也有个银行，叫做 <strong>微众银行</strong> ，同样，该卡 <strong>支付宝</strong> 也不接受。所以，想拿这种卡无痛在支付宝和微信互转是不可能的了</p>
+<p>那么如果，你想要让余额在各平台流转，那就必须去找 <strong>中立的</strong> 银行，如：<strong>交通银行</strong> 、 <strong>农业银行</strong> 、<strong>广发银行</strong> 等等</p>
+<p>世界上这么多银行，他们并不都是一视同仁的，鉴于国家近几年对于 <strong>反诈，反洗钱</strong> 的打击，特别是针对 <strong>未成年人</strong> ，你使用 <strong>中国银行</strong> <strong>工商银行</strong> 等 <strong>国有大行</strong> 进行 <strong>大额快进快出</strong> 时大概率会被冻结，并且无法通过网银解除，必须手动跑一次线下，这非常恶心，所以，如果你要开卡，就选择附近最近的银行，且不要选择那些国有大行</p>
+<p>我家附近有 <strong>交通银行</strong> <strong>农业银行</strong> <strong>工商银行</strong> ，目前这三大行的卡我都有，交行Ⅱ类卡一张线下开，农行Ⅰ类卡一张、信用卡一张，工行社保卡（Ⅰ类）卡一张，另有Ⅰ类卡一张</p>
+<p>如果你没有研究过银行卡，你可能不理解Ⅰ类，Ⅱ类，Ⅲ类，特种卡，信用卡等等，这里就大概快速讲下</p>
+<ul>
+<li>Ⅰ类：储蓄卡。绝大部分发卡行要求 <strong>线下开卡</strong> ，日限额1w-5w，后期你财力雄厚了可以提。其中，<strong>社保卡、医保卡</strong> 若有 <strong>储蓄功能</strong> ，也为Ⅰ类卡，且为 <strong>特种卡</strong> 。一个自然人一般来说只能自主注册 <strong>一张</strong> 一类卡（特种卡除外）</li>
+<li>Ⅱ类：储蓄卡。绝大部分发卡行仅要求你有一个 <strong>他行一类卡</strong> ，然后可以通过 <strong>线上</strong> 自主注册。日限额1k-1w，不建议开</li>
+<li>Ⅲ类卡：储蓄卡。一般作为 <strong>副卡，亲情卡</strong> 使用，日限额1k左右，不建议自己用</li>
+<li>特种卡：一般为储蓄卡。大部分为国家要求的 <strong>社保、医保账户</strong> ，除了一卡多用，其余和一类卡一致</li>
+<li>信用卡：有储蓄功能，但是不咋好用，详见后文。未工作的学生可以申请，但是无信用额度，一般用于海外付款（强制需要CVV/CVC，不接受储蓄卡的收单机构），已工作的将会根据你的工作状态给你批额度</li>
+</ul>
+<p>我曾经在使用 <strong>工商银行</strong> 的储蓄卡进行网上消费，因为想要吃支付宝的优惠，则将微信里面的钱先转到银行卡，然后通过支付宝进行扣款，然后失败了，跑去网点后说我 <strong>大额快进快出</strong> 还要吃店员的司马脸，好在给了身份证和卡和账单，滴几下就解开了，之后，我就再也没有把钱放在工行了</p>
+<p>设想一个场景，你有一个Ⅰ类卡，日限额10000 CNY，卡里余额8000 CNY，你现在想要购买一个6000 CNY的商品，于是使用微信或支付宝进行支付，然后你款式选错了，于是进行退款，好在商家还没有发货，痛快的给你退款了，然后看似你的卡状态又回到了一开始的状态，你重新确认款式，再次购买，然后被银行卡拒绝了，说超出限额。注意到了吗，当你第一次成功扣款后，你的当日限额就只有 4000 CNY了，哪怕原款项已经原封不动退回你的卡里了，但是你付了就是付了，不管你最终是退款了，还是成功交易了，限额在你的钱从卡到对面商户那边的那一瞬间就已经扣除了，并且无法恢复。同样的，对于将卡里的钱提现到微信和支付宝，也是会扣除你的日限额，所以跨平台互转需谨慎，一不小心，你的卡就会进入只进不出的情况，当你多次交易被拒绝后，某些银行还会暂时冻结你的银行卡，还需要带上身份证跑线下</p>
+<h1 id="信用卡与储蓄卡">信用卡与储蓄卡</h1>
+<p>不知道你是否注意到一件事，那就是我们在上文提到的Ⅰ类，Ⅱ类，Ⅲ类都提到了 <strong>日限额</strong> 唯独信用卡没有提到 <strong>日限额</strong> 。那么，信用卡是否就没有日限额呢？</p>
+<p>对！信用卡的确没有日限额！但是！你微信支付宝的钱无法直接提现到信用卡中，要先转到储蓄卡，然后通过银行APP中的 <strong>转账</strong> 输入卡号将钱款转入信用卡</p>
+<p>欸？你是否又发现一件事，没错！就算信用卡无日限额，但是最终将钱转到信用卡的时候，还是会扣除你对应的储蓄卡的日限额，你最终能转的钱一天还是那么多</p>
+<p>信用卡无论是否有信用额度，各大发卡行都和微信支付宝有合作，你的日常消费使用信用卡大概率是有优惠，并且每笔都可以攒积分（类似于国外的 <strong>返现</strong> ）</p>
+<p>但是需要注意，我目前就读的学校食堂仅能用支付宝支付，且不支持信用卡，我只能在储蓄卡中留点余额</p>
+<p>这也是国内支付的一个窘境，各大机构都鼓励你使用信用卡支付，但是有些商家不支持信用卡。而对于没有银行卡的未成年人群体，想要在微信和支付宝互转则是极其困难的，这也催生了 <strong>代付</strong> 业务，中介收取部分手续费，然后帮你支付（比如你只有微信余额但是想在淘宝买东西）</p>
+<h1 id="对于巨头，我们只能妥协">对于巨头，我们只能妥协</h1>
+<p>这几年淘宝曾经灰度了几次微信扫码付，但是大多数用户反馈就看到过几次，经常是今天能付，明天就找不到入口了。而京东始终不支持支付宝支付</p>
+<p>在很长一段时间，<strong>蓝绿争霸</strong> 并不会停止，我们仍然需要将钱通过银行卡在各平台互转，且自己承担卡被冻结的风险</p>
+<p>而互转的时候，微信通常会收取0.01%的服务费，小额可以通过做活动领取免服务费提现券，而支付宝会给每个自然人终生2w的免费提现额度，之后也会收取0.01%的服务费，在你看来，这可能无关痛痒，但是你想想每天有多少人在使用微信支付宝来回互转余额？就算每笔只收一毛钱的手续费，一秒也能创造出高额的收益，对于巨头，我们只能妥协</p>
+
+    </article>
+
+    <!-- License -->
+    <div class="mt-8 p-6 bg-gray-50 dark:bg-gray-700/50 rounded-2xl text-sm text-gray-600 dark:text-gray-400">
+        <div class="flex flex-col gap-2">
+            <p class="font-medium text-gray-900 dark:text-white">版权声明</p>
+            <p>
+                本文由 <span class="font-medium">二叉树树</span> 创作，采用 
+                <a href="https:&#x2F;&#x2F;creativecommons.org&#x2F;licenses&#x2F;by-nc-sa&#x2F;4.0&#x2F;" target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-blue-400 hover:underline">CC BY-NC-SA 4.0</a> 
+                许可协议。
+            </p>
+            <p>
+                转载请注明出处：<a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;posts&#x2F;wx-zfb-card&#x2F;" class="text-blue-600 dark:text-blue-400 hover:underline break-all">AcoFork Blog - 微信，支付宝，储蓄卡与信用卡的爱恨情仇: https:&#x2F;&#x2F;blog.acofork.com&#x2F;posts&#x2F;wx-zfb-card&#x2F;</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Help & Edit -->
+    <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-sm">
+            <h3 class="font-bold text-gray-900 dark:text-white mb-2">这篇文章是否对你有帮助？</h3>
+            <div class="flex space-x-4">
+                <a href="&#x2F;posts&#x2F;pin" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline">联系</a>
+                <a href="&#x2F;sponsors" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline">赞助</a>
+            </div>
+        </div>
+        <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-sm">
+            <h3 class="font-bold text-gray-900 dark:text-white mb-2">发现错误或想要改进这篇文章？</h3>
+            <a href="https:&#x2F;&#x2F;github.com&#x2F;afoim&#x2F;AcoFork_Blog_Zola/blob/main/content/posts&#x2F;wx-zfb-card.md" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline flex items-center">
+                <span>在 GitHub 上编辑此页</span>
+                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+            </a>
+        </div>
+    </div>
+
+    <!-- Post Footer -->
+    <footer class="mt-8 flex flex-wrap gap-2 justify-center">
+        
+    </footer>
+
+    <!-- Comments (Giscus) -->
+    <div class="mt-12 bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-sm">
+<script src="https://giscus.app/client.js"
+        data-repo="afoim/giscus-fuwari"
+        data-repo-id="R_kgDOOi8quw"
+        data-category="Announcements"
+        data-category-id="DIC_kwDOOi8qu84CprDV"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="preferred_color_scheme"
+        data-lang="zh-CN"
+        crossorigin="anonymous"
+        async>
+</script>
+    </div>
+</div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col items-center justify-center space-y-2">
+                <p class="text-gray-500 dark:text-gray-400 text-sm">
+                    &copy; 2026 二叉树树. 
+                    <a href="https:&#x2F;&#x2F;creativecommons.org&#x2F;licenses&#x2F;by-nc-sa&#x2F;4.0&#x2F;" target="_blank" class="hover:underline">CC BY-NC-SA 4.0</a>
+                </p>
+                <p class="text-gray-400 dark:text-gray-500 text-xs">
+                    Powered by <a href="https://www.getzola.org" target="_blank" class="hover:text-gray-300">Zola</a>
+                     · <a href="https://github.com/afoim/AcoFork_Blog_Zola" target="_blank" class="hover:text-gray-300">Source Code</a>
+                </p>
+                <a href="https://blog.acofork.com/rss.xml" target="_blank" class="text-gray-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors p-2">
+                    <span class="sr-only">RSS</span>
+                    <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                        <path d="M5 3a1 1 0 000 2c5.523 0 10 4.477 10 10a1 1 0 102 0C17 8.373 11.627 3 5 3z"></path>
+                        <path d="M4 9a1 1 0 011-1 7 7 0 017 7 1 1 0 11-2 0 5 5 0 00-5-5 1 1 0 01-1-1zM3 15a2 2 0 114 0 2 2 0 01-4 0z"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/elasticlunr/0.9.6/elasticlunr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+    <script src="/js/umami-share.js"></script>
+    <script src="/js/search.js"></script>
+    <script src="/js/gfm-alerts.js"></script>
+    <script src="/js/anchor-fix.js"></script>
+    <script>
+        // Umami script needs to be loaded if it's not already
+        // This is a workaround since we removed the original script tag
+        (function() {
+            var el = document.createElement('script');
+            el.setAttribute('src', 'https://umami.acofork.com/script.js');
+            el.setAttribute('data-website-id', '5d710dbd-3a2e-43e3-a553-97b415090c63');
+            el.setAttribute('defer', '');
+            document.body.appendChild(el);
+        })();
+    </script>
+</body>
+</html>

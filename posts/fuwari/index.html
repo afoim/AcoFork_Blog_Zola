@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="zh" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fuwari静态博客搭建教程 - AcoFork Blog</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css"/>
+    <link rel="icon" href="https://q2.qlogo.cn/headimg_dl?dst_uin=2726730791&amp;spec=0">
+    <script src="https://pic1.acofork.com/random.js"></script>
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.acofork.com/rss.xml">
+    <script src="/js/main.js"></script>
+</head>
+<body class="bg-[var(--page-bg)] text-gray-900 dark:text-gray-100 transition-colors duration-300 min-h-screen flex flex-col">
+
+    <!-- Navbar -->
+    <nav class="sticky top-0 z-50 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md shadow-sm dark:border-b dark:border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="/" class="text-xl font-bold text-blue-600 dark:text-blue-400">AcoFork Blog</a>
+                    </div>
+                    <!-- Desktop Menu -->
+                    <div class="hidden md:ml-6 md:flex md:space-x-8">
+                        
+                        <a href="&#x2F;" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            首页
+                        </a>
+                        
+                        <a href="&#x2F;posts" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            归档
+                        </a>
+                        
+                        <a href="&#x2F;friends" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            友链
+                        </a>
+                        
+                        <a href="&#x2F;sponsors" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            赞助
+                        </a>
+                        
+                        <a href="https:&#x2F;&#x2F;umami.acofork.com&#x2F;share&#x2F;CdkXbGgZr6ECKOyK" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           target="_blank">
+                            统计
+                        </a>
+                        
+                        <a href="https:&#x2F;&#x2F;status.acofork.com" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           target="_blank">
+                            监控
+                        </a>
+                        
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <!-- Mobile Menu Button -->
+                    <button type="button" onclick="toggleMobileMenu()" class="md:hidden p-2 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
+                        <span class="sr-only">Open menu</span>
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                    <!-- Search Button -->
+                    <button onclick="toggleSearch()" class="p-2 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </button>
+                    <!-- Theme Toggle -->
+                    <button onclick="toggleTheme()" class="p-2 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
+                        <svg id="sun-icon" class="h-6 w-6 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                        <svg id="moon-icon" class="h-6 w-6 block dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                
+                <a href="&#x2F;" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    首页
+                </a>
+                
+                <a href="&#x2F;posts" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    归档
+                </a>
+                
+                <a href="&#x2F;friends" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    友链
+                </a>
+                
+                <a href="&#x2F;sponsors" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    赞助
+                </a>
+                
+                <a href="https:&#x2F;&#x2F;umami.acofork.com&#x2F;share&#x2F;CdkXbGgZr6ECKOyK" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   target="_blank">
+                    统计
+                </a>
+                
+                <a href="https:&#x2F;&#x2F;status.acofork.com" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   target="_blank">
+                    监控
+                </a>
+                
+            </div>
+        </div>
+    </nav>
+
+    <!-- Search Modal -->
+    <div id="search-modal" class="fixed inset-0 z-50 hidden" role="dialog" aria-modal="true">
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" onclick="toggleSearch()"></div>
+        <div class="fixed inset-0 z-10 overflow-y-auto p-4 sm:p-6 md:p-20" onclick="if(event.target === this) toggleSearch()">
+            <div class="mx-auto max-w-xl transform rounded-xl bg-white dark:bg-gray-800 p-2 shadow-2xl transition-all">
+                <input type="text" id="search-input" 
+                       class="w-full rounded-md border-0 bg-gray-100 dark:bg-gray-700 px-4 py-2.5 text-gray-900 dark:text-white placeholder-gray-500 focus:ring-0 sm:text-sm" 
+                       placeholder="搜索文章..." autocomplete="off">
+                <ul id="search-results" class="max-h-96 scroll-py-3 overflow-y-auto p-3"></ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+<div class="max-w-4xl mx-auto">
+    <!-- Post Header -->
+    <header class="mb-8 text-center">
+        <div class="flex items-center justify-center space-x-2 text-sm text-gray-500 dark:text-gray-400 mb-4">
+            <time datetime="2025-09-17">2025-09-17</time>
+            <span>•</span>
+            <span>9 分钟阅读</span>
+            <span id="views-separator" style="display: none">•</span>
+            <span id="page-views" style="display: none"></span>
+        </div>
+        <h1 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">Fuwari静态博客搭建教程</h1>
+        
+        <p class="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">Fuwari是一个静态博客框架，Cloudflare Pages是一个托管静态网站的服务，将他俩结合即可得到一个快速安全无需托管的高效博客</p>
+        
+        
+        <div class="w-full rounded-2xl overflow-hidden shadow-sm mb-8">
+            <img src="&#x2F;img&#x2F;ca14d7de8a07118b17b7072c7ec977ca.webp" alt="Fuwari静态博客搭建教程" class="w-full h-auto">
+        </div>
+        
+    </header>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const baseUrl = 'https://umami.acofork.com';
+                const shareId = 'CdkXbGgZr6ECKOyK';
+                // Current page path
+                const urlPath = window.location.pathname;
+                
+                const stats = await window.fetchUmamiStats(baseUrl, shareId, {
+                    url: urlPath
+                });
+                
+                // Check for both 'visits' (new preference) or 'pageviews' (fallback)
+                const metric = (stats && (stats.visits || stats.pageviews));
+                
+                let views = 0;
+                let hasData = false;
+
+                if (metric && typeof metric.value !== 'undefined') {
+                    views = metric.value;
+                    hasData = true;
+                } else if (stats && (typeof stats.visits === 'number' || typeof stats.pageviews === 'number')) {
+                        // Fallback for flat structure
+                        views = stats.visits || stats.pageviews;
+                        hasData = true;
+                }
+
+                if (hasData) {
+                    const viewEl = document.getElementById('page-views');
+                    viewEl.textContent = views + ' 次访问';
+                    viewEl.style.display = 'inline';
+                    document.getElementById('views-separator').style.display = 'inline';
+                }
+            } catch (e) {
+                console.error('Failed to load page views:', e);
+            }
+        });
+    </script>
+
+    <!-- Post Content -->
+    <article class="prose prose-lg dark:prose-invert max-w-none bg-white dark:bg-gray-800 p-8 md:p-12 rounded-2xl shadow-sm">
+        <h3 id="你需要准备的东西">你需要准备的东西</h3>
+<ol>
+<li>
+<p>一个牛逼的脑子，支持并行运算至少两个单位以上的事件。遇到问题先思考，想不通就搜索，搜索不到就去和AI调情，不要上来就问问问</p>
+</li>
+<li>
+<p><a rel="noopener nofollow" target="_blank" href="https://git-scm.com/downloads">Git - Downloads (git-scm.com)</a>：最牛逼的版本控制器，这里用于对Github进行操作，当然，你也可以尝试使用<a rel="noopener nofollow" target="_blank" href="https://github.com/apps/desktop">GitHub Desktop | Simple collaboration from your desktop</a> <del>但就我而言，这玩意更难用</del> 在现在SSH克隆默认被阻断的情况下，它变得好用起来了</p>
+</li>
+<li>
+<p><a rel="noopener nofollow" target="_blank" href="https://nodejs.org/en">Node.js — Run JavaScript Everywhere (nodejs.org)</a>：Fuwari基于Node.js，你需要安装这个来搭建博客</p>
+</li>
+<li>
+<p>一个<a rel="noopener nofollow" target="_blank" href="https://github.com">Github</a>账号：用于创建一个代码仓库存放Fuwari文件</p>
+</li>
+<li>
+<p>一个<a rel="noopener nofollow" target="_blank" href="https://cloudflare.com">Cloudflare</a>账号：用于创建一个Pages并且绑定域名支持访问</p>
+</li>
+<li>
+<p><a href="/posts/obsidian/">黑曜石（Obsidian）</a>：这是一个可视化MarkDown编辑器，因为Fuwari的每一篇文章/页面都是MarkDown，所以需要一个好用的编辑器</p>
+</li>
+<li>
+<p>你得会用MarkDown语法来编写文章，如果你不会可以参见：<a rel="noopener nofollow" target="_blank" href="https://markdown.com.cn/basic-syntax/">Markdown 基本语法 | Markdown 官方教程</a></p>
+</li>
+</ol>
+<h3 id="流程图">流程图</h3>
+<p>本地部署Fuwari，编写文章 -&gt; 推送更改到远程Github仓库 -&gt; Cloudflare Pages检测到仓库更新自动构建新的网站静态文件 -&gt; 网站成功更改</p>
+<h3 id="让我们开搞吧！">让我们开搞吧！</h3>
+<h4 id="首先，我们来本地部署Fuwari">首先，我们来本地部署Fuwari</h4>
+<ol>
+<li>
+<p>Fork仓库：</p>
+<p><a rel="noopener nofollow" target="_blank" href="https://github.com/saicaca/fuwari"><a rel="noopener nofollow" target="_blank" href="https://github.com/saicaca/fuwari">https://github.com/saicaca/fuwari</a></a></p>
+</li>
+<li>
+<p>避免有小废物不会Fork仓库，这里附上图片教程</p>
+</li>
+<li>
+<p><img src="/img/c697389b7d4ea17879136e83e51388a1.webp" alt="" /><img src="/img/9c6b5f65240b76f4b7262d1327f34e10.webp" alt="" /></p>
+</li>
+<li>
+<p>然后将仓库克隆到本地：<code>git clone &lt;你的仓库URL&gt;</code>（推荐使用SSH，可以不用魔法来推送更改）</p>
+</li>
+<li>
+<p>首先，全局安装pnpm：<code>npm install -g pnpm</code>（如果npm国内拉取过慢，请尝试cnpm：<a rel="noopener nofollow" target="_blank" href="https://npmmirror.com/">npmmirror 镜像站</a>）</p>
+</li>
+<li>
+<p>然后在项目根目录安装依赖：<code>pnpm install</code>  和 <code>pnpm add sharp</code></p>
+</li>
+<li>
+<p>至此，你成功在本地部署了Fuwari</p>
+</li>
+</ol>
+<blockquote>
+<p>[!TIP]</p>
+<p>你也可以使用创建一个新的空仓库然后手动上传文件，并且可以将仓库可见性设为：Private</p>
+</blockquote>
+<h4 id="改写Fuwari的基本信息并且清理多余文件">改写Fuwari的基本信息并且清理多余文件</h4>
+<blockquote>
+<p>刚创建的Fuwari可能带有一些示例的博主名，ICON，URL，介绍和示例文章，为了让用户知道这是你的博客，我们需要一一改写</p>
+</blockquote>
+<ol>
+<li>
+<p>在根目录下的 <code>src</code> 文件夹中，你可以找到 <code>config.ts</code> 我们来开始改写</p>
+<ul>
+<li>
+<p>title：你的博客主标题</p>
+</li>
+<li>
+<p>subtitle：你的博客副标题。可选，在首页会显示为“主标题 - 副标题”</p>
+</li>
+<li>
+<p>lang：博客显示语言。注释已经列出了一些常用的值，如：en, zh_CN, zh_TW, ja, ko</p>
+</li>
+<li>
+<p>themeColor：hue值则是你的博客主题色，可以在你的博客右上角的画板图标确定喜欢的颜色再填写<img src="/img/b3bb9325a63231dacc10b47a7b1ed5a8.webp" alt="" /></p>
+</li>
+<li>
+<p>banner：src：即banner图片，支持http/https URL</p>
+</li>
+<li>
+<p>favicon：src：即网站图标，支持http/https URL</p>
+</li>
+<li>
+<p>links：即友情链接，这些链接在导航栏上</p>
+</li>
+<li>
+<p>avatar：即你的头像</p>
+</li>
+<li>
+<p>name：即你的名字</p>
+</li>
+<li>
+<p>bio：即个性签名，会显示在头像和名字下面</p>
+</li>
+<li>
+<p><code>NavBarConfig</code> 为导航栏设置的超链接。<code>ProfileConfig</code> 为你的用户的超链接，分别如图<img src="/img/c2f942fb7e1baa141f04cd355c99fb38.webp" alt="" /></p>
+</li>
+<li>
+<p>icon：你需要前往<a rel="noopener nofollow" target="_blank" href="https://icones.js.org/">icones.js</a>去搜索你想要的图标，比如QQ，则填写 <code>fa6-brands:qq</code> ，如图。Fuwari默认支持这几种类型：<code>fa6-brands</code>, <code>fa6-regular</code>, <code>fa6-solid</code>, <code>material-symbols</code>。可以在 <code>astro.config.mjs</code> 中搜索关键字进行配置</p>
+</li>
+<li>
+<p><img src="/img/9b5dfb22b446ce9436e09de7950874d4.webp" alt="" /></p>
+</li>
+<li>
+<p><img src="/img/c79d6bd4fc10ef6e3f549265ca0f3cad.webp" alt="" /></p>
+</li>
+<li>
+<p>这里我附上我的 <code>config.ts</code></p>
+</li>
+<li><pre data-lang="ts" class="language-ts "><code class="language-ts" data-lang="ts">import type {
+  LicenseConfig,
+  NavBarConfig,
+  ProfileConfig,
+  SiteConfig,
+} from &#x27;.&#x2F;types&#x2F;config&#x27;
+import { LinkPreset } from &#x27;.&#x2F;types&#x2F;config&#x27;
+
+export const siteConfig: SiteConfig = {
+  title: &#x27;AcoFork Blog&#x27;,
+  subtitle: &#x27;爱你所爱！&#x27;,
+  lang: &#x27;zh_CN&#x27;,         &#x2F;&#x2F; &#x27;en&#x27;, &#x27;zh_CN&#x27;, &#x27;zh_TW&#x27;, &#x27;ja&#x27;, &#x27;ko&#x27;
+  themeColor: {
+    hue: 355,         &#x2F;&#x2F; Default hue for the theme color, from 0 to 360. e.g. red: 0, teal: 200, cyan: 250, pink: 345
+    fixed: false,     &#x2F;&#x2F; Hide the theme color picker for visitors
+  },
+  banner: {
+    enable: true,
+    src: &#x27;https:&#x2F;&#x2F;eo-r2.2x.nz&#x2F;myblog&#x2F;img&#x2F;222.webp&#x27;,   &#x2F;&#x2F; Relative to the &#x2F;src directory. Relative to the &#x2F;public directory if it starts with &#x27;&#x2F;&#x27;
+    position: &#x27;center&#x27;,      &#x2F;&#x2F; Equivalent to object-position, only supports &#x27;top&#x27;, &#x27;center&#x27;, &#x27;bottom&#x27;. &#x27;center&#x27; by default
+    credit: {
+      enable: false,         &#x2F;&#x2F; Display the credit text of the banner image
+      text: &#x27;&#x27;,              &#x2F;&#x2F; Credit text to be displayed
+      url: &#x27;&#x27;                &#x2F;&#x2F; (Optional) URL link to the original artwork or artist&#x27;s page
+    }
+  },
+  favicon: [    &#x2F;&#x2F; Leave this array empty to use the default favicon
+     {
+       src: &#x27;https:&#x2F;&#x2F;q2.qlogo.cn&#x2F;headimg_dl?dst_uin=2973517380&amp;spec=5&#x27;,    &#x2F;&#x2F; Path of the favicon, relative to the &#x2F;public directory
+       &#x2F;&#x2F;theme: &#x27;light&#x27;,              &#x2F;&#x2F; (Optional) Either &#x27;light&#x27; or &#x27;dark&#x27;, set only if you have different favicons for light and dark mode
+       sizes: &#x27;128x128&#x27;,              &#x2F;&#x2F; (Optional) Size of the favicon, set only if you have favicons of different sizes
+     }
+  ]
+}
+
+export const navBarConfig: NavBarConfig = {
+  links: [
+    LinkPreset.Home,
+    LinkPreset.Archive,
+    LinkPreset.About,
+    {
+      name: &#x27;随机图&#x27;,
+      url: &#x27;https:&#x2F;&#x2F;pic.onani.cn&#x27;,     &#x2F;&#x2F; Internal links should not include the base path, as it is automatically added
+      external: true,                               &#x2F;&#x2F; Show an external link icon and will open in a new tab
+    },
+    {
+      name: &#x27;GitHub&#x27;,
+      url: &#x27;https:&#x2F;&#x2F;github.com&#x2F;saicaca&#x2F;fuwari&#x27;,     &#x2F;&#x2F; Internal links should not include the base path, as it is automatically added
+      external: true,                               &#x2F;&#x2F; Show an external link icon and will open in a new tab
+    },
+  ],
+}
+
+export const profileConfig: ProfileConfig = {
+  avatar: &#x27;https:&#x2F;&#x2F;eo-r2.2x.nz&#x2F;myblog&#x2F;img&#x2F;111.webp&#x27;,  &#x2F;&#x2F; Relative to the &#x2F;src directory. Relative to the &#x2F;public directory if it starts with &#x27;&#x2F;&#x27;
+  name: &#x27;二叉树树&#x27;,
+  bio: &#x27;Protect What You Love.&#x2F;爱你所爱！&#x27;,
+  links: [
+    &#x2F;&#x2F; {
+      &#x2F;&#x2F; name: &#x27;Twitter&#x27;,
+      &#x2F;&#x2F; icon: &#x27;fa6-brands:twitter&#x27;,       &#x2F;&#x2F; Visit https:&#x2F;&#x2F;icones.js.org&#x2F; for icon codes
+                                        &#x2F;&#x2F; You will need to install the corresponding icon set if it&#x27;s not already included
+                                        &#x2F;&#x2F; `pnpm add @iconify-json&#x2F;&lt;icon-set-name&gt;`
+      &#x2F;&#x2F; url: &#x27;https:&#x2F;&#x2F;twitter.com&#x27;,
+    &#x2F;&#x2F; },
+    &#x2F;&#x2F; {
+      &#x2F;&#x2F; name: &#x27;Steam&#x27;,
+      &#x2F;&#x2F; icon: &#x27;fa6-brands:steam&#x27;,
+      &#x2F;&#x2F; url: &#x27;https:&#x2F;&#x2F;store.steampowered.com&#x27;,
+    &#x2F;&#x2F; },
+    {
+      name: &#x27;GitHub&#x27;,
+      icon: &#x27;fa6-brands:github&#x27;,
+      url: &#x27;https:&#x2F;&#x2F;github.com&#x2F;afoim&#x27;,
+    },
+    {
+      name: &#x27;QQ&#x27;,
+      icon: &#x27;fa6-brands:qq&#x27;,
+      url: &#x27;https:&#x2F;&#x2F;qm.qq.com&#x2F;q&#x2F;Uy9kmDXHYO&#x27;,
+    },
+    {
+      name: &#x27;Email&#x27;,
+      icon: &#x27;fa6-solid:envelope&#x27;,
+      url: &#x27;mailto:email@example.com&#x27;,
+    },
+  ],
+}
+
+export const licenseConfig: LicenseConfig = {
+  enable: true,
+  name: &#x27;CC BY-NC-SA 4.0&#x27;,
+  url: &#x27;https:&#x2F;&#x2F;creativecommons.org&#x2F;licenses&#x2F;by-nc-sa&#x2F;4.0&#x2F;&#x27;,
+}
+</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>清理多余文件。在根目录下的 <code>src/content/posts</code> 文件夹中会有一些示例文章，这些文章介绍了一些MarkDown语法和技巧，可以让你更快上手Fuwari和fuwari，我们可以将其保存到别处</p>
+</li>
+<li>
+<p>至此，你已经可以开始撰写文章了</p>
+</li>
+</ol>
+<h4 id="让我们开始写作！">让我们开始写作！</h4>
+<blockquote>
+<p>推荐使用 <a href="/posts/obsidian/">黑曜石（Obsidian）</a></p>
+</blockquote>
+<ol>
+<li>
+<p>首先，在项目根目录执行：<code>pnpm new-post &lt;这里填写你的文章标题&gt;</code></p>
+</li>
+<li>
+<p>然后，在根目录下的 <code>src/content/posts</code> 文件夹中会多出一个 <code>xxx.md</code>文件</p>
+</li>
+<li>
+<p>我们使用MarkText打开这个文件，你可以看到一些基本信息，我们只需要关注几个重要的信息</p>
+</li>
+<li><pre data-lang="markdown" class="language-markdown "><code class="language-markdown" data-lang="markdown">title: xxx
+published: 2024-10-14
+description: &#x27;&#x27;
+image: &#x27;&#x27;
+tags: []
+draft: false 
+lang: &#x27;&#x27;
+</code></pre>
+<ul>
+<li>
+<p>title：文章标题</p>
+</li>
+<li>
+<p>published：文章创建时间</p>
+</li>
+<li>
+<p>description：文章描述，正常会显示在文章标题下面</p>
+</li>
+<li>
+<p>image：文章封面图（同目录需要写 <code>./</code> 如：<code>./https://eo-r2.2x.nz/myblog/img/2024-10-14-11-33-28-image.webp</code>）</p>
+</li>
+<li>
+<p>tag：文章标签</p>
+</li>
+<li>
+<p>categories：文章分类</p>
+</li>
+</ul>
+</li>
+<li>
+<p>我们还需要更改根目录下的 <code>astro.config.mjs</code> 。在第34行更改 <code>stie:</code> 为你的站点URL，如： <code>site: "https://onani.cn",</code></p>
+</li>
+<li>
+<p>欸？有的人就会问了，MarkDown固然好，但是我要如何处理图片的置入呢</p>
+</li>
+<li>
+<p>这也很简单，多亏了MarkText这款软件，我们也可以像编辑Typecho一样直接使用Ctrl+CV来在MarkDown语法中置入图片，但是我们需要一些小设置：</p>
+<ul>
+<li>
+<p>依次点击：MarkText软件的左上角的三条杠 -&gt; File -&gt; Perferences -&gt; 左侧的Image分类 -&gt; 如图设置 -&gt; 注意更改第一个选项为Copy开头的选项，将Perfer开关打开，然后上下两个文本框一个填写绝对路径一个填写相对路径</p>
+</li>
+<li>
+<p><img src="/img/7df58d547fdb491f4d5dee055ece8b8d.webp" alt="" /></p>
+</li>
+<li>
+<p>这样，当置入图片时，会往 <code>https://eo-r2.2x.nz/myblog/img</code> 文件夹复制一份，然后通过<code>![1](https://eo-r2.2x.nz/myblog/img/1.webp)</code>写入MarkDown文件。这样网站就能成功读取到图片啦。而你只需要Ctrl+CV，其他操作MarkText都会自动处理</p>
+</li>
+</ul>
+</li>
+<li>
+<p>至此，你已经会用MarkText编写MarkDown语法的博文了</p>
+</li>
+</ol>
+<h4 id="本地预览，然后发布到Github">本地预览，然后发布到Github</h4>
+<ol>
+<li>
+<p>当你认为你的文章已经写得差不多时，想要看看效果？请到项目根目录执行：<code>pnpm dev</code>，稍等片刻，你就可以本地预览你的博客啦<img src="/img/7688d13dbe3666650ba28efa87d914c3.webp" alt="" /></p>
+</li>
+<li>
+<p>好！接下来我们需要使用Git将我们所做的更改发布到Github</p>
+<ul>
+<li>
+<p>首先，你需要让Git知道你是谁：<code>git config --global user.name "你的Github用户名"</code>和<code>git config --global user.email "你的Github邮箱@example.com"</code></p>
+</li>
+<li>
+<p>然后，更改远程仓库为ssh*（如果是通过ssh克隆的不用改）：<code>git remote set-url origin git@github.com:xxx/xxx</code></p>
+</li>
+<li>
+<p>随后，让我们提交所有文件：<code>git add .</code></p>
+</li>
+<li>
+<p>之后，让我们发布一个本地提交：<code>git commit -m "项目初始化"</code></p>
+</li>
+<li>
+<p>最后，让我们将本地更改提交到远程仓库：<code>git push</code></p>
+</li>
+</ul>
+</li>
+<li>
+<p>此时，你的Github仓库应该已经有了新的提交<img src="/img/f9fa1a51f3a9d794461908773afda27d.webp" alt="" /></p>
+</li>
+</ol>
+<h4 id="让Cloudflare连接上Github，使用Pages服务展示你的博客（FREE！）">让Cloudflare连接上Github，使用Pages服务展示你的博客（FREE！）</h4>
+<ol>
+<li>
+<p>前往Cloudflare的 Workers 和 Pages 页面，创建一个新Pages<img src="/img/02bea28bee89e0d3cf76c5f874c6a29d.webp" alt="" /></p>
+</li>
+<li>
+<p>然后选择连接Git存储库，连接你的Github，随后设置构建命令：<code>pnpm build</code>  ，然后设置构建输出目录：<code>dist</code> ，如图<img src="/img/3be90d09c5b48f0e7301814b3af5bc29.webp" alt="" /></p>
+</li>
+<li>
+<p>绑定自定义域，访问自定义域即可访问你的博客！<img src="/img/7c0dbffc9109836977957841bd54737d.webp" alt="" /></p>
+</li>
+<li>
+<p>随后，你只需要在本地编写文章，然后<a href="https://blog.acofork.com/posts/fuwari/#%E6%9C%AC%E5%9C%B0%E9%A2%84%E8%A7%88%E7%84%B6%E5%90%8E%E5%8F%91%E5%B8%83%E5%88%B0github">使用Git将更改推送到远程仓库</a>，Cloudflare就会自动部署，更新你的博客！</p>
+</li>
+</ol>
+
+    </article>
+
+    <!-- License -->
+    <div class="mt-8 p-6 bg-gray-50 dark:bg-gray-700/50 rounded-2xl text-sm text-gray-600 dark:text-gray-400">
+        <div class="flex flex-col gap-2">
+            <p class="font-medium text-gray-900 dark:text-white">版权声明</p>
+            <p>
+                本文由 <span class="font-medium">二叉树树</span> 创作，采用 
+                <a href="https:&#x2F;&#x2F;creativecommons.org&#x2F;licenses&#x2F;by-nc-sa&#x2F;4.0&#x2F;" target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-blue-400 hover:underline">CC BY-NC-SA 4.0</a> 
+                许可协议。
+            </p>
+            <p>
+                转载请注明出处：<a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;posts&#x2F;fuwari&#x2F;" class="text-blue-600 dark:text-blue-400 hover:underline break-all">AcoFork Blog - Fuwari静态博客搭建教程: https:&#x2F;&#x2F;blog.acofork.com&#x2F;posts&#x2F;fuwari&#x2F;</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Help & Edit -->
+    <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-sm">
+            <h3 class="font-bold text-gray-900 dark:text-white mb-2">这篇文章是否对你有帮助？</h3>
+            <div class="flex space-x-4">
+                <a href="&#x2F;posts&#x2F;pin" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline">联系</a>
+                <a href="&#x2F;sponsors" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline">赞助</a>
+            </div>
+        </div>
+        <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-sm">
+            <h3 class="font-bold text-gray-900 dark:text-white mb-2">发现错误或想要改进这篇文章？</h3>
+            <a href="https:&#x2F;&#x2F;github.com&#x2F;afoim&#x2F;AcoFork_Blog_Zola/blob/main/content/posts&#x2F;fuwari.md" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline flex items-center">
+                <span>在 GitHub 上编辑此页</span>
+                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+            </a>
+        </div>
+    </div>
+
+    <!-- Post Footer -->
+    <footer class="mt-8 flex flex-wrap gap-2 justify-center">
+        
+    </footer>
+
+    <!-- Comments (Giscus) -->
+    <div class="mt-12 bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-sm">
+<script src="https://giscus.app/client.js"
+        data-repo="afoim/giscus-fuwari"
+        data-repo-id="R_kgDOOi8quw"
+        data-category="Announcements"
+        data-category-id="DIC_kwDOOi8qu84CprDV"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="preferred_color_scheme"
+        data-lang="zh-CN"
+        crossorigin="anonymous"
+        async>
+</script>
+    </div>
+</div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col items-center justify-center space-y-2">
+                <p class="text-gray-500 dark:text-gray-400 text-sm">
+                    &copy; 2026 二叉树树. 
+                    <a href="https:&#x2F;&#x2F;creativecommons.org&#x2F;licenses&#x2F;by-nc-sa&#x2F;4.0&#x2F;" target="_blank" class="hover:underline">CC BY-NC-SA 4.0</a>
+                </p>
+                <p class="text-gray-400 dark:text-gray-500 text-xs">
+                    Powered by <a href="https://www.getzola.org" target="_blank" class="hover:text-gray-300">Zola</a>
+                     · <a href="https://github.com/afoim/AcoFork_Blog_Zola" target="_blank" class="hover:text-gray-300">Source Code</a>
+                </p>
+                <a href="https://blog.acofork.com/rss.xml" target="_blank" class="text-gray-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors p-2">
+                    <span class="sr-only">RSS</span>
+                    <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                        <path d="M5 3a1 1 0 000 2c5.523 0 10 4.477 10 10a1 1 0 102 0C17 8.373 11.627 3 5 3z"></path>
+                        <path d="M4 9a1 1 0 011-1 7 7 0 017 7 1 1 0 11-2 0 5 5 0 00-5-5 1 1 0 01-1-1zM3 15a2 2 0 114 0 2 2 0 01-4 0z"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/elasticlunr/0.9.6/elasticlunr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+    <script src="/js/umami-share.js"></script>
+    <script src="/js/search.js"></script>
+    <script src="/js/gfm-alerts.js"></script>
+    <script src="/js/anchor-fix.js"></script>
+    <script>
+        // Umami script needs to be loaded if it's not already
+        // This is a workaround since we removed the original script tag
+        (function() {
+            var el = document.createElement('script');
+            el.setAttribute('src', 'https://umami.acofork.com/script.js');
+            el.setAttribute('data-website-id', '5d710dbd-3a2e-43e3-a553-97b415090c63');
+            el.setAttribute('defer', '');
+            document.body.appendChild(el);
+        })();
+    </script>
+</body>
+</html>

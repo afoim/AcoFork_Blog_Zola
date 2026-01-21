@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="zh" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AcoFork Blog - 技术分享与实践</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css"/>
+    <link rel="icon" href="https://q2.qlogo.cn/headimg_dl?dst_uin=2726730791&amp;spec=0">
+    <script src="https://pic1.acofork.com/random.js"></script>
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.acofork.com/rss.xml">
+    <script src="/js/main.js"></script>
+</head>
+<body class="bg-[var(--page-bg)] text-gray-900 dark:text-gray-100 transition-colors duration-300 min-h-screen flex flex-col">
+
+    <!-- Navbar -->
+    <nav class="sticky top-0 z-50 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md shadow-sm dark:border-b dark:border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="/" class="text-xl font-bold text-blue-600 dark:text-blue-400">AcoFork Blog</a>
+                    </div>
+                    <!-- Desktop Menu -->
+                    <div class="hidden md:ml-6 md:flex md:space-x-8">
+                        
+                        <a href="&#x2F;" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            首页
+                        </a>
+                        
+                        <a href="&#x2F;posts" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            归档
+                        </a>
+                        
+                        <a href="&#x2F;friends" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            友链
+                        </a>
+                        
+                        <a href="&#x2F;sponsors" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            赞助
+                        </a>
+                        
+                        <a href="https:&#x2F;&#x2F;umami.acofork.com&#x2F;share&#x2F;CdkXbGgZr6ECKOyK" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           target="_blank">
+                            统计
+                        </a>
+                        
+                        <a href="https:&#x2F;&#x2F;status.acofork.com" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           target="_blank">
+                            监控
+                        </a>
+                        
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <!-- Mobile Menu Button -->
+                    <button type="button" onclick="toggleMobileMenu()" class="md:hidden p-2 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
+                        <span class="sr-only">Open menu</span>
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                    <!-- Search Button -->
+                    <button onclick="toggleSearch()" class="p-2 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </button>
+                    <!-- Theme Toggle -->
+                    <button onclick="toggleTheme()" class="p-2 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
+                        <svg id="sun-icon" class="h-6 w-6 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                        <svg id="moon-icon" class="h-6 w-6 block dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                
+                <a href="&#x2F;" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    首页
+                </a>
+                
+                <a href="&#x2F;posts" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    归档
+                </a>
+                
+                <a href="&#x2F;friends" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    友链
+                </a>
+                
+                <a href="&#x2F;sponsors" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    赞助
+                </a>
+                
+                <a href="https:&#x2F;&#x2F;umami.acofork.com&#x2F;share&#x2F;CdkXbGgZr6ECKOyK" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   target="_blank">
+                    统计
+                </a>
+                
+                <a href="https:&#x2F;&#x2F;status.acofork.com" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   target="_blank">
+                    监控
+                </a>
+                
+            </div>
+        </div>
+    </nav>
+
+    <!-- Search Modal -->
+    <div id="search-modal" class="fixed inset-0 z-50 hidden" role="dialog" aria-modal="true">
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" onclick="toggleSearch()"></div>
+        <div class="fixed inset-0 z-10 overflow-y-auto p-4 sm:p-6 md:p-20" onclick="if(event.target === this) toggleSearch()">
+            <div class="mx-auto max-w-xl transform rounded-xl bg-white dark:bg-gray-800 p-2 shadow-2xl transition-all">
+                <input type="text" id="search-input" 
+                       class="w-full rounded-md border-0 bg-gray-100 dark:bg-gray-700 px-4 py-2.5 text-gray-900 dark:text-white placeholder-gray-500 focus:ring-0 sm:text-sm" 
+                       placeholder="搜索文章..." autocomplete="off">
+                <ul id="search-results" class="max-h-96 scroll-py-3 overflow-y-auto p-3"></ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+<div class="max-w-4xl mx-auto">
+    <header class="mb-10 text-center">
+        <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">赞助</h1>
+        <p class="text-gray-600 dark:text-gray-300">感谢您的支持！</p>
+    </header>
+
+    <!-- Payment QR Codes -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm text-center">
+            <h3 class="text-xl font-bold text-blue-500 mb-4">支付宝</h3>
+            <img src="https://blog.acofork.com/sponsors/alipay.svg" alt="Alipay" class="w-48 h-48 mx-auto object-contain">
+        </div>
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm text-center">
+            <h3 class="text-xl font-bold text-green-500 mb-4">微信支付</h3>
+            <img src="https://blog.acofork.com/sponsors/wechat.svg" alt="WeChat Pay" class="w-48 h-48 mx-auto object-contain">
+        </div>
+    </div>
+
+    
+    
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm overflow-hidden">
+        <div class="px-6 py-4 border-b border-gray-100 dark:border-gray-700">
+            <h3 class="font-bold text-gray-900 dark:text-white">近期赞助</h3>
+        </div>
+        <ul class="divide-y divide-gray-100 dark:divide-gray-700">
+            
+            <li class="p-4 flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                <div class="flex items-center space-x-4">
+                    <img src="https:&#x2F;&#x2F;blog-backend.alexma.top&#x2F;api&#x2F;v2&#x2F;objects&#x2F;avatar&#x2F;112zjnt1f3c2cf3prp.webp" alt="AlexMa233" class="w-10 h-10 rounded-full bg-gray-200">
+                    <div>
+                        <p class="font-medium text-gray-900 dark:text-white">AlexMa233</p>
+                        <p class="text-xs text-gray-500">2025-07-27</p>
+                    </div>
+                </div>
+                <div class="font-bold text-green-600 dark:text-green-400">
+                    5 B币
+                </div>
+            </li>
+            
+            <li class="p-4 flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                <div class="flex items-center space-x-4">
+                    <img src="https:&#x2F;&#x2F;q2.qlogo.cn&#x2F;headimg_dl?dst_uin=3451860760&amp;spec=0" alt="chuzouX" class="w-10 h-10 rounded-full bg-gray-200">
+                    <div>
+                        <p class="font-medium text-gray-900 dark:text-white">chuzouX</p>
+                        <p class="text-xs text-gray-500">2025-09-07</p>
+                    </div>
+                </div>
+                <div class="font-bold text-green-600 dark:text-green-400">
+                    10￥
+                </div>
+            </li>
+            
+            <li class="p-4 flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                <div class="flex items-center space-x-4">
+                    <img src="https:&#x2F;&#x2F;blog.510904.xyz&#x2F;_astro&#x2F;1.BpX3ReIY_2fdyFy.webp" alt="CPer" class="w-10 h-10 rounded-full bg-gray-200">
+                    <div>
+                        <p class="font-medium text-gray-900 dark:text-white">CPer</p>
+                        <p class="text-xs text-gray-500">2026-01-02</p>
+                    </div>
+                </div>
+                <div class="font-bold text-green-600 dark:text-green-400">
+                    5B币+99电池
+                </div>
+            </li>
+            
+            <li class="p-4 flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                <div class="flex items-center space-x-4">
+                    <img src="https:&#x2F;&#x2F;img.alicdn.com&#x2F;bao&#x2F;uploaded&#x2F;i4&#x2F;O1CN01TWOpM42DSyY5nC0hM_!!0-mtopupload.jpg" alt="HEISEN黑森" class="w-10 h-10 rounded-full bg-gray-200">
+                    <div>
+                        <p class="font-medium text-gray-900 dark:text-white">HEISEN黑森</p>
+                        <p class="text-xs text-gray-500">2025-08-09</p>
+                    </div>
+                </div>
+                <div class="font-bold text-green-600 dark:text-green-400">
+                    两个月充电
+                </div>
+            </li>
+            
+            <li class="p-4 flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                <div class="flex items-center space-x-4">
+                    <img src="https:&#x2F;&#x2F;q2.qlogo.cn&#x2F;headimg_dl?dst_uin=1520942621&amp;spec=0" alt="云云云" class="w-10 h-10 rounded-full bg-gray-200">
+                    <div>
+                        <p class="font-medium text-gray-900 dark:text-white">云云云</p>
+                        <p class="text-xs text-gray-500">2026-1-12</p>
+                    </div>
+                </div>
+                <div class="font-bold text-green-600 dark:text-green-400">
+                    50 ￥
+                </div>
+            </li>
+            
+            <li class="p-4 flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                <div class="flex items-center space-x-4">
+                    <img src="https:&#x2F;&#x2F;q.qlogo.cn&#x2F;g?b=qq&amp;nk=2244347713&amp;s=160" alt="MingTone" class="w-10 h-10 rounded-full bg-gray-200">
+                    <div>
+                        <p class="font-medium text-gray-900 dark:text-white">MingTone</p>
+                        <p class="text-xs text-gray-500">2025-07-21</p>
+                    </div>
+                </div>
+                <div class="font-bold text-green-600 dark:text-green-400">
+                    50 ￥
+                </div>
+            </li>
+            
+            <li class="p-4 flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                <div class="flex items-center space-x-4">
+                    <img src="https:&#x2F;&#x2F;xapi.rownix.dev&#x2F;8bec399a8d697bf4db49df6073b263795760a2a9.jpg" alt="Rownix" class="w-10 h-10 rounded-full bg-gray-200">
+                    <div>
+                        <p class="font-medium text-gray-900 dark:text-white">Rownix</p>
+                        <p class="text-xs text-gray-500">2026-01-17</p>
+                    </div>
+                </div>
+                <div class="font-bold text-green-600 dark:text-green-400">
+                    10￥
+                </div>
+            </li>
+            
+            <li class="p-4 flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                <div class="flex items-center space-x-4">
+                    <img src="https:&#x2F;&#x2F;zhongzhong.space&#x2F;wp-content&#x2F;uploads&#x2F;2025&#x2F;11&#x2F;avatar.webp" alt="zz4zz" class="w-10 h-10 rounded-full bg-gray-200">
+                    <div>
+                        <p class="font-medium text-gray-900 dark:text-white">zz4zz</p>
+                        <p class="text-xs text-gray-500">2025-11-15</p>
+                    </div>
+                </div>
+                <div class="font-bold text-green-600 dark:text-green-400">
+                    10￥
+                </div>
+            </li>
+            
+            <li class="p-4 flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                <div class="flex items-center space-x-4">
+                    <img src="https:&#x2F;&#x2F;avatars.githubusercontent.com&#x2F;u&#x2F;95153572" alt="コットンキャンディ" class="w-10 h-10 rounded-full bg-gray-200">
+                    <div>
+                        <p class="font-medium text-gray-900 dark:text-white">コットンキャンディ</p>
+                        <p class="text-xs text-gray-500">2026-01-02</p>
+                    </div>
+                </div>
+                <div class="font-bold text-green-600 dark:text-green-400">
+                    10 CNY
+                </div>
+            </li>
+            
+            <li class="p-4 flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                <div class="flex items-center space-x-4">
+                    <img src="https:&amp;#x2F;&amp;#x2F;q2.qlogo.cn&amp;#x2F;headimg_dl?dst_uin=2726730791&amp;amp;spec=0" alt="匿名用户" class="w-10 h-10 rounded-full bg-gray-200">
+                    <div>
+                        <p class="font-medium text-gray-900 dark:text-white">匿名用户</p>
+                        <p class="text-xs text-gray-500">2025-07-15</p>
+                    </div>
+                </div>
+                <div class="font-bold text-green-600 dark:text-green-400">
+                    19.80￥
+                </div>
+            </li>
+            
+            <li class="p-4 flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                <div class="flex items-center space-x-4">
+                    <img src="https:&#x2F;&#x2F;blog.yeqing.net&#x2F;favicon.ico" alt="夜轻" class="w-10 h-10 rounded-full bg-gray-200">
+                    <div>
+                        <p class="font-medium text-gray-900 dark:text-white">夜轻</p>
+                        <p class="text-xs text-gray-500">2025-07-11</p>
+                    </div>
+                </div>
+                <div class="font-bold text-green-600 dark:text-green-400">
+                    78 ￥
+                </div>
+            </li>
+            
+            <li class="p-4 flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                <div class="flex items-center space-x-4">
+                    <img src="&#x2F;sponsors&#x2F;mjt.jpg" alt="明镜台" class="w-10 h-10 rounded-full bg-gray-200">
+                    <div>
+                        <p class="font-medium text-gray-900 dark:text-white">明镜台</p>
+                        <p class="text-xs text-gray-500">2025-08-02</p>
+                    </div>
+                </div>
+                <div class="font-bold text-green-600 dark:text-green-400">
+                    100 ￥
+                </div>
+            </li>
+            
+            <li class="p-4 flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                <div class="flex items-center space-x-4">
+                    <img src="https:&#x2F;&#x2F;i0.hdslb.com&#x2F;bfs&#x2F;face&#x2F;cd7027786846c4a49e4c8046b536ca0f5923cb16.jpg" alt="请输入内容404" class="w-10 h-10 rounded-full bg-gray-200">
+                    <div>
+                        <p class="font-medium text-gray-900 dark:text-white">请输入内容404</p>
+                        <p class="text-xs text-gray-500">2025-12-17</p>
+                    </div>
+                </div>
+                <div class="font-bold text-green-600 dark:text-green-400">
+                    11.45 CNY
+                </div>
+            </li>
+            
+            <li class="p-4 flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                <div class="flex items-center space-x-4">
+                    <img src="https:&#x2F;&#x2F;coldin.top&#x2F;src&#x2F;avatar.webp" alt="酷丁同学" class="w-10 h-10 rounded-full bg-gray-200">
+                    <div>
+                        <p class="font-medium text-gray-900 dark:text-white">酷丁同学</p>
+                        <p class="text-xs text-gray-500">2025-07-15</p>
+                    </div>
+                </div>
+                <div class="font-bold text-green-600 dark:text-green-400">
+                    5 USDC
+                </div>
+            </li>
+            
+            <li class="p-4 flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                <div class="flex items-center space-x-4">
+                    <img src="https:&#x2F;&#x2F;r2.1t.nz&#x2F;images&#x2F;avatars&#x2F;Ferxal.webp" alt="风萧li" class="w-10 h-10 rounded-full bg-gray-200">
+                    <div>
+                        <p class="font-medium text-gray-900 dark:text-white">风萧li</p>
+                        <p class="text-xs text-gray-500">2026-01-11</p>
+                    </div>
+                </div>
+                <div class="font-bold text-green-600 dark:text-green-400">
+                    10B币+9电池
+                </div>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="mt-12 prose dark:prose-invert mx-auto text-center">
+        <p>如果我的文章对你有帮助，欢迎赞助我一杯咖啡 ☕️</p>
+
+    </div>
+</div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col items-center justify-center space-y-2">
+                <p class="text-gray-500 dark:text-gray-400 text-sm">
+                    &copy; 2026 二叉树树. 
+                    <a href="https:&#x2F;&#x2F;creativecommons.org&#x2F;licenses&#x2F;by-nc-sa&#x2F;4.0&#x2F;" target="_blank" class="hover:underline">CC BY-NC-SA 4.0</a>
+                </p>
+                <p class="text-gray-400 dark:text-gray-500 text-xs">
+                    Powered by <a href="https://www.getzola.org" target="_blank" class="hover:text-gray-300">Zola</a>
+                     · <a href="https://github.com/afoim/AcoFork_Blog_Zola" target="_blank" class="hover:text-gray-300">Source Code</a>
+                </p>
+                <a href="https://blog.acofork.com/rss.xml" target="_blank" class="text-gray-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors p-2">
+                    <span class="sr-only">RSS</span>
+                    <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                        <path d="M5 3a1 1 0 000 2c5.523 0 10 4.477 10 10a1 1 0 102 0C17 8.373 11.627 3 5 3z"></path>
+                        <path d="M4 9a1 1 0 011-1 7 7 0 017 7 1 1 0 11-2 0 5 5 0 00-5-5 1 1 0 01-1-1zM3 15a2 2 0 114 0 2 2 0 01-4 0z"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/elasticlunr/0.9.6/elasticlunr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+    <script src="/js/umami-share.js"></script>
+    <script src="/js/search.js"></script>
+    <script src="/js/gfm-alerts.js"></script>
+    <script src="/js/anchor-fix.js"></script>
+    <script>
+        // Umami script needs to be loaded if it's not already
+        // This is a workaround since we removed the original script tag
+        (function() {
+            var el = document.createElement('script');
+            el.setAttribute('src', 'https://umami.acofork.com/script.js');
+            el.setAttribute('data-website-id', '5d710dbd-3a2e-43e3-a553-97b415090c63');
+            el.setAttribute('defer', '');
+            document.body.appendChild(el);
+        })();
+    </script>
+</body>
+</html>

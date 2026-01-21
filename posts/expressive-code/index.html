@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="zh" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expressive Code 记录 - AcoFork Blog</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css"/>
+    <link rel="icon" href="https://q2.qlogo.cn/headimg_dl?dst_uin=2726730791&amp;spec=0">
+    <script src="https://pic1.acofork.com/random.js"></script>
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.acofork.com/rss.xml">
+    <script src="/js/main.js"></script>
+</head>
+<body class="bg-[var(--page-bg)] text-gray-900 dark:text-gray-100 transition-colors duration-300 min-h-screen flex flex-col">
+
+    <!-- Navbar -->
+    <nav class="sticky top-0 z-50 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md shadow-sm dark:border-b dark:border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="/" class="text-xl font-bold text-blue-600 dark:text-blue-400">AcoFork Blog</a>
+                    </div>
+                    <!-- Desktop Menu -->
+                    <div class="hidden md:ml-6 md:flex md:space-x-8">
+                        
+                        <a href="&#x2F;" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            首页
+                        </a>
+                        
+                        <a href="&#x2F;posts" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            归档
+                        </a>
+                        
+                        <a href="&#x2F;friends" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            友链
+                        </a>
+                        
+                        <a href="&#x2F;sponsors" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            赞助
+                        </a>
+                        
+                        <a href="https:&#x2F;&#x2F;umami.acofork.com&#x2F;share&#x2F;CdkXbGgZr6ECKOyK" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           target="_blank">
+                            统计
+                        </a>
+                        
+                        <a href="https:&#x2F;&#x2F;status.acofork.com" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           target="_blank">
+                            监控
+                        </a>
+                        
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <!-- Mobile Menu Button -->
+                    <button type="button" onclick="toggleMobileMenu()" class="md:hidden p-2 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
+                        <span class="sr-only">Open menu</span>
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                    <!-- Search Button -->
+                    <button onclick="toggleSearch()" class="p-2 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </button>
+                    <!-- Theme Toggle -->
+                    <button onclick="toggleTheme()" class="p-2 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
+                        <svg id="sun-icon" class="h-6 w-6 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                        <svg id="moon-icon" class="h-6 w-6 block dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                
+                <a href="&#x2F;" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    首页
+                </a>
+                
+                <a href="&#x2F;posts" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    归档
+                </a>
+                
+                <a href="&#x2F;friends" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    友链
+                </a>
+                
+                <a href="&#x2F;sponsors" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    赞助
+                </a>
+                
+                <a href="https:&#x2F;&#x2F;umami.acofork.com&#x2F;share&#x2F;CdkXbGgZr6ECKOyK" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   target="_blank">
+                    统计
+                </a>
+                
+                <a href="https:&#x2F;&#x2F;status.acofork.com" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   target="_blank">
+                    监控
+                </a>
+                
+            </div>
+        </div>
+    </nav>
+
+    <!-- Search Modal -->
+    <div id="search-modal" class="fixed inset-0 z-50 hidden" role="dialog" aria-modal="true">
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" onclick="toggleSearch()"></div>
+        <div class="fixed inset-0 z-10 overflow-y-auto p-4 sm:p-6 md:p-20" onclick="if(event.target === this) toggleSearch()">
+            <div class="mx-auto max-w-xl transform rounded-xl bg-white dark:bg-gray-800 p-2 shadow-2xl transition-all">
+                <input type="text" id="search-input" 
+                       class="w-full rounded-md border-0 bg-gray-100 dark:bg-gray-700 px-4 py-2.5 text-gray-900 dark:text-white placeholder-gray-500 focus:ring-0 sm:text-sm" 
+                       placeholder="搜索文章..." autocomplete="off">
+                <ul id="search-results" class="max-h-96 scroll-py-3 overflow-y-auto p-3"></ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+<div class="max-w-4xl mx-auto">
+    <!-- Post Header -->
+    <header class="mb-8 text-center">
+        <div class="flex items-center justify-center space-x-2 text-sm text-gray-500 dark:text-gray-400 mb-4">
+            <time datetime="2025-08-11">2025-08-11</time>
+            <span>•</span>
+            <span>4 分钟阅读</span>
+            <span id="views-separator" style="display: none">•</span>
+            <span id="page-views" style="display: none"></span>
+        </div>
+        <h1 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">Expressive Code 记录</h1>
+        
+        <p class="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">如何使用Expressive Code 代码块及迁移踩坑记录</p>
+        
+        
+        <div class="w-full rounded-2xl overflow-hidden shadow-sm mb-8">
+            <img src="&#x2F;img&#x2F;8128be999308ddbab0518315861b8de7.png" alt="Expressive Code 记录" class="w-full h-auto">
+        </div>
+        
+    </header>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const baseUrl = 'https://umami.acofork.com';
+                const shareId = 'CdkXbGgZr6ECKOyK';
+                // Current page path
+                const urlPath = window.location.pathname;
+                
+                const stats = await window.fetchUmamiStats(baseUrl, shareId, {
+                    url: urlPath
+                });
+                
+                // Check for both 'visits' (new preference) or 'pageviews' (fallback)
+                const metric = (stats && (stats.visits || stats.pageviews));
+                
+                let views = 0;
+                let hasData = false;
+
+                if (metric && typeof metric.value !== 'undefined') {
+                    views = metric.value;
+                    hasData = true;
+                } else if (stats && (typeof stats.visits === 'number' || typeof stats.pageviews === 'number')) {
+                        // Fallback for flat structure
+                        views = stats.visits || stats.pageviews;
+                        hasData = true;
+                }
+
+                if (hasData) {
+                    const viewEl = document.getElementById('page-views');
+                    viewEl.textContent = views + ' 次访问';
+                    viewEl.style.display = 'inline';
+                    document.getElementById('views-separator').style.display = 'inline';
+                }
+            } catch (e) {
+                console.error('Failed to load page views:', e);
+            }
+        });
+    </script>
+
+    <!-- Post Content -->
+    <article class="prose prose-lg dark:prose-invert max-w-none bg-white dark:bg-gray-800 p-8 md:p-12 rounded-2xl shadow-sm">
+        <blockquote>
+<p>本文非站长原创，由 <a rel="noopener nofollow" target="_blank" href="https://github.com/afoim/fuwari/pull/27">Expressive code by yCENzh · Pull Request #27 · afoim/fuwari</a> 提供</p>
+</blockquote>
+<p>:::note
+原文链接:<a rel="noopener nofollow" target="_blank" href="https://14131413.xyz/posts/default/expressive-code/">Expressive Code Example</a>
+:::</p>
+<blockquote>
+<h3 id="踩坑">踩坑</h3>
+<ol>
+<li>首先按照fuwari原仓库commit进行修改,发现ac没推上去,构建第一次失败</li>
+<li>推完ac后发现在ec中引用了三个插件,但是pnpm astro add并没有自动安装,第二次修改</li>
+<li>现在正常跑起来了,但是由于2x主题的原因,样式很奇怪,再改一次</li>
+<li>这下正常了,推pr去</li>
+<li>没错我又回来了,滑块样式有问题,什么奇奇怪怪的圆角对不齐,干脆调小圆角</li>
+<li>应该是这个pr最后一次提交了,合并上游8个commit,不愧是劳模2x</li>
+<li>去tm的ANSI</li>
+</ol>
+</blockquote>
+<p>Here, we’ll explore how code blocks look using <a rel="noopener nofollow" target="_blank" href="https://expressive-code.com/">Expressive Code</a>. The provided examples are based on the official documentation, which you can refer to for further details.
+在这里，我们将探索使用 <a rel="noopener nofollow" target="_blank" href="https://expressive-code.com/">Expressive Code</a> 的代码块显示效果。提供的示例基于官方文档，您可以参考该文档获取更多细节。</p>
+<h2 id="Expressive_Code">Expressive Code</h2>
+<h3 id="Syntax_Highlighting">Syntax Highlighting</h3>
+<h3 id="语法高亮">语法高亮</h3>
+<p><a rel="noopener nofollow" target="_blank" href="https://expressive-code.com/key-features/syntax-highlighting/">Syntax Highlighting</a>
+<a rel="noopener nofollow" target="_blank" href="https://expressive-code.com/key-features/syntax-highlighting/">语法高亮</a></p>
+<h4 id="Regular_syntax_highlighting">Regular syntax highlighting</h4>
+<h4 id="常规语法高亮">常规语法高亮</h4>
+<pre data-lang="js" class="language-js "><code class="language-js" data-lang="js">console.log(&#x27;This code is syntax highlighted!&#x27;)
+</code></pre>
+<h3 id="Editor_&amp;_Terminal_Frames">Editor &amp; Terminal Frames</h3>
+<h3 id="编辑器与终端框架">编辑器与终端框架</h3>
+<p><a rel="noopener nofollow" target="_blank" href="https://expressive-code.com/key-features/frames/">Editor &amp; Terminal Frames</a>
+<a rel="noopener nofollow" target="_blank" href="https://expressive-code.com/key-features/frames/">编辑器与终端框架</a></p>
+<h4 id="Code_editor_frames">Code editor frames</h4>
+<h4 id="代码编辑器框架">代码编辑器框架</h4>
+<pre data-lang="js" class="language-js "><code class="language-js" data-lang="js">console.log(&#x27;Title attribute example&#x27;)
+</code></pre>
+<hr />
+<pre data-lang="html" class="language-html "><code class="language-html" data-lang="html">&lt;!-- src&#x2F;content&#x2F;index.html --&gt;
+&lt;div&gt;File name comment example&lt;&#x2F;div&gt;
+</code></pre>
+<h4 id="Terminal_frames">Terminal frames</h4>
+<h4 id="终端框架">终端框架</h4>
+<pre data-lang="bash" class="language-bash "><code class="language-bash" data-lang="bash">echo &quot;This terminal frame has no title&quot;
+</code></pre>
+<hr />
+<pre data-lang="powershell" class="language-powershell "><code class="language-powershell" data-lang="powershell">Write-Output &quot;This one has a title!&quot;
+</code></pre>
+<h4 id="Overriding_frame_types">Overriding frame types</h4>
+<h4 id="覆盖框架类型">覆盖框架类型</h4>
+<pre data-lang="sh" class="language-sh "><code class="language-sh" data-lang="sh">echo &quot;Look ma, no frame!&quot;
+</code></pre>
+<hr />
+<pre data-lang="ps" class="language-ps "><code class="language-ps" data-lang="ps"># Without overriding, this would be a terminal frame
+function Watch-Tail { Get-Content -Tail 20 -Wait $args }
+New-Alias tail Watch-Tail
+</code></pre>
+<h3 id="Text_&amp;_Line_Markers">Text &amp; Line Markers</h3>
+<h3 id="文本与行标记">文本与行标记</h3>
+<p><a rel="noopener nofollow" target="_blank" href="https://expressive-code.com/key-features/text-markers/">Text &amp; Line Markers</a>
+<a rel="noopener nofollow" target="_blank" href="https://expressive-code.com/key-features/text-markers/">文本与行标记</a></p>
+<h4 id="Marking_full_lines_&amp;_line_ranges">Marking full lines &amp; line ranges</h4>
+<h4 id="标记整行与行范围">标记整行与行范围</h4>
+<pre data-lang="js" class="language-js "><code class="language-js" data-lang="js">&#x2F;&#x2F; Line 1 - targeted by line number
+&#x2F;&#x2F; Line 2
+&#x2F;&#x2F; Line 3
+&#x2F;&#x2F; Line 4 - targeted by line number
+&#x2F;&#x2F; Line 5
+&#x2F;&#x2F; Line 6
+&#x2F;&#x2F; Line 7 - targeted by range &quot;7-8&quot;
+&#x2F;&#x2F; Line 8 - targeted by range &quot;7-8&quot;
+</code></pre>
+<h4 id="Selecting_line_marker_types_(mark,_ins,_del)">Selecting line marker types (mark, ins, del)</h4>
+<h4 id="选择行标记类型（mark,_ins,_del）">选择行标记类型（mark, ins, del）</h4>
+<pre data-lang="js" class="language-js "><code class="language-js" data-lang="js">function demo() {
+  console.log(&#x27;this line is marked as deleted&#x27;)
+  &#x2F;&#x2F; This line and the next one are marked as inserted
+  console.log(&#x27;this is the second inserted line&#x27;)
+
+  return &#x27;this line uses the neutral default marker type&#x27;
+}
+</code></pre>
+<h4 id="Adding_labels_to_line_markers">Adding labels to line markers</h4>
+<h4 id="为行标记添加标签">为行标记添加标签</h4>
+<pre data-lang="jsx" class="language-jsx "><code class="language-jsx" data-lang="jsx">&#x2F;&#x2F; labeled-line-markers.jsx
+&lt;button
+  role=&quot;button&quot;
+  {...props}
+  value={value}
+  className={buttonClassName}
+  disabled={disabled}
+  active={active}
+&gt;
+  {children &amp;&amp;
+    !active &amp;&amp;
+    (typeof children === &#x27;string&#x27; ? &lt;span&gt;{children}&lt;&#x2F;span&gt; : children)}
+&lt;&#x2F;button&gt;
+</code></pre>
+<h4 id="Adding_long_labels_on_their_own_lines">Adding long labels on their own lines</h4>
+<h4 id="在独立行添加长标签">在独立行添加长标签</h4>
+<pre data-lang="jsx" class="language-jsx "><code class="language-jsx" data-lang="jsx">&#x2F;&#x2F; labeled-line-markers.jsx
+&lt;button
+  role=&quot;button&quot;
+  {...props}
+
+  value={value}
+  className={buttonClassName}
+
+  disabled={disabled}
+  active={active}
+&gt;
+
+  {children &amp;&amp;
+    !active &amp;&amp;
+    (typeof children === &#x27;string&#x27; ? &lt;span&gt;{children}&lt;&#x2F;span&gt; : children)}
+&lt;&#x2F;button&gt;
+</code></pre>
+<h4 id="Using_diff-like_syntax">Using diff-like syntax</h4>
+<h4 id="使用类似_diff_的语法">使用类似 diff 的语法</h4>
+<pre data-lang="diff" class="language-diff "><code class="language-diff" data-lang="diff">+this line will be marked as inserted
+-this line will be marked as deleted
+this is a regular line
+</code></pre>
+<hr />
+<pre data-lang="diff" class="language-diff "><code class="language-diff" data-lang="diff">--- a&#x2F;README.md
++++ b&#x2F;README.md
+@@ -1,3 +1,4 @@
++this is an actual diff file
+-all contents will remain unmodified
+ no whitespace will be removed either
+</code></pre>
+<h4 id="Combining_syntax_highlighting_with_diff-like_syntax">Combining syntax highlighting with diff-like syntax</h4>
+<h4 id="结合语法高亮与类似_diff_的语法">结合语法高亮与类似 diff 的语法</h4>
+<pre data-lang="diff" class="language-diff "><code class="language-diff" data-lang="diff">  function thisIsJavaScript() {
+    &#x2F;&#x2F; This entire block gets highlighted as JavaScript,
+    &#x2F;&#x2F; and we can still add diff markers to it!
+-   console.log(&#x27;Old code to be removed&#x27;)
++   console.log(&#x27;New and shiny code!&#x27;)
+  }
+</code></pre>
+<h4 id="Marking_individual_text_inside_lines">Marking individual text inside lines</h4>
+<h4 id="标记行内特定文本">标记行内特定文本</h4>
+<pre data-lang="js" class="language-js "><code class="language-js" data-lang="js">function demo() {
+  &#x2F;&#x2F; Mark any given text inside lines
+  return &#x27;Multiple matches of the given text are supported&#x27;;
+}
+</code></pre>
+<h4 id="Regular_expressions">Regular expressions</h4>
+<h4 id="正则表达式">正则表达式</h4>
+<pre data-lang="ts" class="language-ts "><code class="language-ts" data-lang="ts">console.log(&#x27;The words yes and yep will be marked.&#x27;)
+</code></pre>
+<h4 id="Escaping_forward_slashes">Escaping forward slashes</h4>
+<h4 id="转义正斜杠">转义正斜杠</h4>
+<pre data-lang="sh" class="language-sh "><code class="language-sh" data-lang="sh">echo &quot;Test&quot; &gt; &#x2F;home&#x2F;test.txt
+</code></pre>
+<h4 id="Selecting_inline_marker_types_(mark,_ins,_del)">Selecting inline marker types (mark, ins, del)</h4>
+<h4 id="选择行内标记类型（mark,_ins,_del）">选择行内标记类型（mark, ins, del）</h4>
+<pre data-lang="js" class="language-js "><code class="language-js" data-lang="js">function demo() {
+  console.log(&#x27;These are inserted and deleted marker types&#x27;);
+  &#x2F;&#x2F; The return statement uses the default marker type
+  return true;
+}
+</code></pre>
+<h2 id="Collapsible_Sections">Collapsible Sections</h2>
+<h2 id="可折叠部分">可折叠部分</h2>
+<p><a rel="noopener nofollow" target="_blank" href="https://expressive-code.com/plugins/collapsible-sections/">Collapsible Sections</a>
+<a rel="noopener nofollow" target="_blank" href="https://expressive-code.com/plugins/collapsible-sections/">可折叠部分</a></p>
+<pre data-lang="js" class="language-js "><code class="language-js" data-lang="js">&#x2F;&#x2F; All this boilerplate setup code will be collapsed
+import { someBoilerplateEngine } from &#x27;@example&#x2F;some-boilerplate&#x27;
+import { evenMoreBoilerplate } from &#x27;@example&#x2F;even-more-boilerplate&#x27;
+
+const engine = someBoilerplateEngine(evenMoreBoilerplate())
+
+&#x2F;&#x2F; This part of the code will be visible by default
+engine.doSomething(1, 2, 3, calcFn)
+
+function calcFn() {
+  &#x2F;&#x2F; You can have multiple collapsed sections
+  const a = 1
+  const b = 2
+  const c = a + b
+
+  &#x2F;&#x2F; This will remain visible
+  console.log(`Calculation result: ${a} + ${b} = ${c}`)
+  return c
+}
+
+&#x2F;&#x2F; All this code until the end of the block will be collapsed again
+engine.closeConnection()
+engine.freeMemory()
+engine.shutdown({ reason: &#x27;End of example boilerplate code&#x27; })
+</code></pre>
+<h2 id="Line_Numbers">Line Numbers</h2>
+<h2 id="行号">行号</h2>
+<p><a rel="noopener nofollow" target="_blank" href="https://expressive-code.com/plugins/line-numbers/">Line Numbers</a>
+<a rel="noopener nofollow" target="_blank" href="https://expressive-code.com/plugins/line-numbers/">行号</a></p>
+<h3 id="Displaying_line_numbers_per_block">Displaying line numbers per block</h3>
+<h3 id="按代码块显示行号">按代码块显示行号</h3>
+<pre data-lang="js" class="language-js "><code class="language-js" data-lang="js">&#x2F;&#x2F; This code block will show line numbers
+console.log(&#x27;Greetings from line 2!&#x27;)
+console.log(&#x27;I am on line 3&#x27;)
+</code></pre>
+<hr />
+<pre data-lang="js" class="language-js "><code class="language-js" data-lang="js">&#x2F;&#x2F; Line numbers are disabled for this block
+console.log(&#x27;Hello?&#x27;)
+console.log(&#x27;Sorry, do you know what line I am on?&#x27;)
+</code></pre>
+<h3 id="Changing_the_starting_line_number">Changing the starting line number</h3>
+<h3 id="更改起始行号">更改起始行号</h3>
+<pre data-lang="js" class="language-js "><code class="language-js" data-lang="js">console.log(&#x27;Greetings from line 5!&#x27;)
+console.log(&#x27;I am on line 6&#x27;)
+</code></pre>
+
+    </article>
+
+    <!-- License -->
+    <div class="mt-8 p-6 bg-gray-50 dark:bg-gray-700/50 rounded-2xl text-sm text-gray-600 dark:text-gray-400">
+        <div class="flex flex-col gap-2">
+            <p class="font-medium text-gray-900 dark:text-white">版权声明</p>
+            <p>
+                本文由 <span class="font-medium">二叉树树</span> 创作，采用 
+                <a href="https:&#x2F;&#x2F;creativecommons.org&#x2F;licenses&#x2F;by-nc-sa&#x2F;4.0&#x2F;" target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-blue-400 hover:underline">CC BY-NC-SA 4.0</a> 
+                许可协议。
+            </p>
+            <p>
+                转载请注明出处：<a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;posts&#x2F;expressive-code&#x2F;" class="text-blue-600 dark:text-blue-400 hover:underline break-all">AcoFork Blog - Expressive Code 记录: https:&#x2F;&#x2F;blog.acofork.com&#x2F;posts&#x2F;expressive-code&#x2F;</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Help & Edit -->
+    <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-sm">
+            <h3 class="font-bold text-gray-900 dark:text-white mb-2">这篇文章是否对你有帮助？</h3>
+            <div class="flex space-x-4">
+                <a href="&#x2F;posts&#x2F;pin" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline">联系</a>
+                <a href="&#x2F;sponsors" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline">赞助</a>
+            </div>
+        </div>
+        <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-sm">
+            <h3 class="font-bold text-gray-900 dark:text-white mb-2">发现错误或想要改进这篇文章？</h3>
+            <a href="https:&#x2F;&#x2F;github.com&#x2F;afoim&#x2F;AcoFork_Blog_Zola/blob/main/content/posts&#x2F;expressive-code.md" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline flex items-center">
+                <span>在 GitHub 上编辑此页</span>
+                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+            </a>
+        </div>
+    </div>
+
+    <!-- Post Footer -->
+    <footer class="mt-8 flex flex-wrap gap-2 justify-center">
+        
+        
+        <a href="https://blog.acofork.com/tags/markdown/" class="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-full text-sm hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">#Markdown</a>
+        
+        <a href="https://blog.acofork.com/tags/blogging/" class="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-full text-sm hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">#Blogging</a>
+        
+        <a href="https://blog.acofork.com/tags/demo/" class="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-full text-sm hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">#Demo</a>
+        
+        
+    </footer>
+
+    <!-- Comments (Giscus) -->
+    <div class="mt-12 bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-sm">
+<script src="https://giscus.app/client.js"
+        data-repo="afoim/giscus-fuwari"
+        data-repo-id="R_kgDOOi8quw"
+        data-category="Announcements"
+        data-category-id="DIC_kwDOOi8qu84CprDV"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="preferred_color_scheme"
+        data-lang="zh-CN"
+        crossorigin="anonymous"
+        async>
+</script>
+    </div>
+</div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col items-center justify-center space-y-2">
+                <p class="text-gray-500 dark:text-gray-400 text-sm">
+                    &copy; 2026 二叉树树. 
+                    <a href="https:&#x2F;&#x2F;creativecommons.org&#x2F;licenses&#x2F;by-nc-sa&#x2F;4.0&#x2F;" target="_blank" class="hover:underline">CC BY-NC-SA 4.0</a>
+                </p>
+                <p class="text-gray-400 dark:text-gray-500 text-xs">
+                    Powered by <a href="https://www.getzola.org" target="_blank" class="hover:text-gray-300">Zola</a>
+                     · <a href="https://github.com/afoim/AcoFork_Blog_Zola" target="_blank" class="hover:text-gray-300">Source Code</a>
+                </p>
+                <a href="https://blog.acofork.com/rss.xml" target="_blank" class="text-gray-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors p-2">
+                    <span class="sr-only">RSS</span>
+                    <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                        <path d="M5 3a1 1 0 000 2c5.523 0 10 4.477 10 10a1 1 0 102 0C17 8.373 11.627 3 5 3z"></path>
+                        <path d="M4 9a1 1 0 011-1 7 7 0 017 7 1 1 0 11-2 0 5 5 0 00-5-5 1 1 0 01-1-1zM3 15a2 2 0 114 0 2 2 0 01-4 0z"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/elasticlunr/0.9.6/elasticlunr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+    <script src="/js/umami-share.js"></script>
+    <script src="/js/search.js"></script>
+    <script src="/js/gfm-alerts.js"></script>
+    <script src="/js/anchor-fix.js"></script>
+    <script>
+        // Umami script needs to be loaded if it's not already
+        // This is a workaround since we removed the original script tag
+        (function() {
+            var el = document.createElement('script');
+            el.setAttribute('src', 'https://umami.acofork.com/script.js');
+            el.setAttribute('data-website-id', '5d710dbd-3a2e-43e3-a553-97b415090c63');
+            el.setAttribute('defer', '');
+            document.body.appendChild(el);
+        })();
+    </script>
+</body>
+</html>

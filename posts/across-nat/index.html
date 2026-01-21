@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="zh" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>究极喂饭教程，手把手教你内网穿透 - AcoFork Blog</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css"/>
+    <link rel="icon" href="https://q2.qlogo.cn/headimg_dl?dst_uin=2726730791&amp;spec=0">
+    <script src="https://pic1.acofork.com/random.js"></script>
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.acofork.com/rss.xml">
+    <script src="/js/main.js"></script>
+</head>
+<body class="bg-[var(--page-bg)] text-gray-900 dark:text-gray-100 transition-colors duration-300 min-h-screen flex flex-col">
+
+    <!-- Navbar -->
+    <nav class="sticky top-0 z-50 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md shadow-sm dark:border-b dark:border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="/" class="text-xl font-bold text-blue-600 dark:text-blue-400">AcoFork Blog</a>
+                    </div>
+                    <!-- Desktop Menu -->
+                    <div class="hidden md:ml-6 md:flex md:space-x-8">
+                        
+                        <a href="&#x2F;" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            首页
+                        </a>
+                        
+                        <a href="&#x2F;posts" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            归档
+                        </a>
+                        
+                        <a href="&#x2F;friends" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            友链
+                        </a>
+                        
+                        <a href="&#x2F;sponsors" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            赞助
+                        </a>
+                        
+                        <a href="https:&#x2F;&#x2F;umami.acofork.com&#x2F;share&#x2F;CdkXbGgZr6ECKOyK" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           target="_blank">
+                            统计
+                        </a>
+                        
+                        <a href="https:&#x2F;&#x2F;status.acofork.com" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           target="_blank">
+                            监控
+                        </a>
+                        
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <!-- Mobile Menu Button -->
+                    <button type="button" onclick="toggleMobileMenu()" class="md:hidden p-2 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
+                        <span class="sr-only">Open menu</span>
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                    <!-- Search Button -->
+                    <button onclick="toggleSearch()" class="p-2 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </button>
+                    <!-- Theme Toggle -->
+                    <button onclick="toggleTheme()" class="p-2 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
+                        <svg id="sun-icon" class="h-6 w-6 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                        <svg id="moon-icon" class="h-6 w-6 block dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                
+                <a href="&#x2F;" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    首页
+                </a>
+                
+                <a href="&#x2F;posts" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    归档
+                </a>
+                
+                <a href="&#x2F;friends" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    友链
+                </a>
+                
+                <a href="&#x2F;sponsors" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    赞助
+                </a>
+                
+                <a href="https:&#x2F;&#x2F;umami.acofork.com&#x2F;share&#x2F;CdkXbGgZr6ECKOyK" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   target="_blank">
+                    统计
+                </a>
+                
+                <a href="https:&#x2F;&#x2F;status.acofork.com" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   target="_blank">
+                    监控
+                </a>
+                
+            </div>
+        </div>
+    </nav>
+
+    <!-- Search Modal -->
+    <div id="search-modal" class="fixed inset-0 z-50 hidden" role="dialog" aria-modal="true">
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" onclick="toggleSearch()"></div>
+        <div class="fixed inset-0 z-10 overflow-y-auto p-4 sm:p-6 md:p-20" onclick="if(event.target === this) toggleSearch()">
+            <div class="mx-auto max-w-xl transform rounded-xl bg-white dark:bg-gray-800 p-2 shadow-2xl transition-all">
+                <input type="text" id="search-input" 
+                       class="w-full rounded-md border-0 bg-gray-100 dark:bg-gray-700 px-4 py-2.5 text-gray-900 dark:text-white placeholder-gray-500 focus:ring-0 sm:text-sm" 
+                       placeholder="搜索文章..." autocomplete="off">
+                <ul id="search-results" class="max-h-96 scroll-py-3 overflow-y-auto p-3"></ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+<div class="max-w-4xl mx-auto">
+    <!-- Post Header -->
+    <header class="mb-8 text-center">
+        <div class="flex items-center justify-center space-x-2 text-sm text-gray-500 dark:text-gray-400 mb-4">
+            <time datetime="2024-10-28">2024-10-28</time>
+            <span>•</span>
+            <span>11 分钟阅读</span>
+            <span id="views-separator" style="display: none">•</span>
+            <span id="page-views" style="display: none"></span>
+        </div>
+        <h1 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">究极喂饭教程，手把手教你内网穿透</h1>
+        
+        <p class="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">使用Zerotier，Tailscale，Cloudflare Tunnel可以实现多种内网穿透，其中有适用于个人访问的，也有适用于公众访问的</p>
+        
+        
+        <div class="w-full rounded-2xl overflow-hidden shadow-sm mb-8">
+            <img src="&#x2F;img&#x2F;1d637607bdaddac348d9339e5eadf16a.webp" alt="究极喂饭教程，手把手教你内网穿透" class="w-full h-auto">
+        </div>
+        
+    </header>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const baseUrl = 'https://umami.acofork.com';
+                const shareId = 'CdkXbGgZr6ECKOyK';
+                // Current page path
+                const urlPath = window.location.pathname;
+                
+                const stats = await window.fetchUmamiStats(baseUrl, shareId, {
+                    url: urlPath
+                });
+                
+                // Check for both 'visits' (new preference) or 'pageviews' (fallback)
+                const metric = (stats && (stats.visits || stats.pageviews));
+                
+                let views = 0;
+                let hasData = false;
+
+                if (metric && typeof metric.value !== 'undefined') {
+                    views = metric.value;
+                    hasData = true;
+                } else if (stats && (typeof stats.visits === 'number' || typeof stats.pageviews === 'number')) {
+                        // Fallback for flat structure
+                        views = stats.visits || stats.pageviews;
+                        hasData = true;
+                }
+
+                if (hasData) {
+                    const viewEl = document.getElementById('page-views');
+                    viewEl.textContent = views + ' 次访问';
+                    viewEl.style.display = 'inline';
+                    document.getElementById('views-separator').style.display = 'inline';
+                }
+            } catch (e) {
+                console.error('Failed to load page views:', e);
+            }
+        });
+    </script>
+
+    <!-- Post Content -->
+    <article class="prose prose-lg dark:prose-invert max-w-none bg-white dark:bg-gray-800 p-8 md:p-12 rounded-2xl shadow-sm">
+        <h1 id="经实测，Zerotier的打洞能力明显优于Tailscale，所以建议通过Zerotier来实现内网穿透">经实测，Zerotier的打洞能力明显优于Tailscale，所以建议通过Zerotier来实现内网穿透</h1>
+<p>详细报表：</p>
+<table><thead><tr><th></th><th>Zerotier</th><th>Tailscale</th></tr></thead><tbody>
+<tr><td>单端DMZ（单端NAT1）</td><td>STUN</td><td>STUN</td></tr>
+<tr><td>仅单端UPnP（单端NAT3）</td><td>UDP P2P</td><td>玄学穿透</td></tr>
+<tr><td>双端UPnP（双端NAT3）</td><td>UDP P2P</td><td>玄学穿透</td></tr>
+<tr><td>双端无UPnP/DMZ（双端NAT3/NAT4）</td><td>UDP P2P</td><td>无法穿透</td></tr>
+<tr><td>自建中继/握手节点</td><td>√</td><td>√</td></tr>
+</tbody></table>
+<p>其实实际情况会更加复杂一点，但是你只要有 <strong>公网IPv6、UPnP、DMZ</strong> 中的其中一项，Zerotier就几乎是100%的打洞成功率</p>
+<p>如何知道我是P2P还是中继？
+ping你的对端设备，如果延迟大于200ms或者经常丢包大概率就是中继节点（也有小概率是你的设备负载过高导致无法及时接收和返回ping包）</p>
+<h1 id="啥是内网穿透？">啥是内网穿透？</h1>
+<p>当我们在家中有个NAS，想要在学校/公司的网络来访问，就需要用到内网穿透，实现外网访问内网服务。原理一般是P2P打洞和服务器中转流量</p>
+<h1 id="前期准备">前期准备</h1>
+<p>路由器开启UPnP<img src="/img/38d78f3fb5aeb29c946ec66e6ad653c5.webp" alt="" /></p>
+<p>关闭路由器的IPv4，IPv6防火墙 <strong>（可选）</strong><img src="/img/650e7c26770f84c5e0dd1190a9d0675a.webp" alt="" /></p>
+<h1 id="使用Zerotier/Tailscale进行内网穿透"><em>使用Zerotier/Tailscale进行内网穿透</em></h1>
+<blockquote>
+<p>他们俩的原理都是尝试对端建立P2P连接，需要对端安装一个软件并且长期运行</p>
+</blockquote>
+<h1 id="使用Zerotier进行内网穿透的详细教程">使用Zerotier进行内网穿透的详细教程</h1>
+<h2 id="创建Zerotier账号">创建Zerotier账号</h2>
+<p>前往：<a rel="noopener nofollow" target="_blank" href="https://www.zerotier.com/">ZeroTier | Global Networking Solution for IoT, SD-WAN, and VPN</a>。如果你进不去，请尝试挂梯子。如果看不懂英文可以开启浏览器的翻译功能<img src="/img/9d9ed2e955113009df413956f1cbac75.webp" alt="" /></p>
+<p>选择 <code>Sign up</code><img src="/img/1b6eedaac982dba9b241f18e87209ce3.webp" alt="" /></p>
+<p>如果你到了这个界面，请仍然选择<code>Sign up</code><img src="/img/1490288a0dc82c2f47840eb5162fbb0d.webp" alt="" /></p>
+<p><img src="/img/830103bc433fa089036131b6a8d62d20.webp" alt="" /></p>
+<p>账号创建完毕后，登录即可<img src="/img/778341b68427d453b1a55f2cc2f26dd0.webp" alt="" /></p>
+<h2 id="创建一个新的Zerotier网络组">创建一个新的Zerotier网络组</h2>
+<p>当你账号登录成功后，会自动跳转到这个页面，点击<code>Create A Network</code>。如果没有，请访问<a rel="noopener nofollow" target="_blank" href="https://my.zerotier.com/">ZeroTier Central</a></p>
+<p><img src="/img/13998046b33b6436003a421d9308b8fa.webp" alt="" /></p>
+<p>下面的列表会增加一个新的网络组，点击它<img src="/img/677e0a15931062a484f712e1f433eff8.webp" alt="" /></p>
+<p>Zerotier默认的网络组模式为<code>Private</code>。即私密模式，哪怕别人知道了你的<code>Network ID</code>尝试加入你的网络组也需要你进行验证</p>
+<p><img src="/img/f77f932aba2b9dbbd66ded7a095bf521.webp" alt="" /></p>
+<p>复制这个<code>Network ID</code><img src="/img/063c7c465fd379194bcdc42339bf412f.webp" alt="" /></p>
+<hr />
+<h1 id="在设备上安装Zerotier应用">在设备上安装Zerotier应用</h1>
+<h2 id="Windows：">Windows：</h2>
+<p>前往<a rel="noopener nofollow" target="_blank" href="https://www.zerotier.com/download/">Download - ZeroTier</a>，下载exe安装文件<img src="/img/a9a5958e27755a5326a7a68403b2001a.webp" alt="" /></p>
+<p>打开Zerotier<img src="/img/e6bf34082943bf69af0c52df608e9a72.webp" alt="" /></p>
+<p>查看右下角托盘，按照图片操作加入网络组<img src="/img/2053a33d6ae178fffe8fad636480f8d9.webp" alt="" /><img src="/img/53464f62b4cac11209d1f4fb0eb11b5e.webp" alt="" /><img src="/img/57abc07a9f75d46881952b605c96626d.webp" alt="" /></p>
+<p>这里可以查询到你的设备ID和你在这个网络组的IP</p>
+<p><img src="/img/cd99a91012e447fef0be41c1acaf94f0.webp" alt="" /></p>
+<p><strong>然后参考：<a href="https://blog.acofork.com/posts/across-nat/#zerotier%E6%8E%88%E6%9D%83%E8%AE%BE%E5%A4%87">Zerotier授权设备</a></strong></p>
+<h2 id="Linux（飞牛OS）：">Linux（飞牛OS）：</h2>
+<p>通过SSH连接上你的Linux设备</p>
+<p>查看安装命令：<a rel="noopener nofollow" target="_blank" href="https://www.zerotier.com/download/">Download - ZeroTier</a><img src="/img/ea3367fae8f1be10e1fb879045efd55a.webp" alt="" /></p>
+<p>终端执行： <code>curl -s https://install.zerotier.com | sudo bash</code></p>
+<p>看到这一行即安装完毕，后面那一串即你的设备ID：<img src="/img/35105fcd6c66d627d24334926bb8b510.webp" alt="" /></p>
+<p>加入网络：<code>sudo zerotier-cli join 你的Network ID</code><img src="/img/be12014fc0b8e9eed5ae8567921b3d3d.webp" alt="" /></p>
+<p><strong>然后参考：<a href="https://blog.acofork.com/posts/across-nat/#zerotier%E6%8E%88%E6%9D%83%E8%AE%BE%E5%A4%87">Zerotier授权设备</a></strong></p>
+<h2 id="Android（安卓）">Android（安卓）</h2>
+<p>下载客户端</p>
+<ol>
+<li>
+<p>Zerotier One：<a rel="noopener nofollow" target="_blank" href="https://apkpure.net/zerotier-one/com.zerotier.one">ZeroTier One APK Download for Android - Latest Version</a></p>
+</li>
+<li>
+<p>ZerotierFix：<a rel="noopener nofollow" target="_blank" href="https://github.com/kaaass/ZerotierFix/releases">Releases · kaaass/ZerotierFix</a></p>
+</li>
+</ol>
+<p>如图操作</p>
+<p><img src="/img/bd2a22a7a690317026871b25a1b7644b.webp" alt="" /><img src="/img/41452db816c3d294f00c3aa36cf28a1e.webp" alt="" /></p>
+<p><strong>然后参考：<a href="https://blog.acofork.com/posts/across-nat/#zerotier%E6%8E%88%E6%9D%83%E8%AE%BE%E5%A4%87">Zerotier授权设备</a></strong></p>
+<hr />
+<h1 id="Zerotier授权设备">Zerotier授权设备</h1>
+<p>前往Zerotier的网页控制台：<a href="https://blog.acofork.com/posts/across-nat/%5B%3Chttps://my.zerotier.com/%3E%5D(https://my.zerotier.com/)">ZeroTier Central</a></p>
+<p>授权刚才加入的设备<img src="/img/4ab9553d901f25240a93aa9a60f22a0e.webp" alt="" /></p>
+<p>勾选然后保存<img src="/img/773dc7eacb997aa522af5aca7489db82.webp" alt="" /></p>
+<hr />
+<h1 id="Zerotier访问测试">Zerotier访问测试</h1>
+<p>如果你同一个网络组里已经有两台以上的设备了，可以尝试ping一下测试连通性，请先确保两台设备不在同一个局域网（比如手机开流量，NAS用家里的无线网）</p>
+<p>IP可以在这里查看<img src="/img/8b704e7ca8a9bf502aefbb1ba31ae0c9.webp" alt="" /></p>
+<p>ping测试：<img src="/img/2660aad4542f7c5cf787ef8ac213f2eb.webp" alt="" /></p>
+<hr />
+<h1 id="使用Tailscale进行内网穿透的详细教程">使用Tailscale进行内网穿透的详细教程</h1>
+<h2 id="创建Tailscale账号">创建Tailscale账号</h2>
+<p>前往：<a rel="noopener nofollow" target="_blank" href="https://login.tailscale.com/start">Tailscale</a>。如果你进不去，请尝试挂梯子。如果看不懂英文可以开启浏览器的翻译功能</p>
+<p>选择任意一个登录方式<img src="/img/0ae39e06c693c339ede42b6f4bfc27ac.webp" alt="" /></p>
+<p>账号创建完毕后，登录即可</p>
+<hr />
+<h1 id="在设备上安装Tailscale应用">在设备上安装Tailscale应用</h1>
+<h2 id="Windows：-1">Windows：</h2>
+<p>前往<a rel="noopener nofollow" target="_blank" href="https://tailscale.com/download">Download · Tailscale</a>，下载exe安装文件</p>
+<p>官方教程：<img src="/img/90b19f275cb26797fab9c17ce1c5a5c5.webp" alt="" /></p>
+<h2 id="Linux（飞牛OS）：-1">Linux（飞牛OS）：</h2>
+<p>通过SSH连接上你的Linux设备</p>
+<p>查看安装命令：<a rel="noopener nofollow" target="_blank" href="https://tailscale.com/download/linux">Download · Tailscale</a><img src="/img/5b70423701865cd175528c48b06143ce.webp" alt="" /></p>
+<p>终端执行： <code>curl -fsSL https://tailscale.com/install.sh | sh</code></p>
+<p>等待安装完毕后输入：<code>tailscale login</code></p>
+<p>打开弹出的浏览器窗口，登录你的账号即可</p>
+<h2 id="Android（安卓）-1">Android（安卓）</h2>
+<p>下载客户端（Google Play）：<a rel="noopener nofollow" target="_blank" href="https://tailscale.com/download/android">Download · Tailscale</a></p>
+<p>登录你的账号即可</p>
+<hr />
+<h2 id="Tailscale访问测试">Tailscale访问测试</h2>
+<p>前往Tailscale的网页控制台：<a rel="noopener nofollow" target="_blank" href="https://login.tailscale.com/admin/machines">Machines - Tailscale</a>。可以查看到每个设备Tailscale分配的IP<img src="/img/a9aedd0da178ae266a34339fc8efefe8.webp" alt="" /></p>
+<p>ping测试<img src="/img/033ef48819fa42a1e2304530c0a3c4ab.webp" alt="" /></p>
+<hr />
+<h1 id="使用Cloudflare_Tunnel进行内网穿透">使用Cloudflare Tunnel进行内网穿透</h1>
+<blockquote>
+<p>这种方法可以不进行任何配置直接在公网上被访问，但是仅限Web服务。如果你想穿透游戏服务器等则不可用。你需要先将域名托管到Cloudflare</p>
+</blockquote>
+<p>创建Cloudflare账号<a rel="noopener nofollow" target="_blank" href="https://dash.cloudflare.com/">主页 | Cloudflare</a></p>
+<p>进入<a rel="noopener nofollow" target="_blank" href="https://one.dash.cloudflare.com/">Cloudflare One</a>（需要绑定PayPal）</p>
+<p>如图操作，创建一个Tunnel<img src="/img/cba032a6c417028169f3a8c4a6ae75d8.webp" alt="" /><img src="/img/597b8b5dffc7b27c539f1b4081838102.webp" alt="" /><img src="/img/556d6086a3ed6e3bd43fd870f30cf323.webp" alt="" /></p>
+<h2 id="Docker方式">Docker方式</h2>
+<p><strong>使用1Panel</strong></p>
+<p>复制如图的命令</p>
+<p><img src="/img/83256c7b2e7cef19da710df024d1b5e9.webp" alt="" /></p>
+<p>将其粘贴，并且复制后面的令牌<img src="/img/4268ed7e7efad22372d086f4b60561d7.webp" alt="" /></p>
+<p>1Panel应用商店搜索<code>cloudflared</code><img src="/img/74bc5e89ec5e78e5d5f051aceb1716ad.webp" alt="" /></p>
+<p>填入令牌<img src="/img/62b837a0f3dc361912fbdfab5e3a0508.webp" alt="" /></p>
+<p>然后前往<a href="https://blog.acofork.com/posts/across-nat/#%E6%9F%A5%E7%9C%8Bcloudflared%E7%9A%84ip">查看IP</a></p>
+<p><strong>使用命令运行</strong></p>
+<p>复制底下的命令然后SSH连接到Linux（飞牛OS）在终端输入</p>
+<p><img src="/img/e148b4bda87495b00e034b568461b12c.webp" alt="" /></p>
+<p>然后前往<a href="https://blog.acofork.com/posts/across-nat/#%E6%9F%A5%E7%9C%8Bcloudflared%E7%9A%84ip">查看IP</a></p>
+<h3 id="查看cloudflared的IP">查看cloudflared的IP</h3>
+<p>因为我们是Docker模式，所以IP需要通过SSH终端输入<code>ip a</code>来查看。我这里是<code>192.168.124.34</code></p>
+<pre><code>root@n100-debian:~# ip a
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link&#x2F;loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1&#x2F;8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1&#x2F;128 scope host noprefixroute
+       valid_lft forever preferred_lft forever
+2: ens18: tiROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link&#x2F;ether bc:24:11:33:e1:7d brd ff:ff:ff:ff:ff:ff
+    altname enp0s18
+    inet 192.168.124.34&#x2F;24 brd 192.168.124.255 scope global dynamic ens18
+       valid_lft 46579sec preferred_lft 46579sec
+    inet6 2409:8a30:320:a170:be24:11ff:fe33:e17d&#x2F;64 scope global dynamic mngtmpaddr
+       valid_lft 1902sec preferred_lft 1898sec
+    inet6 fe80::be24:11ff:fe33:e17d&#x2F;64 scope link
+       valid_lft forever preferred_lft foreverti
+</code></pre>
+<p><strong>然后前往<a href="https://blog.acofork.com/posts/across-nat/#%E9%85%8D%E7%BD%AE%E5%B9%B6%E8%AE%BF%E9%97%AEtunnel">配置并访问Tunnel</a></strong></p>
+<h2 id="原生模式（以Debian为例）">原生模式（以Debian为例）</h2>
+<p>选择Debian，然后复制底下的命令，直接到终端执行</p>
+<p><img src="/img/11b19900d6668389362d957c76c948ff.webp" alt="" /></p>
+<p>如果你的环境无法连接上Github</p>
+<p>尝试手动下载：<a rel="noopener nofollow" target="_blank" href="https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb"><a rel="noopener nofollow" target="_blank" href="https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb">https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb</a></a></p>
+<p>然后将其通过SSH等方式传到Linux上，如图终端为MobaXterm<img src="/img/9cce55629b6f348e49f9d1880b1723cd.webp" alt="" /></p>
+<p>然后使用：<code>dpkg -i cloudflared-linux-amd64.deb</code>安装这个软件包</p>
+<p>然后直接复制右边的命令到SSH终端执行<img src="/img/83256c7b2e7cef19da710df024d1b5e9.webp" alt="" /></p>
+<p><strong>然后前往<a href="https://blog.acofork.com/posts/across-nat/#%E9%85%8D%E7%BD%AE%E5%B9%B6%E8%AE%BF%E9%97%AEtunnel">配置并访问Tunnel</a></strong></p>
+<h2 id="Android（Termux）">Android（Termux）</h2>
+<p>在Android上安装<a rel="noopener nofollow" target="_blank" href="https://termux.dev">Termux | The main termux site and help pages.</a></p>
+<p>在终端执行：<code>pkg install cloudflared</code></p>
+<p>选择<code>Debian</code>然后复制最右边的命令到终端执行<img src="/img/fab9750fe1be7af289c1d86cde1ec363.webp" alt="" />
+如果你无法使用Termux自带的cloudflared，请尝试安装proot容器实现</p>
+<p>依次输入命令：</p>
+<pre data-lang="shell" class="language-shell "><code class="language-shell" data-lang="shell">pkg update &amp;&amp; pkg upgrade
+pkg install proot
+pkg install proot-distro
+proot-distro list
+proot-distro install debian
+proot-distro login debian
+apt install wget
+wget https:&#x2F;&#x2F;github.com&#x2F;cloudflare&#x2F;cloudflared&#x2F;releases&#x2F;download&#x2F;2024.10.1&#x2F;cloudflared-linux-arm64.deb
+dpkg -i cloudflared-linux-amd64.deb
+</code></pre>
+<p>然后直接复制右边的命令到SSH终端执行</p>
+<p><img src="/img/fab9750fe1be7af289c1d86cde1ec363.webp" alt="" /></p>
+<p>如果你无法通过令牌配置cloudflared，请参见<a href="https://blog.acofork.com/posts/across-nat/#%E6%9C%AC%E5%9C%B0%E6%96%B9%E5%BC%8F">本地方式配置cloudflared</a></p>
+<p><strong>然后前往<a href="https://blog.acofork.com/posts/across-nat/#%E9%85%8D%E7%BD%AE%E5%B9%B6%E8%AE%BF%E9%97%AEtunnel">配置并访问Tunnel</a></strong></p>
+<hr />
+<h1 id="配置并访问Tunnel">配置并访问Tunnel</h1>
+<h2 id="通过网页配置">通过网页配置</h2>
+<blockquote>
+<p>这种方法需要直接在安装了cloudflared的设备上通过令牌运行</p>
+</blockquote>
+<p>如图进入，创建一个HTTP隧道</p>
+<p><img src="/img/59edc44177571960274b209bd60c717f.webp" alt="" /><img src="/img/368743ea1c20127a7852a69b66bfb36b.webp" alt="" /></p>
+<p>填写你的IP和端口，非Docker模式可以直接填写localhost<img src="/img/155dbf6e7eec951cc181045794f980a2.webp" alt="" /></p>
+<h2 id="本地方式">本地方式</h2>
+<blockquote>
+<p>这种方法只需要在安装了cloudflared的设备上输入一些命令然后通过网页授权，后续更改配置也需要在本地操作</p>
+</blockquote>
+<p>登录并授权：<code>cloudflared tunnel login</code></p>
+<p>创建隧道并设置隧道（HTTP模式穿透，目标地址<code>127.0.0.1</code>，端口：<code>8080</code>，外部域名：<code>test.onani.cn</code>）：<code>cloudflared tunnel --name test --url http://127.0.0.1:8080 --http2 --hostname test.onani.cn</code></p>
+<h2 id="访问测试">访问测试</h2>
+<p>成功访问<img src="/img/54215399655a715c472c99e2f8f36aa5.webp" alt="" /></p>
+<h1 id="使用STUN打洞">使用STUN打洞</h1>
+<blockquote>
+<p>这种方法可以不进行任何配置直接在公网上被访问，并且所有类型的服务都能正常使用。但是这种方式进行的内网穿透无法固定也无法指定IP和端口，在3~7天后会改变</p>
+</blockquote>
+<h2 id="安装Lucky">安装Lucky</h2>
+<p>执行：<code>curl -o /tmp/install.sh http://6.666666.host:6/files/golucky.sh &amp;&amp; sh /tmp/install.sh http://6.666666.host:6/files 2.13.4</code></p>
+<p>通过<code>host:16601</code> 进入Lucky后台，设置STUN穿透。如果DMZ主机不设为Lucky主机可能会失败。打码的地方即公网访问的IP和端口<img src="/img/093ba8111ffc140c4ada3f4a41448cfc.webp" alt="" /></p>
+
+    </article>
+
+    <!-- License -->
+    <div class="mt-8 p-6 bg-gray-50 dark:bg-gray-700/50 rounded-2xl text-sm text-gray-600 dark:text-gray-400">
+        <div class="flex flex-col gap-2">
+            <p class="font-medium text-gray-900 dark:text-white">版权声明</p>
+            <p>
+                本文由 <span class="font-medium">二叉树树</span> 创作，采用 
+                <a href="https:&#x2F;&#x2F;creativecommons.org&#x2F;licenses&#x2F;by-nc-sa&#x2F;4.0&#x2F;" target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-blue-400 hover:underline">CC BY-NC-SA 4.0</a> 
+                许可协议。
+            </p>
+            <p>
+                转载请注明出处：<a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;posts&#x2F;across-nat&#x2F;" class="text-blue-600 dark:text-blue-400 hover:underline break-all">AcoFork Blog - 究极喂饭教程，手把手教你内网穿透: https:&#x2F;&#x2F;blog.acofork.com&#x2F;posts&#x2F;across-nat&#x2F;</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Help & Edit -->
+    <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-sm">
+            <h3 class="font-bold text-gray-900 dark:text-white mb-2">这篇文章是否对你有帮助？</h3>
+            <div class="flex space-x-4">
+                <a href="&#x2F;posts&#x2F;pin" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline">联系</a>
+                <a href="&#x2F;sponsors" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline">赞助</a>
+            </div>
+        </div>
+        <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-sm">
+            <h3 class="font-bold text-gray-900 dark:text-white mb-2">发现错误或想要改进这篇文章？</h3>
+            <a href="https:&#x2F;&#x2F;github.com&#x2F;afoim&#x2F;AcoFork_Blog_Zola/blob/main/content/posts&#x2F;across-nat.md" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline flex items-center">
+                <span>在 GitHub 上编辑此页</span>
+                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+            </a>
+        </div>
+    </div>
+
+    <!-- Post Footer -->
+    <footer class="mt-8 flex flex-wrap gap-2 justify-center">
+        
+        
+        <a href="https://blog.acofork.com/tags/zerotier/" class="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-full text-sm hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">#Zerotier</a>
+        
+        <a href="https://blog.acofork.com/tags/tailscale/" class="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-full text-sm hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">#Tailscale</a>
+        
+        <a href="https://blog.acofork.com/tags/cloudflare-tunnel/" class="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-full text-sm hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">#Cloudflare Tunnel</a>
+        
+        <a href="https://blog.acofork.com/tags/stun/" class="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-full text-sm hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">#STUN</a>
+        
+        
+    </footer>
+
+    <!-- Comments (Giscus) -->
+    <div class="mt-12 bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-sm">
+<script src="https://giscus.app/client.js"
+        data-repo="afoim/giscus-fuwari"
+        data-repo-id="R_kgDOOi8quw"
+        data-category="Announcements"
+        data-category-id="DIC_kwDOOi8qu84CprDV"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="preferred_color_scheme"
+        data-lang="zh-CN"
+        crossorigin="anonymous"
+        async>
+</script>
+    </div>
+</div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col items-center justify-center space-y-2">
+                <p class="text-gray-500 dark:text-gray-400 text-sm">
+                    &copy; 2026 二叉树树. 
+                    <a href="https:&#x2F;&#x2F;creativecommons.org&#x2F;licenses&#x2F;by-nc-sa&#x2F;4.0&#x2F;" target="_blank" class="hover:underline">CC BY-NC-SA 4.0</a>
+                </p>
+                <p class="text-gray-400 dark:text-gray-500 text-xs">
+                    Powered by <a href="https://www.getzola.org" target="_blank" class="hover:text-gray-300">Zola</a>
+                     · <a href="https://github.com/afoim/AcoFork_Blog_Zola" target="_blank" class="hover:text-gray-300">Source Code</a>
+                </p>
+                <a href="https://blog.acofork.com/rss.xml" target="_blank" class="text-gray-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors p-2">
+                    <span class="sr-only">RSS</span>
+                    <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                        <path d="M5 3a1 1 0 000 2c5.523 0 10 4.477 10 10a1 1 0 102 0C17 8.373 11.627 3 5 3z"></path>
+                        <path d="M4 9a1 1 0 011-1 7 7 0 017 7 1 1 0 11-2 0 5 5 0 00-5-5 1 1 0 01-1-1zM3 15a2 2 0 114 0 2 2 0 01-4 0z"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/elasticlunr/0.9.6/elasticlunr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+    <script src="/js/umami-share.js"></script>
+    <script src="/js/search.js"></script>
+    <script src="/js/gfm-alerts.js"></script>
+    <script src="/js/anchor-fix.js"></script>
+    <script>
+        // Umami script needs to be loaded if it's not already
+        // This is a workaround since we removed the original script tag
+        (function() {
+            var el = document.createElement('script');
+            el.setAttribute('src', 'https://umami.acofork.com/script.js');
+            el.setAttribute('data-website-id', '5d710dbd-3a2e-43e3-a553-97b415090c63');
+            el.setAttribute('defer', '');
+            document.body.appendChild(el);
+        })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="zh" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oracle（甲骨文云）踩坑记录 - AcoFork Blog</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css"/>
+    <link rel="icon" href="https://q2.qlogo.cn/headimg_dl?dst_uin=2726730791&amp;spec=0">
+    <script src="https://pic1.acofork.com/random.js"></script>
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.acofork.com/rss.xml">
+    <script src="/js/main.js"></script>
+</head>
+<body class="bg-[var(--page-bg)] text-gray-900 dark:text-gray-100 transition-colors duration-300 min-h-screen flex flex-col">
+
+    <!-- Navbar -->
+    <nav class="sticky top-0 z-50 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md shadow-sm dark:border-b dark:border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="/" class="text-xl font-bold text-blue-600 dark:text-blue-400">AcoFork Blog</a>
+                    </div>
+                    <!-- Desktop Menu -->
+                    <div class="hidden md:ml-6 md:flex md:space-x-8">
+                        
+                        <a href="&#x2F;" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            首页
+                        </a>
+                        
+                        <a href="&#x2F;posts" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            归档
+                        </a>
+                        
+                        <a href="&#x2F;friends" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            友链
+                        </a>
+                        
+                        <a href="&#x2F;sponsors" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            赞助
+                        </a>
+                        
+                        <a href="https:&#x2F;&#x2F;umami.acofork.com&#x2F;share&#x2F;CdkXbGgZr6ECKOyK" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           target="_blank">
+                            统计
+                        </a>
+                        
+                        <a href="https:&#x2F;&#x2F;status.acofork.com" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           target="_blank">
+                            监控
+                        </a>
+                        
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <!-- Mobile Menu Button -->
+                    <button type="button" onclick="toggleMobileMenu()" class="md:hidden p-2 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
+                        <span class="sr-only">Open menu</span>
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                    <!-- Search Button -->
+                    <button onclick="toggleSearch()" class="p-2 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </button>
+                    <!-- Theme Toggle -->
+                    <button onclick="toggleTheme()" class="p-2 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
+                        <svg id="sun-icon" class="h-6 w-6 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                        <svg id="moon-icon" class="h-6 w-6 block dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                
+                <a href="&#x2F;" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    首页
+                </a>
+                
+                <a href="&#x2F;posts" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    归档
+                </a>
+                
+                <a href="&#x2F;friends" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    友链
+                </a>
+                
+                <a href="&#x2F;sponsors" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    赞助
+                </a>
+                
+                <a href="https:&#x2F;&#x2F;umami.acofork.com&#x2F;share&#x2F;CdkXbGgZr6ECKOyK" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   target="_blank">
+                    统计
+                </a>
+                
+                <a href="https:&#x2F;&#x2F;status.acofork.com" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   target="_blank">
+                    监控
+                </a>
+                
+            </div>
+        </div>
+    </nav>
+
+    <!-- Search Modal -->
+    <div id="search-modal" class="fixed inset-0 z-50 hidden" role="dialog" aria-modal="true">
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" onclick="toggleSearch()"></div>
+        <div class="fixed inset-0 z-10 overflow-y-auto p-4 sm:p-6 md:p-20" onclick="if(event.target === this) toggleSearch()">
+            <div class="mx-auto max-w-xl transform rounded-xl bg-white dark:bg-gray-800 p-2 shadow-2xl transition-all">
+                <input type="text" id="search-input" 
+                       class="w-full rounded-md border-0 bg-gray-100 dark:bg-gray-700 px-4 py-2.5 text-gray-900 dark:text-white placeholder-gray-500 focus:ring-0 sm:text-sm" 
+                       placeholder="搜索文章..." autocomplete="off">
+                <ul id="search-results" class="max-h-96 scroll-py-3 overflow-y-auto p-3"></ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+<div class="max-w-4xl mx-auto">
+    <!-- Post Header -->
+    <header class="mb-8 text-center">
+        <div class="flex items-center justify-center space-x-2 text-sm text-gray-500 dark:text-gray-400 mb-4">
+            <time datetime="2025-09-08">2025-09-08</time>
+            <span>•</span>
+            <span>9 分钟阅读</span>
+            <span id="views-separator" style="display: none">•</span>
+            <span id="page-views" style="display: none"></span>
+        </div>
+        <h1 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">Oracle（甲骨文云）踩坑记录</h1>
+        
+        <p class="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">在钞能力的帮助下也是成功薅到了一个甲骨文账号，上手把玩发现坑点挺多的，遂记录</p>
+        
+        
+        <div class="w-full rounded-2xl overflow-hidden shadow-sm mb-8">
+            <img src="&#x2F;img&#x2F;1bd2033f64e7016494ad540c7ae6a917.png" alt="Oracle（甲骨文云）踩坑记录" class="w-full h-auto">
+        </div>
+        
+    </header>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const baseUrl = 'https://umami.acofork.com';
+                const shareId = 'CdkXbGgZr6ECKOyK';
+                // Current page path
+                const urlPath = window.location.pathname;
+                
+                const stats = await window.fetchUmamiStats(baseUrl, shareId, {
+                    url: urlPath
+                });
+                
+                // Check for both 'visits' (new preference) or 'pageviews' (fallback)
+                const metric = (stats && (stats.visits || stats.pageviews));
+                
+                let views = 0;
+                let hasData = false;
+
+                if (metric && typeof metric.value !== 'undefined') {
+                    views = metric.value;
+                    hasData = true;
+                } else if (stats && (typeof stats.visits === 'number' || typeof stats.pageviews === 'number')) {
+                        // Fallback for flat structure
+                        views = stats.visits || stats.pageviews;
+                        hasData = true;
+                }
+
+                if (hasData) {
+                    const viewEl = document.getElementById('page-views');
+                    viewEl.textContent = views + ' 次访问';
+                    viewEl.style.display = 'inline';
+                    document.getElementById('views-separator').style.display = 'inline';
+                }
+            } catch (e) {
+                console.error('Failed to load page views:', e);
+            }
+        });
+    </script>
+
+    <!-- Post Content -->
+    <article class="prose prose-lg dark:prose-invert max-w-none bg-white dark:bg-gray-800 p-8 md:p-12 rounded-2xl shadow-sm">
+        <h1 id="区域选择">区域选择</h1>
+<p>注册的时候会让你选择一个账户主区域，选择后 <strong>不可更改</strong> ，我选择的是 <strong>Japan East (Tokyo)</strong> 。由于甲骨文的arm免费机是需要抢的，你选择的区域越热门，能抢到arm机子的概率就越低</p>
+<h1 id="安全性">安全性</h1>
+<blockquote>
+<p><a rel="noopener nofollow" target="_blank" href="https://cloud.oracle.com/identity/domains/my-profile/security">https://cloud.oracle.com/identity/domains/my-profile/security</a></p>
+</blockquote>
+<p>建议启用 <strong>两步验证</strong> 使用你的移动设备下载一个甲骨文App 然后扫码即可（实际上就是一个联网的TOTP）</p>
+<p><img src="/img/2efc9e7ac1477ff0fbdb21298714ba64.png" alt="" /></p>
+<p>如果需要更改密码，它在这里</p>
+<p><img src="/img/fe11d42514b50924f2ce9220ec786485.png" alt="" /></p>
+<h1 id="没有Debian系统？">没有Debian系统？</h1>
+<p>如果你前往 <a rel="noopener nofollow" target="_blank" href="https://cloud.oracle.com/compute/instances/create">https://cloud.oracle.com/compute/instances/create</a> 尝试创建实例。会发现没有 <strong>Debian</strong> 映像 。我们可以通过最下面 <strong>我的映像</strong> 来上传自己的自定义映像，详细步骤往下看</p>
+<p><img src="/img/28ab9c0dfcb9b15ce89e19fbeb3f1b81.png" alt="" /></p>
+<p>写在前面，如果你需要往甲骨文上传自定义映像，你需要先将自定义映像上传到你 <strong>甲骨文账户下的对象存储</strong> ，随便找一个对象存储上传是不行的！！！</p>
+<p>首先下载适用于云的Debian映像，进入 <a rel="noopener nofollow" target="_blank" href="https://www.debian.org/distrib">下载 Debian</a> ，找到 <strong>使用 Debian 云镜像</strong> 分别下载</p>
+<ul>
+<li>64 位 AMD/Intel (<a rel="noopener nofollow" target="_blank" title="用于 64 位 AMD/Intel 的 OpenStack 镜像，qcow2" href="https://cloud.debian.org/images/cloud/trixie/latest/debian-13-generic-amd64.qcow2">qcow2</a>, <a rel="noopener nofollow" target="_blank" title="用于 64 位 AMD/Intel 的 OpenStack 镜像，raw" href="https://cloud.debian.org/images/cloud/trixie/latest/debian-13-generic-amd64.raw">raw</a>)</li>
+<li>64 位 ARM (<a rel="noopener nofollow" target="_blank" title="用于 64 位 ARM 的 OpenStack 镜像，qcow2" href="https://cloud.debian.org/images/cloud/trixie/latest/debian-13-generic-arm64.qcow2">qcow2</a>, <a rel="noopener nofollow" target="_blank" title="用于 64 位 ARM 的 OpenStack 镜像，raw" href="https://cloud.debian.org/images/cloud/trixie/latest/debian-13-generic-arm64.raw">raw</a>)</li>
+</ul>
+<p><img src="/img/bce5f1083cde9901c1fff0a849cd7830.png" alt="" /></p>
+<p>你会得到</p>
+<p><img src="/img/5c977cb3b2129386fe5c461fa69cc662.png" alt="" /></p>
+<p>前往 <a rel="noopener nofollow" target="_blank" href="https://cloud.oracle.com/object-storage/buckets">https://cloud.oracle.com/object-storage/buckets</a> 创建一个新存储桶，点击编辑可见性，改为 <strong>公共</strong></p>
+<p><img src="/img/1c5348896fe2f1d7bd21fbd4783b1145.png" alt="" /></p>
+<p><img src="/img/736e78d1abb4ece241c54deb98244ea1.png" alt="" /></p>
+<p>然后上载刚刚下载的映像</p>
+<p><img src="/img/df256fd12897e5513865146e1dfb4bb6.png" alt="" /></p>
+<p>前往 <a rel="noopener nofollow" target="_blank" href="https://cloud.oracle.com/compute/images">https://cloud.oracle.com/compute/images</a> 点击 <strong>导入映像</strong> 按需填写</p>
+<p><img src="/img/774e7134c768a2912becdd698db04133.png" alt="" /></p>
+<p>映像类型和启动模式如图填写（性能最大化）</p>
+<p><img src="/img/0f7e034e15f96a5f6336e8bb42f60d49.png" alt="" /></p>
+<p>验收无误后，点击右下角的 <strong>导入映像</strong> ，大约需要 <strong>20min</strong> ，状态将变为 <strong>可用</strong></p>
+<p><img src="/img/348f21b6a7d42ba43d6050d321d61f3f.png" alt="" /></p>
+<p>点击其中一个映像，进入详情页面，针对于 <strong>arm映像</strong> 我们需要手动调节 <strong>兼容的配置</strong>。右上角点击 <strong>操作 - 编辑详细信息</strong></p>
+<p><img src="/img/453e5e6887780af89f2e7d119e0bcff3.png" alt="" /></p>
+<p>全部打勾，保存更改</p>
+<p><em>仍然需要注意，创建实例的时候请看准是x86还是arm实例，x86实例无法使用arm映像，反之亦然</em></p>
+<p><img src="/img/f9f2016235ee458e959263ece719e41e.png" alt="" /></p>
+<p>然后点击右上角<strong>创建实例</strong>，即可使用自定义映像创建实例</p>
+<p><img src="/img/2c73b23e9d3531003b3b6b438fd722c3.png" alt="" /></p>
+<h1 id="创建VCN（网络）">创建VCN（网络）</h1>
+<p>前往 <a rel="noopener nofollow" target="_blank" href="https://cloud.oracle.com/networking/vcns">https://cloud.oracle.com/networking/vcns</a> 点击 <strong>创建VCN</strong> 改个名称然后一路下一步即可</p>
+<p><img src="/img/f08d9f10fd59091723d3657b54273b9a.png" alt="" /></p>
+<p>成功创建一个如图的网络</p>
+<p><img src="/img/fbfc18d70a06e665ce6cfb48d860a53a.png" alt="" /></p>
+<h1 id="为VCN附加IPv6前缀">为VCN附加IPv6前缀</h1>
+<p>前往 <a rel="noopener nofollow" target="_blank" href="https://cloud.oracle.com/networking/vcns">https://cloud.oracle.com/networking/vcns</a></p>
+<p>进入我们刚刚创建的VCN
+<img src="/img/e18b9943ffa2e4d1b765b51a34a0c14b.png" alt="" /></p>
+<p>导航栏选择 <strong>子网</strong> - <strong>公共子网</strong></p>
+<p><img src="/img/342b4e8cf7b87a7be62ed56b49f9a2f6.png" alt="" /></p>
+<p>在新页面的导航栏点击 <strong>IP管理</strong></p>
+<p><img src="/img/4a4e0d217f97e15ac93face85a8538d3.png" alt="" /></p>
+<p>往下滚动，添加 <strong>IPv6前缀</strong></p>
+<p><img src="/img/4d77a5bfa1e62b144a49e6ea001ee51b.png" alt="" /></p>
+<h1 id="创建实例">创建实例</h1>
+<p>前往 <a rel="noopener nofollow" target="_blank" href="https://cloud.oracle.com/compute/instances">https://cloud.oracle.com/compute/instances</a> 点击 <strong>创建实例</strong></p>
+<p>在这里可以更改映像为自定义映像，即我们刚刚上传的Debian映像</p>
+<p><img src="/img/15563fc1ff5396d0b54e6fc8d0992ee3.png" alt="" /></p>
+<p>在这里可以更改 <strong>架构和配置</strong> 。永久免费套餐为</p>
+<ul>
+<li>
+<p>VM.Standard.E2.1.Micro：<strong>两个</strong> 1c1g的x86 实例，<strong>不可合并为2c2g使用</strong></p>
+</li>
+<li>
+<p>VM.Standard.A1.Flex：共 4c24g的arm64 实例，<strong>可以随意拆分</strong></p>
+</li>
+</ul>
+<p><strong>重要事项</strong></p>
+<p><strong>闲置计算实例的回收</strong></p>
+<p>Oracle 可能会回收闲置的“永久免费”计算实例。如果在 <strong>7 天周期内</strong> 同时满足以下条件，则虚拟机和裸金属计算实例会被视为闲置：</p>
+<ul>
+<li>
+<p><strong>CPU 使用率</strong>（95 百分位数）低于 20%</p>
+</li>
+<li>
+<p><strong>网络使用率</strong>低于 20%</p>
+</li>
+<li>
+<p><strong>内存使用率</strong>低于 20%（仅适用于 A1 规格）</p>
+</li>
+</ul>
+<p><img src="/img/045adb4f859a31cae01344a90dba7f29.png" alt="" /></p>
+<p>在这里可以选择是否附加 <strong>IPv4</strong> 和 <strong>IPv6</strong> 地址，其中， <strong>IPv6</strong> 地址的附加功能取决于是否在VCN附加了 <strong>IPv6前缀</strong></p>
+<p><img src="/img/32cea448c2e04326b5e2d289a3ae3ebe.png" alt="" /></p>
+<p>在这里可以更改IO配置，直接拉满即可</p>
+<p><img src="/img/cf7885fa1906af3b10f5b7b40e4021ea.png" alt="" /></p>
+<p>在这里可以更改SSH相关配置</p>
+<p><img src="/img/1dc7b829330d2b53f3962ef662a097a4.png" alt="" /></p>
+<p>一路下一步，验收无误后点击 <strong>创建</strong></p>
+<h1 id="更改防火墙">更改防火墙</h1>
+<blockquote>
+<p>我直接改为全允许，我更喜欢在Linux服务器上配置 ufw 来实现防火墙</p>
+</blockquote>
+<p>前往 <a rel="noopener nofollow" target="_blank" href="https://cloud.oracle.com/networking/vcns">https://cloud.oracle.com/networking/vcns</a> ，进入你刚刚创建的VCN，导航栏点击 <strong>安全</strong> 找到这个</p>
+<p><img src="/img/e66117cec4050e037d412e7bb83790e3.png" alt="" /></p>
+<p>导航栏继续找到 <strong>安全规则</strong> 我直接全放行</p>
+<p><img src="/img/6d885d2275521a0d859997cf88ffbb74.png" alt="" /></p>
+<h1 id="使用SSH连接实例">使用SSH连接实例</h1>
+<p>前往 <a rel="noopener nofollow" target="_blank" href="https://cloud.oracle.com/compute/instances">https://cloud.oracle.com/compute/instances</a> 可以看到 <strong>公共IP</strong> ，携带你的 <strong>SSH私钥</strong> 通过 <strong>22 端口</strong> 连接服务器即可</p>
+<p><img src="/img/c10b0ab6422d0ab28ce92e0b5ff9eab0.png" alt="" /></p>
+<h1 id="改root登录">改root登录</h1>
+<p>如果你使用root直接登录，会提示</p>
+<p><img src="/img/5f7703a859b34f269caa38246ccb10e7.png" alt="" /></p>
+<p>意为： <strong>请使用名为 <code>debian</code> 的用户登录而不是 <code>root</code> 用户</strong></p>
+<p>那我们就听他的，想把登录名改为 <strong>debian</strong></p>
+<p>再次尝试，成功登录了</p>
+<p><img src="/img/def56350a0a3977856bad5073cf31ed5.png" alt="" /></p>
+<p>首先提权为 <strong>root</strong></p>
+<pre data-lang="bash" class="language-bash "><code class="language-bash" data-lang="bash">sudo -i
+</code></pre>
+<p>接着编辑root用户的ssh公钥文件，以允许直接使用root登录</p>
+<pre data-lang="bash" class="language-bash "><code class="language-bash" data-lang="bash">nano &#x2F;root&#x2F;.ssh&#x2F;authorized_keys
+</code></pre>
+<p><strong>Ctrl+K</strong> 删除第一行的警告，并且重新写入你的SSH公钥</p>
+<p><strong>Ctrl+X</strong> 保存并退出，然后重启 <strong>sshd</strong></p>
+<pre data-lang="bash" class="language-bash "><code class="language-bash" data-lang="bash">systemctl restart sshd
+</code></pre>
+<p>重新使用 <strong>root</strong> 登录，成功</p>
+<p><img src="/img/b57a7dd04b5378c23d949adaedc3e762.png" alt="" /></p>
+<h1 id="自动脚本抢arm机">自动脚本抢arm机</h1>
+<p>如果你在创建实例的时候选择arm，并且最后创建的时候提示</p>
+<p><strong>可用性域 VM.Standard.A1.Flex 中配置 AD-1 的容量不足。请在其他可用性域中创建实例，或稍后重试。如果指定了容错域，请尝试在不指定容错域的情况下创建实例。如果这样不起作用，请稍后重试。<a rel="noopener nofollow" target="_blank" href="https://www.oracle.com/cloud/free/faq.html">了解有关主机容量的更多信息。</a></strong></p>
+<p>字面意思，我们可以依靠一个自动脚本来无限重试</p>
+<p>前往 <a rel="noopener nofollow" target="_blank" href="https://cloud.oracle.com/identity/domains/my-profile/auth-tokens">https://cloud.oracle.com/identity/domains/my-profile/auth-tokens</a> 点击 <strong>添加API密钥</strong> 并 <strong>下载私有密钥（只能下一次）</strong> ，然后会弹出 <strong>配置文件预览</strong> ，复制它，后面要用</p>
+<p><img src="/img/3fddcd41bc2913efe2e0471439a01b93.png" alt="" /></p>
+<p>克隆仓库 <a rel="noopener nofollow" target="_blank" href="https://github.com/chacuavip10/oci_auto">chacuavip10/oci_auto</a></p>
+<p>编辑 <code>config</code> 内的内容，将内容清空，粘贴上一步的 <strong>配置文件预览</strong> 的内容。但是确保最后一行为</p>
+<pre data-lang="bash" class="language-bash "><code class="language-bash" data-lang="bash">key_file=oci_private_key.pem
+</code></pre>
+<p>前往 <a rel="noopener nofollow" target="_blank" href="https://cloud.oracle.com/compute/instances/create">https://cloud.oracle.com/compute/instances/create</a> 再次尝试创建一个arm机子，并且F12抓包，查看该包的详情</p>
+<p><img src="/img/43d69b6cf9afb9aa348d5992195e05e2.png" alt="" /></p>
+<p>对号入座填写 <code>oci_auto.py</code> 内的内容</p>
+<p><img src="/img/3ae0f95dc1bc459f95cbad2ba3670519.png" alt="" /></p>
+<p>安装依赖</p>
+<pre data-lang="bash" class="language-bash "><code class="language-bash" data-lang="bash">apt install python3
+apt install pip
+pip install oci requests
+</code></pre>
+<p>运行</p>
+<pre data-lang="bash" class="language-bash "><code class="language-bash" data-lang="bash">python3 oci_auto.py
+</code></pre>
+<p>即可自动抢机子，可能几个月后，你的账户下就会多一台arm了（？</p>
+<p><img src="/img/ee970ecb792c9f8ec1752d50cd6961fe.png" alt="" /></p>
+
+    </article>
+
+    <!-- License -->
+    <div class="mt-8 p-6 bg-gray-50 dark:bg-gray-700/50 rounded-2xl text-sm text-gray-600 dark:text-gray-400">
+        <div class="flex flex-col gap-2">
+            <p class="font-medium text-gray-900 dark:text-white">版权声明</p>
+            <p>
+                本文由 <span class="font-medium">二叉树树</span> 创作，采用 
+                <a href="https:&#x2F;&#x2F;creativecommons.org&#x2F;licenses&#x2F;by-nc-sa&#x2F;4.0&#x2F;" target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-blue-400 hover:underline">CC BY-NC-SA 4.0</a> 
+                许可协议。
+            </p>
+            <p>
+                转载请注明出处：<a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;posts&#x2F;oci&#x2F;" class="text-blue-600 dark:text-blue-400 hover:underline break-all">AcoFork Blog - Oracle（甲骨文云）踩坑记录: https:&#x2F;&#x2F;blog.acofork.com&#x2F;posts&#x2F;oci&#x2F;</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Help & Edit -->
+    <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-sm">
+            <h3 class="font-bold text-gray-900 dark:text-white mb-2">这篇文章是否对你有帮助？</h3>
+            <div class="flex space-x-4">
+                <a href="&#x2F;posts&#x2F;pin" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline">联系</a>
+                <a href="&#x2F;sponsors" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline">赞助</a>
+            </div>
+        </div>
+        <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-sm">
+            <h3 class="font-bold text-gray-900 dark:text-white mb-2">发现错误或想要改进这篇文章？</h3>
+            <a href="https:&#x2F;&#x2F;github.com&#x2F;afoim&#x2F;AcoFork_Blog_Zola/blob/main/content/posts&#x2F;oci.md" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline flex items-center">
+                <span>在 GitHub 上编辑此页</span>
+                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+            </a>
+        </div>
+    </div>
+
+    <!-- Post Footer -->
+    <footer class="mt-8 flex flex-wrap gap-2 justify-center">
+        
+        
+        <a href="https://blog.acofork.com/tags/oracle/" class="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-full text-sm hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">#Oracle</a>
+        
+        
+    </footer>
+
+    <!-- Comments (Giscus) -->
+    <div class="mt-12 bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-sm">
+<script src="https://giscus.app/client.js"
+        data-repo="afoim/giscus-fuwari"
+        data-repo-id="R_kgDOOi8quw"
+        data-category="Announcements"
+        data-category-id="DIC_kwDOOi8qu84CprDV"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="preferred_color_scheme"
+        data-lang="zh-CN"
+        crossorigin="anonymous"
+        async>
+</script>
+    </div>
+</div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col items-center justify-center space-y-2">
+                <p class="text-gray-500 dark:text-gray-400 text-sm">
+                    &copy; 2026 二叉树树. 
+                    <a href="https:&#x2F;&#x2F;creativecommons.org&#x2F;licenses&#x2F;by-nc-sa&#x2F;4.0&#x2F;" target="_blank" class="hover:underline">CC BY-NC-SA 4.0</a>
+                </p>
+                <p class="text-gray-400 dark:text-gray-500 text-xs">
+                    Powered by <a href="https://www.getzola.org" target="_blank" class="hover:text-gray-300">Zola</a>
+                     · <a href="https://github.com/afoim/AcoFork_Blog_Zola" target="_blank" class="hover:text-gray-300">Source Code</a>
+                </p>
+                <a href="https://blog.acofork.com/rss.xml" target="_blank" class="text-gray-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors p-2">
+                    <span class="sr-only">RSS</span>
+                    <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                        <path d="M5 3a1 1 0 000 2c5.523 0 10 4.477 10 10a1 1 0 102 0C17 8.373 11.627 3 5 3z"></path>
+                        <path d="M4 9a1 1 0 011-1 7 7 0 017 7 1 1 0 11-2 0 5 5 0 00-5-5 1 1 0 01-1-1zM3 15a2 2 0 114 0 2 2 0 01-4 0z"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/elasticlunr/0.9.6/elasticlunr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+    <script src="/js/umami-share.js"></script>
+    <script src="/js/search.js"></script>
+    <script src="/js/gfm-alerts.js"></script>
+    <script src="/js/anchor-fix.js"></script>
+    <script>
+        // Umami script needs to be loaded if it's not already
+        // This is a workaround since we removed the original script tag
+        (function() {
+            var el = document.createElement('script');
+            el.setAttribute('src', 'https://umami.acofork.com/script.js');
+            el.setAttribute('data-website-id', '5d710dbd-3a2e-43e3-a553-97b415090c63');
+            el.setAttribute('defer', '');
+            document.body.appendChild(el);
+        })();
+    </script>
+</body>
+</html>

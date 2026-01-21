@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="zh" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AcoFork Blog - 技术分享与实践</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css"/>
+    <link rel="icon" href="https://q2.qlogo.cn/headimg_dl?dst_uin=2726730791&amp;spec=0">
+    <script src="https://pic1.acofork.com/random.js"></script>
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.acofork.com/rss.xml">
+    <script src="/js/main.js"></script>
+</head>
+<body class="bg-[var(--page-bg)] text-gray-900 dark:text-gray-100 transition-colors duration-300 min-h-screen flex flex-col">
+
+    <!-- Navbar -->
+    <nav class="sticky top-0 z-50 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md shadow-sm dark:border-b dark:border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="/" class="text-xl font-bold text-blue-600 dark:text-blue-400">AcoFork Blog</a>
+                    </div>
+                    <!-- Desktop Menu -->
+                    <div class="hidden md:ml-6 md:flex md:space-x-8">
+                        
+                        <a href="&#x2F;" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            首页
+                        </a>
+                        
+                        <a href="&#x2F;posts" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            归档
+                        </a>
+                        
+                        <a href="&#x2F;friends" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            友链
+                        </a>
+                        
+                        <a href="&#x2F;sponsors" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            赞助
+                        </a>
+                        
+                        <a href="https:&#x2F;&#x2F;umami.acofork.com&#x2F;share&#x2F;CdkXbGgZr6ECKOyK" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           target="_blank">
+                            统计
+                        </a>
+                        
+                        <a href="https:&#x2F;&#x2F;status.acofork.com" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           target="_blank">
+                            监控
+                        </a>
+                        
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <!-- Mobile Menu Button -->
+                    <button type="button" onclick="toggleMobileMenu()" class="md:hidden p-2 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
+                        <span class="sr-only">Open menu</span>
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                    <!-- Search Button -->
+                    <button onclick="toggleSearch()" class="p-2 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </button>
+                    <!-- Theme Toggle -->
+                    <button onclick="toggleTheme()" class="p-2 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
+                        <svg id="sun-icon" class="h-6 w-6 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                        <svg id="moon-icon" class="h-6 w-6 block dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                
+                <a href="&#x2F;" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    首页
+                </a>
+                
+                <a href="&#x2F;posts" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    归档
+                </a>
+                
+                <a href="&#x2F;friends" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    友链
+                </a>
+                
+                <a href="&#x2F;sponsors" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    赞助
+                </a>
+                
+                <a href="https:&#x2F;&#x2F;umami.acofork.com&#x2F;share&#x2F;CdkXbGgZr6ECKOyK" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   target="_blank">
+                    统计
+                </a>
+                
+                <a href="https:&#x2F;&#x2F;status.acofork.com" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   target="_blank">
+                    监控
+                </a>
+                
+            </div>
+        </div>
+    </nav>
+
+    <!-- Search Modal -->
+    <div id="search-modal" class="fixed inset-0 z-50 hidden" role="dialog" aria-modal="true">
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" onclick="toggleSearch()"></div>
+        <div class="fixed inset-0 z-10 overflow-y-auto p-4 sm:p-6 md:p-20" onclick="if(event.target === this) toggleSearch()">
+            <div class="mx-auto max-w-xl transform rounded-xl bg-white dark:bg-gray-800 p-2 shadow-2xl transition-all">
+                <input type="text" id="search-input" 
+                       class="w-full rounded-md border-0 bg-gray-100 dark:bg-gray-700 px-4 py-2.5 text-gray-900 dark:text-white placeholder-gray-500 focus:ring-0 sm:text-sm" 
+                       placeholder="搜索文章..." autocomplete="off">
+                <ul id="search-results" class="max-h-96 scroll-py-3 overflow-y-auto p-3"></ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+<div class="max-w-4xl mx-auto">
+    <header class="mb-10 text-center">
+        <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">Tags</h1>
+    </header>
+
+    <div class="flex flex-wrap gap-4 justify-center">
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;3x-ui&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">3x-ui</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;a-li-yun-yun-han-shu-fc&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">阿里云云函数 FC</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;ai&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">AI</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">3</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;aihui-tu&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">AI绘图</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;alist&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">AList</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">2</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;astro&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">Astro</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">2</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;autobangumi&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">AutoBangumi</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;beng-pi-xing-qiong-tie-dao&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">崩坏星穹铁道</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;betterstack&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">BetterStack</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;blogging&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">Blogging</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;bo-ke&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">博客</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;cdn&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">CDN</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">2</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;chen-bai-jin-qu&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">尘白禁区</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;chevereto&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">Chevereto</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;cloudflare&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">Cloudflare</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">7</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;cloudflare-byoip&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">Cloudflare Byoip</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;cloudflare-pages&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">Cloudflare Pages</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;cloudflare-r2&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">Cloudflare R2</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;cloudflare-tunnel&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">Cloudflare Tunnel</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;cloudflare-worker&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">Cloudflare Worker</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;cloudflare-workers&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">Cloudflare Workers</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;cors&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">CORS</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;csp&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">CSP</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;cyberduck&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">Cyberduck</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;deepseek&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">Deepseek</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;demo&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">Demo</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;discourse&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">Discourse</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;dllzhu-ru&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">DLL注入</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;dui-xiang-cun-chu&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">对象存储</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;edgeone&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">EdgeOne</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">5</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;exhentai&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">exhentai</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;fan-xiang-dai-li&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">反向代理</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">2</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;fei-niu-nas&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">飞牛NAS</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;folo&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">Folo</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;fuwariyou-hua&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">fuwari优化</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;gemini&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">Gemini</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;giscus&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">Giscus</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;github&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">Github</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">4</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;github-edu&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">Github Edu</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">3</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;goedge&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">GoEdge</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;google&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">Google</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;h3c&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">H3C</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;hugo&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">Hugo</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;icp&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">ICP</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">2</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;ip6-arpa&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">ip6.arpa</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;ipfs&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">IPFS</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;ipv6&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">IPv6</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;ji-lu&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">记录</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;jie-bao&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">解包</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;js&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">JS</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;k3s&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">k3s</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;koishi&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">Koishi</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;lan-kong-tu-chuang&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">兰空图床</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">2</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;liu-lan-qi&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">浏览器</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;liu-zi-qi&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">六子棋</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;lucky&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">Lucky</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;mai-ke-feng&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">麦克风</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;markdown&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">Markdown</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;matrix&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">Matrix</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">2</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;meme&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">meme</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;mortix&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">Mortix</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;na-zha-jian-kong&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">哪吒监控</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;nas&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">NAS</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;nat1&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">NAT1</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;netlify&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">Netlify</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">3</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;nextjs&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">Nextjs</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;noobai&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">NoobAI</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;oracle&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">Oracle</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;phira&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">Phira</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;ping-lun-qu&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">评论区</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;po-jie&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">破解</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;prompt&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">Prompt</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;pve&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">PVE</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;python&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">Python</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;qi-ye-wei-xin&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">企业微信</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;qqbot&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">QQBot</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">3</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;reality&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">Reality</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;render&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">Render</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;replay&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">Replay</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;rewrite&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">Rewrite</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;secbit&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">Secbit</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;seo&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">SEO</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;sheng-huo&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">生活</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;sshfs&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">SSHFS</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;steam&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">Steam</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;stun&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">STUN</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;sui-ji-tu-api&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">随机图API</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;synapse&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">Synapse</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;tailscale&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">Tailscale</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;telegram&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">Telegram</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;telegram-web&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">Telegram Web</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;tu-chuang&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">图床</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;tu-pian-yin-xie&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">图片隐写</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;typora&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">Typora</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;umami&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">Umami</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">3</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;uptimerobot&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">UptimeRobot</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;ustc&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">USTC</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;vercel&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">Vercel</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">5</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;wang-yi-mian-fei-qi-ye-you&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">网易免费企业邮</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;wang-yi-yun-yin-le&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">网易云音乐</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;web&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">Web</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;wei-xin-qi-ye-you&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">微信企业邮</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;whois&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">Whois</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;wordpress&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">wordpress</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;xia-zai-qi&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">下载器</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;xssgong-ji&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">XSS攻击</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;you-xuan&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">优选</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">2</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;yu-ming-you-xiang&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">域名邮箱</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">2</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;zeabur&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">Zeabur</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;zerotier&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">Zerotier</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">1</span>
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;tags&#x2F;zhong-ding-xiang&#x2F;" class="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center space-x-2">
+            <span class="font-medium">重定向</span>
+            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md text-xs text-gray-500 dark:text-gray-400">2</span>
+        </a>
+        
+    </div>
+</div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col items-center justify-center space-y-2">
+                <p class="text-gray-500 dark:text-gray-400 text-sm">
+                    &copy; 2026 二叉树树. 
+                    <a href="https:&#x2F;&#x2F;creativecommons.org&#x2F;licenses&#x2F;by-nc-sa&#x2F;4.0&#x2F;" target="_blank" class="hover:underline">CC BY-NC-SA 4.0</a>
+                </p>
+                <p class="text-gray-400 dark:text-gray-500 text-xs">
+                    Powered by <a href="https://www.getzola.org" target="_blank" class="hover:text-gray-300">Zola</a>
+                     · <a href="https://github.com/afoim/AcoFork_Blog_Zola" target="_blank" class="hover:text-gray-300">Source Code</a>
+                </p>
+                <a href="https://blog.acofork.com/rss.xml" target="_blank" class="text-gray-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors p-2">
+                    <span class="sr-only">RSS</span>
+                    <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                        <path d="M5 3a1 1 0 000 2c5.523 0 10 4.477 10 10a1 1 0 102 0C17 8.373 11.627 3 5 3z"></path>
+                        <path d="M4 9a1 1 0 011-1 7 7 0 017 7 1 1 0 11-2 0 5 5 0 00-5-5 1 1 0 01-1-1zM3 15a2 2 0 114 0 2 2 0 01-4 0z"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/elasticlunr/0.9.6/elasticlunr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+    <script src="/js/umami-share.js"></script>
+    <script src="/js/search.js"></script>
+    <script src="/js/gfm-alerts.js"></script>
+    <script src="/js/anchor-fix.js"></script>
+    <script>
+        // Umami script needs to be loaded if it's not already
+        // This is a workaround since we removed the original script tag
+        (function() {
+            var el = document.createElement('script');
+            el.setAttribute('src', 'https://umami.acofork.com/script.js');
+            el.setAttribute('data-website-id', '5d710dbd-3a2e-43e3-a553-97b415090c63');
+            el.setAttribute('defer', '');
+            document.body.appendChild(el);
+        })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="zh" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI绘图发展了这么多年，你还不会画你推的同人图？ - AcoFork Blog</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css"/>
+    <link rel="icon" href="https://q2.qlogo.cn/headimg_dl?dst_uin=2726730791&amp;spec=0">
+    <script src="https://pic1.acofork.com/random.js"></script>
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.acofork.com/rss.xml">
+    <script src="/js/main.js"></script>
+</head>
+<body class="bg-[var(--page-bg)] text-gray-900 dark:text-gray-100 transition-colors duration-300 min-h-screen flex flex-col">
+
+    <!-- Navbar -->
+    <nav class="sticky top-0 z-50 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md shadow-sm dark:border-b dark:border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="/" class="text-xl font-bold text-blue-600 dark:text-blue-400">AcoFork Blog</a>
+                    </div>
+                    <!-- Desktop Menu -->
+                    <div class="hidden md:ml-6 md:flex md:space-x-8">
+                        
+                        <a href="&#x2F;" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            首页
+                        </a>
+                        
+                        <a href="&#x2F;posts" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            归档
+                        </a>
+                        
+                        <a href="&#x2F;friends" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            友链
+                        </a>
+                        
+                        <a href="&#x2F;sponsors" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           >
+                            赞助
+                        </a>
+                        
+                        <a href="https:&#x2F;&#x2F;umami.acofork.com&#x2F;share&#x2F;CdkXbGgZr6ECKOyK" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           target="_blank">
+                            统计
+                        </a>
+                        
+                        <a href="https:&#x2F;&#x2F;status.acofork.com" 
+                           class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition duration-150 ease-in-out"
+                           target="_blank">
+                            监控
+                        </a>
+                        
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <!-- Mobile Menu Button -->
+                    <button type="button" onclick="toggleMobileMenu()" class="md:hidden p-2 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
+                        <span class="sr-only">Open menu</span>
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                    <!-- Search Button -->
+                    <button onclick="toggleSearch()" class="p-2 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </button>
+                    <!-- Theme Toggle -->
+                    <button onclick="toggleTheme()" class="p-2 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
+                        <svg id="sun-icon" class="h-6 w-6 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                        <svg id="moon-icon" class="h-6 w-6 block dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                
+                <a href="&#x2F;" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    首页
+                </a>
+                
+                <a href="&#x2F;posts" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    归档
+                </a>
+                
+                <a href="&#x2F;friends" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    友链
+                </a>
+                
+                <a href="&#x2F;sponsors" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   >
+                    赞助
+                </a>
+                
+                <a href="https:&#x2F;&#x2F;umami.acofork.com&#x2F;share&#x2F;CdkXbGgZr6ECKOyK" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   target="_blank">
+                    统计
+                </a>
+                
+                <a href="https:&#x2F;&#x2F;status.acofork.com" 
+                   class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700"
+                   target="_blank">
+                    监控
+                </a>
+                
+            </div>
+        </div>
+    </nav>
+
+    <!-- Search Modal -->
+    <div id="search-modal" class="fixed inset-0 z-50 hidden" role="dialog" aria-modal="true">
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" onclick="toggleSearch()"></div>
+        <div class="fixed inset-0 z-10 overflow-y-auto p-4 sm:p-6 md:p-20" onclick="if(event.target === this) toggleSearch()">
+            <div class="mx-auto max-w-xl transform rounded-xl bg-white dark:bg-gray-800 p-2 shadow-2xl transition-all">
+                <input type="text" id="search-input" 
+                       class="w-full rounded-md border-0 bg-gray-100 dark:bg-gray-700 px-4 py-2.5 text-gray-900 dark:text-white placeholder-gray-500 focus:ring-0 sm:text-sm" 
+                       placeholder="搜索文章..." autocomplete="off">
+                <ul id="search-results" class="max-h-96 scroll-py-3 overflow-y-auto p-3"></ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+<div class="max-w-4xl mx-auto">
+    <!-- Post Header -->
+    <header class="mb-8 text-center">
+        <div class="flex items-center justify-center space-x-2 text-sm text-gray-500 dark:text-gray-400 mb-4">
+            <time datetime="2025-05-13">2025-05-13</time>
+            <span>•</span>
+            <span>6 分钟阅读</span>
+            <span id="views-separator" style="display: none">•</span>
+            <span id="page-views" style="display: none"></span>
+        </div>
+        <h1 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">AI绘图发展了这么多年，你还不会画你推的同人图？</h1>
+        
+        <p class="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">从零教你用上最新的NoobAI-V预测模型！2025年最值得上手最简单好用的模型！</p>
+        
+        
+        <div class="w-full rounded-2xl overflow-hidden shadow-sm mb-8">
+            <img src="&#x2F;img&#x2F;2d9e67af8fbdb8cfc81dc0765d0825b4.png" alt="AI绘图发展了这么多年，你还不会画你推的同人图？" class="w-full h-auto">
+        </div>
+        
+    </header>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const baseUrl = 'https://umami.acofork.com';
+                const shareId = 'CdkXbGgZr6ECKOyK';
+                // Current page path
+                const urlPath = window.location.pathname;
+                
+                const stats = await window.fetchUmamiStats(baseUrl, shareId, {
+                    url: urlPath
+                });
+                
+                // Check for both 'visits' (new preference) or 'pageviews' (fallback)
+                const metric = (stats && (stats.visits || stats.pageviews));
+                
+                let views = 0;
+                let hasData = false;
+
+                if (metric && typeof metric.value !== 'undefined') {
+                    views = metric.value;
+                    hasData = true;
+                } else if (stats && (typeof stats.visits === 'number' || typeof stats.pageviews === 'number')) {
+                        // Fallback for flat structure
+                        views = stats.visits || stats.pageviews;
+                        hasData = true;
+                }
+
+                if (hasData) {
+                    const viewEl = document.getElementById('page-views');
+                    viewEl.textContent = views + ' 次访问';
+                    viewEl.style.display = 'inline';
+                    document.getElementById('views-separator').style.display = 'inline';
+                }
+            } catch (e) {
+                console.error('Failed to load page views:', e);
+            }
+        });
+    </script>
+
+    <!-- Post Content -->
+    <article class="prose prose-lg dark:prose-invert max-w-none bg-white dark:bg-gray-800 p-8 md:p-12 rounded-2xl shadow-sm">
+        <h1 id="前情提要（坐牢实况）">前情提要（坐牢实况）</h1>
+<p>其实本来这篇文章应该在一个月前就发出来的，当时已经把部署方法写好了，但是脑子一热给系统重装了。教程没留下，模型没留下，prompt（提示词）没留下，图也没留下。然后就脱坑AI绘图了，然后就开始研究别的东西了</p>
+<p>契机是昨天晚上（2025-05-12）看到有大佬在发一些精美的AI绘图。我这不服输的胜负欲啊…</p>
+<p>然后就边和群u唱歌边研究AI绘图，前前后后把Stable Diffusion WebUI、Stable Diffusion Forge WebUI、Comfyui全装了一遍各种找教程、实操、试错</p>
+<p><img src="/img/0e285313299dc759b33c7f896d825c88.png" alt="2025-05-13-11-58-34-image.png" /></p>
+<p>好在凭借着仅剩的记忆也是顺着这些蛛丝马迹把我曾经丢掉的知识找回来了，在纯小白的情况下，你可以跑出类似下面的图！（跑不出来你打死我！）</p>
+<p><img src="/img/a8f1e5fa9ab7ffe2bb345a5175208c0f.png" alt="2025-05-13-11-59-50-ComfyUI_00016_.png" /></p>
+<p><img src="/img/24c32d5ee1c25542b625b4a6070d8936.png" alt="2025-05-13-12-00-37-ComfyUI_00011_.png" /></p>
+<h1 id="正式开始">正式开始</h1>
+<h2 id="下载NoobAI-V预测模型">下载NoobAI-V预测模型</h2>
+<p>前往 <a rel="noopener nofollow" target="_blank" href="https://civitai.com/models/833294?modelVersionId=1190596">NoobAI-XL (NAI-XL) - V-Pred-1.0-Version | NoobAI Checkpoint | Civitai</a> （需魔法）</p>
+<p>点击下载即可</p>
+<p><img src="/img/9f70e9aa9de8f61a5fe7cf03b3538f2c.png" alt="2025-05-13-12-08-17-image.png" /></p>
+<h2 id="安装Comfyui">安装Comfyui</h2>
+<p>前往秋叶的视频评论区下载Comfyui整合包，下载并解压： <a rel="noopener nofollow" target="_blank" href="https://www.bilibili.com/video/BV1Ew411776J">https://www.bilibili.com/video/BV1Ew411776J</a></p>
+<p>解压完后打开文件夹，打开 <code>A绘世启动器</code></p>
+<p><img src="/img/fc1503517e0980377231eca2836e7c60.png" alt="2025-05-13-12-05-17-image.png" /></p>
+<p>点击右下角的开始运行，先让他进行初始化，直到它自动打开你的浏览器并且可以正常进入Comfyui的界面，如下图<img src="/img/3a0915464350ec2e7be15ea009c4bc13.png" alt="2025-05-13-12-06-57-image.png" /></p>
+<h2 id="放置模型">放置模型</h2>
+<p>将我们刚才下载的NoobAI-V预测模型，类似 <code>noobaiXLNAIXL_vPred10Version.safetensors</code> 这样的文件放到 <code>ComfyUI-aki-v1.5\models\checkpoints</code> 下面，如图</p>
+<p><img src="/img/df39a8fa50a6beaaa0bf98d76bf9bd97.png" alt="2025-05-13-12-10-06-image.png" /></p>
+<h2 id="开始绘图">开始绘图</h2>
+<p>刷新Comfyui，你应该可以在 <code>Checkpoint加载器(简易)</code> 处可以看到你放置的所有模型，选择带有 <code>vPred...</code> 的就是V预测模型</p>
+<p><img src="/img/c2312822597369f9803da685585c36a2.png" alt="2025-05-13-12-11-55-image.png" /></p>
+<p>然后你想要画什么呢？比如崩铁的流萤？</p>
+<p>进入 <a rel="noopener nofollow" target="_blank" href="https://www.downloadmost.com/NoobAI-XL/danbooru-character/">Danbooru characters in NoobAI-XL (NAI-XL)</a></p>
+<p>搜索流萤的英文名 <code>firefly</code> 或者搜索 <code>star rail</code> 找到所有关于崩铁的角色</p>
+<p><img src="/img/6c1b8634affc2ef87f6a70ecd5d3d800.png" alt="2025-05-13-12-15-16-image.png" /></p>
+<p>复制 <code>Prompt tags</code></p>
+<p>回到Comfyui，将其粘贴进链接了正面条件的CLIP文本编码器</p>
+<p><img src="/img/87c903c596a3e056542a3b0c8c212dc6.png" alt="2025-05-13-12-16-35-image.png" /></p>
+<p>这样角色预设就写好了</p>
+<p>我这里也提供了一些起手的提示词</p>
+<ul>
+<li>
+<p>正面条件：</p>
+<pre><code>masterpiece, best quality, newest, absurdres, highres
+</code></pre>
+</li>
+<li>
+<p>负面条件：</p>
+<pre><code>text, watermark, worst quality, old, early, low quality, lowres, signature, username, logo, bad hands, mutated hands, mammal, anthro, furry, ambiguous form, feral, semi-anthro
+</code></pre>
+</li>
+</ul>
+<p>我们将其添加到Comfyui，如下图</p>
+<p><img src="/img/97e668fd546bcaa5b9c72583afd21a81.png" alt="2025-05-13-12-19-32-image.png" /></p>
+<p>ok！接下来让我们配置K采样器</p>
+<ul>
+<li>
+<p>步数：28-35</p>
+</li>
+<li>
+<p>CFG：4-5</p>
+</li>
+<li>
+<p>采样器：euler（❗重要！不能更改！可能会崩图！）</p>
+</li>
+</ul>
+<p>没提到的参数自行斟酌调整，如果你不懂就不要乱调！</p>
+<p>接下来设置图像尺寸，总面积约为 1024x1024。<strong>最推荐832x1216</strong>。其余：768x1344、896x1152、1024x1024、1152x896、1216x832、1344x768、1024x1536、1536x1024</p>
+<p><img src="/img/a12e6bb4972cb5f56b50f985ef6393c2.png" alt="2025-05-13-12-22-06-image.png" /></p>
+<p>最终工作流如图，然后点击执行队列！
+<img src="/img/8d4e56da0ab7f90a972b45c51a65737b.png" alt="2025-05-13-12-24-12-image.png" /></p>
+<p>然后你就能得到一张这样的图片：<img src="/img/24637fef16da95c39d0f6d6f9f946eea.png" alt="2025-05-13-12-24-51-ComfyUI_00018_.png" /></p>
+<p>如果你想要图片是不同的样子请在正面提示词和反面提示词添加（<strong>必须为英文！不知道的用翻译或者问AI！</strong>）。比如我这边想要让足部放到焦点上并且裸足就添加<strong>正面提示词</strong>： <code>barefoot,feet in foreground</code></p>
+<p><img src="/img/fb5ee41648b11e617cb2642721b7e48a.png" alt="2025-05-13-12-27-07-ComfyUI_00019_.png" /></p>
+<h2 id="最后">最后</h2>
+<ul>
+<li>
+<p>AI生成的图片随机性较强。每一次生成的图片都不太一样。多试试</p>
+</li>
+<li>
+<p>可以在负面提示词添加：<code>NSFW</code> ，在正面提示词添加 <code>safe</code> 这样就不会生成涩图</p>
+</li>
+<li>
+<p>由于V预测模型较新，只能在SDForge和Comfyui上运行，原版SD无法运行，会崩图</p>
+</li>
+<li>
+<p>参考：<a rel="noopener nofollow" target="_blank" href="https://civitai.com/models/833294?modelVersionId=1046043">NoobAI-XL (NAI-XL) - V-Pred-0.5-Version | NoobAI Checkpoint | Civitai</a>。关于更多的此模型的技巧可以到图片对应处的About查看<img src="/img/415e669be861af3847f1142422240a24.png" alt="2025-05-13-12-30-55-image.png" /></p>
+</li>
+</ul>
+
+    </article>
+
+    <!-- License -->
+    <div class="mt-8 p-6 bg-gray-50 dark:bg-gray-700/50 rounded-2xl text-sm text-gray-600 dark:text-gray-400">
+        <div class="flex flex-col gap-2">
+            <p class="font-medium text-gray-900 dark:text-white">版权声明</p>
+            <p>
+                本文由 <span class="font-medium">二叉树树</span> 创作，采用 
+                <a href="https:&#x2F;&#x2F;creativecommons.org&#x2F;licenses&#x2F;by-nc-sa&#x2F;4.0&#x2F;" target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-blue-400 hover:underline">CC BY-NC-SA 4.0</a> 
+                许可协议。
+            </p>
+            <p>
+                转载请注明出处：<a href="https:&#x2F;&#x2F;blog.acofork.com&#x2F;posts&#x2F;noobai-vpre&#x2F;" class="text-blue-600 dark:text-blue-400 hover:underline break-all">AcoFork Blog - AI绘图发展了这么多年，你还不会画你推的同人图？: https:&#x2F;&#x2F;blog.acofork.com&#x2F;posts&#x2F;noobai-vpre&#x2F;</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Help & Edit -->
+    <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-sm">
+            <h3 class="font-bold text-gray-900 dark:text-white mb-2">这篇文章是否对你有帮助？</h3>
+            <div class="flex space-x-4">
+                <a href="&#x2F;posts&#x2F;pin" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline">联系</a>
+                <a href="&#x2F;sponsors" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline">赞助</a>
+            </div>
+        </div>
+        <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-sm">
+            <h3 class="font-bold text-gray-900 dark:text-white mb-2">发现错误或想要改进这篇文章？</h3>
+            <a href="https:&#x2F;&#x2F;github.com&#x2F;afoim&#x2F;AcoFork_Blog_Zola/blob/main/content/posts&#x2F;noobai-vpre.md" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline flex items-center">
+                <span>在 GitHub 上编辑此页</span>
+                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+            </a>
+        </div>
+    </div>
+
+    <!-- Post Footer -->
+    <footer class="mt-8 flex flex-wrap gap-2 justify-center">
+        
+        
+        <a href="https://blog.acofork.com/tags/aihui-tu/" class="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-full text-sm hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">#AI绘图</a>
+        
+        <a href="https://blog.acofork.com/tags/noobai/" class="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-full text-sm hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">#NoobAI</a>
+        
+        
+    </footer>
+
+    <!-- Comments (Giscus) -->
+    <div class="mt-12 bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-sm">
+<script src="https://giscus.app/client.js"
+        data-repo="afoim/giscus-fuwari"
+        data-repo-id="R_kgDOOi8quw"
+        data-category="Announcements"
+        data-category-id="DIC_kwDOOi8qu84CprDV"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="preferred_color_scheme"
+        data-lang="zh-CN"
+        crossorigin="anonymous"
+        async>
+</script>
+    </div>
+</div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col items-center justify-center space-y-2">
+                <p class="text-gray-500 dark:text-gray-400 text-sm">
+                    &copy; 2026 二叉树树. 
+                    <a href="https:&#x2F;&#x2F;creativecommons.org&#x2F;licenses&#x2F;by-nc-sa&#x2F;4.0&#x2F;" target="_blank" class="hover:underline">CC BY-NC-SA 4.0</a>
+                </p>
+                <p class="text-gray-400 dark:text-gray-500 text-xs">
+                    Powered by <a href="https://www.getzola.org" target="_blank" class="hover:text-gray-300">Zola</a>
+                     · <a href="https://github.com/afoim/AcoFork_Blog_Zola" target="_blank" class="hover:text-gray-300">Source Code</a>
+                </p>
+                <a href="https://blog.acofork.com/rss.xml" target="_blank" class="text-gray-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors p-2">
+                    <span class="sr-only">RSS</span>
+                    <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                        <path d="M5 3a1 1 0 000 2c5.523 0 10 4.477 10 10a1 1 0 102 0C17 8.373 11.627 3 5 3z"></path>
+                        <path d="M4 9a1 1 0 011-1 7 7 0 017 7 1 1 0 11-2 0 5 5 0 00-5-5 1 1 0 01-1-1zM3 15a2 2 0 114 0 2 2 0 01-4 0z"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/elasticlunr/0.9.6/elasticlunr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+    <script src="/js/umami-share.js"></script>
+    <script src="/js/search.js"></script>
+    <script src="/js/gfm-alerts.js"></script>
+    <script src="/js/anchor-fix.js"></script>
+    <script>
+        // Umami script needs to be loaded if it's not already
+        // This is a workaround since we removed the original script tag
+        (function() {
+            var el = document.createElement('script');
+            el.setAttribute('src', 'https://umami.acofork.com/script.js');
+            el.setAttribute('data-website-id', '5d710dbd-3a2e-43e3-a553-97b415090c63');
+            el.setAttribute('defer', '');
+            document.body.appendChild(el);
+        })();
+    </script>
+</body>
+</html>
