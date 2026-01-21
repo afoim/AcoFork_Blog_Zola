@@ -1,7 +1,8 @@
 {
   "scripts": {
     "build:css": "tailwindcss -i ./styles/input.css -o ./static/css/style.css --minify",
-    "watch:css": "tailwindcss -i ./styles/input.css -o ./static/css/style.css --watch"
+    "watch:css": "tailwindcss -i ./styles/input.css -o ./static/css/style.css --watch",
+    "new-post": "node scripts/new_post.js"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.16",

@@ -3,21 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{{ config.title }}{% endblock title %}</title>
+    <title>{% block title %}{{ config.title }} - {{ config.extra.subtitle }}{% endblock title %}</title>
     <link rel="stylesheet" href="/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css"/>
     <link rel="icon" href="https://q2.qlogo.cn/headimg_dl?dst_uin=2726730791&amp;spec=0">
     <script src="https://pic1.acofork.com/random.js"></script>
     <link rel="alternate" type="application/rss+xml" title="RSS" href="{{ get_url(path="rss.xml", trailing_slash=false) }}">
-    <script>
-        // Theme toggle logic
-        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark')
-        } else {
-            document.documentElement.classList.remove('dark')
-        }
-    </script>
+    <script src="/js/main.js"></script>
 </head>
 <body class="bg-[var(--page-bg)] text-gray-900 dark:text-gray-100 transition-colors duration-300 min-h-screen flex flex-col">
 
@@ -138,67 +131,6 @@
             el.setAttribute('defer', '');
             document.body.appendChild(el);
         })();
-    </script>
-    <script>
-
-        function toggleTheme() {
-            if (document.documentElement.classList.contains('dark')) {
-                document.documentElement.classList.remove('dark')
-                localStorage.theme = 'light'
-                updateGiscusTheme('light')
-            } else {
-                document.documentElement.classList.add('dark')
-                localStorage.theme = 'dark'
-                updateGiscusTheme('dark')
-            }
-        }
-        
-        function updateGiscusTheme(theme) {
-            const iframe = document.querySelector('iframe.giscus-frame');
-            if (!iframe) return;
-            
-            const message = {
-                setConfig: {
-                    theme: theme === 'dark' ? 'dark' : 'light'
-                }
-            };
-            
-            iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
-        }
-
-        function toggleSearch() {
-            const modal = document.getElementById('search-modal');
-            modal.classList.toggle('hidden');
-            if (!modal.classList.contains('hidden')) {
-                document.getElementById('search-input').focus();
-            }
-        }
-        
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('hidden');
-        }
-
-        // Initialize Fancybox
-        document.addEventListener("DOMContentLoaded", function() {
-            Fancybox.bind("[data-fancybox]", {
-                // Your custom options
-            });
-            
-            // Auto-wrap images in prose content with Fancybox links if they aren't already
-            const articleImages = document.querySelectorAll('.prose img');
-            articleImages.forEach(img => {
-                if (img.parentElement.tagName !== 'A') {
-                    const wrapper = document.createElement('a');
-                    wrapper.href = img.src;
-                    wrapper.setAttribute('data-fancybox', 'gallery');
-                    wrapper.setAttribute('data-caption', img.alt || '');
-                    
-                    img.parentNode.insertBefore(wrapper, img);
-                    wrapper.appendChild(img);
-                }
-            });
-        });
     </script>
 </body>
 </html>
