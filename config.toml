@@ -17,6 +17,12 @@ bio = "Protect What You Love."
 avatar = "https://q2.qlogo.cn/headimg_dl?dst_uin=2726730791&spec=0"
 license = "CC BY-NC-SA 4.0"
 license_url = "https://creativecommons.org/licenses/by-nc-sa/4.0/"
+umami_url = "https://umami.acofork.com"
+umami_website_id = "5d710dbd-3a2e-43e3-a553-97b415090c63"
+umami_share_id = "CdkXbGgZr6ECKOyK"
+github_repo = "https://github.com/afoim/AcoFork_Blog_Zola"
+contact_url = "/posts/pin"
+sponsor_url = "/sponsors"
 
 menu = [
     {name = "首页", url = "/", external = false},

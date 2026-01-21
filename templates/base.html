@@ -129,6 +129,18 @@
     <script src="/js/gfm-alerts.js"></script>
     <script src="/js/anchor-fix.js"></script>
     <script>
+        // Umami script needs to be loaded if it's not already
+        // This is a workaround since we removed the original script tag
+        (function() {
+            var el = document.createElement('script');
+            el.setAttribute('src', 'https://umami.acofork.com/script.js');
+            el.setAttribute('data-website-id', '{{ config.extra.umami_website_id }}');
+            el.setAttribute('defer', '');
+            document.body.appendChild(el);
+        })();
+    </script>
+    <script>
+
         function toggleTheme() {
             if (document.documentElement.classList.contains('dark')) {
                 document.documentElement.classList.remove('dark')

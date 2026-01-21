@@ -27,8 +27,8 @@
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
             try {
-                const baseUrl = 'https://umami.acofork.com';
-                const shareId = 'CdkXbGgZr6ECKOyK';
+                const baseUrl = '{{ config.extra.umami_url | safe }}';
+                const shareId = '{{ config.extra.umami_share_id | safe }}';
                 // Current page path
                 const urlPath = window.location.pathname;
                 
@@ -67,6 +67,39 @@
     <article class="prose prose-lg dark:prose-invert max-w-none bg-white dark:bg-gray-800 p-8 md:p-12 rounded-2xl shadow-sm">
         {{ page.content | safe }}
     </article>
+
+    <!-- License -->
+    <div class="mt-8 p-6 bg-gray-50 dark:bg-gray-700/50 rounded-2xl text-sm text-gray-600 dark:text-gray-400">
+        <div class="flex flex-col gap-2">
+            <p class="font-medium text-gray-900 dark:text-white">版权声明</p>
+            <p>
+                本文由 <span class="font-medium">{{ config.extra.author }}</span> 创作，采用 
+                <a href="{{ config.extra.license_url }}" target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-blue-400 hover:underline">{{ config.extra.license }}</a> 
+                许可协议。
+            </p>
+            <p>
+                转载请注明出处：<a href="{{ page.permalink }}" class="text-blue-600 dark:text-blue-400 hover:underline break-all">{{ config.title }} - {{ page.title }}: {{ page.permalink }}</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Help & Edit -->
+    <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-sm">
+            <h3 class="font-bold text-gray-900 dark:text-white mb-2">这篇文章是否对你有帮助？</h3>
+            <div class="flex space-x-4">
+                <a href="{{ config.extra.contact_url }}" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline">联系</a>
+                <a href="{{ config.extra.sponsor_url }}" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline">赞助</a>
+            </div>
+        </div>
+        <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-sm">
+            <h3 class="font-bold text-gray-900 dark:text-white mb-2">发现错误或想要改进这篇文章？</h3>
+            <a href="{{ config.extra.github_repo }}/blob/main/content/{{ page.relative_path }}" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline flex items-center">
+                <span>在 GitHub 上编辑此页</span>
+                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+            </a>
+        </div>
+    </div>
 
     <!-- Post Footer -->
     <footer class="mt-8 flex flex-wrap gap-2 justify-center">

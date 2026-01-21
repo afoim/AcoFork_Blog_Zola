@@ -1863,6 +1863,10 @@ pre[data-lang] {
   overflow-wrap: break-word;
 }
 
+.break-all {
+  word-break: break-all;
+}
+
 .rounded-2xl {
   border-radius: 1rem;
 }
@@ -2020,6 +2024,11 @@ pre[data-lang] {
 .bg-yellow-50 {
   --tw-bg-opacity: 1;
   background-color: rgb(254 252 232 / var(--tw-bg-opacity, 1));
+}
+
+.bg-gray-50 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(249 250 251 / var(--tw-bg-opacity, 1));
 }
 
 .bg-opacity-75 {
@@ -2574,6 +2583,10 @@ pre[data-lang] {
 
 .dark\:bg-yellow-950\/30:is(.dark *) {
   background-color: rgb(66 32 6 / 0.3);
+}
+
+.dark\:bg-gray-700\/50:is(.dark *) {
+  background-color: rgb(55 65 81 / 0.5);
 }
 
 .dark\:text-blue-200:is(.dark *) {

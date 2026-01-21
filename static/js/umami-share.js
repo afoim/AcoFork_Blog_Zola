@@ -95,9 +95,23 @@
             for (const [key, value] of Object.entries(requestParams)) {
                 if (key === 'url') {
                     // Umami v3 特殊逻辑：参数名变更为 'path'，且需要 'eq.' 前缀
-                    const pathValue = value.endsWith('/') ? value : value + '/'; // 确保尾随斜杠一致性（可选，视实际数据而定）
+                    // 处理 URL 编码：先解码再编码，避免重复编码导致 400 错误
+                    let pathValue = value;
+                    try {
+                        pathValue = decodeURIComponent(value);
+                    } catch (e) {
+                        // ignore
+                    }
+                    
+                    // 确保路径以 / 开头（如果是相对路径）
+                    // if (!pathValue.startsWith('/') && !pathValue.startsWith('http')) {
+                    //    pathValue = '/' + pathValue;
+                    // }
+
                     // 用户指出：需要使用 eq. 前缀，参数名为 path
-                    params.append('path', `eq.${value}`); 
+                    // 这里不对 pathValue 进行 encodeURIComponent，因为 URLSearchParams 会自动编码
+                    // 但是我们需要确保传入的是原始字符串，而不是已经编码过的
+                    params.append('path', `eq.${pathValue}`); 
                 } else {
                     params.append(key, value);
                 }
@@ -105,17 +119,39 @@
 
 			const statsUrl = `${baseUrl}/api/websites/${websiteId}/stats?${params.toString()}`;
 
+            console.log('[Umami Debug] Fetching stats:', {
+                baseUrl,
+                shareId,
+                websiteId,
+                token: token ? token.substring(0, 10) + '...' : 'null',
+                statsUrl,
+                params: params.toString()
+            });
+
 			const res = await fetch(statsUrl, {
 				headers: {
 					"x-umami-share-token": token,
 				},
 			});
 
+            if (!res.ok) {
+                console.warn(`[Umami Debug] Request failed with status ${res.status}`);
+                // 如果是 404，可能是 websiteId 不正确（Share ID 对应的网站与当前配置的 ID 不一致？）
+                if (res.status === 404) {
+                     console.error('[Umami Debug] 404 Not Found. Please check if websiteId matches the shareId.');
+                }
+            }
+
 			if (!res.ok) {
 				if (res.status === 401 && !isRetry) {
 					global.clearUmamiShareCache();
 					return doFetch(true);
 				}
+                // 忽略 400 Bad Request 错误，可能是因为 path 格式不正确（例如包含特殊字符）
+                if (res.status === 400) {
+                    console.warn(`Umami API returned 400 for ${statsUrl}`);
+                    return null;
+                }
 				throw new Error("获取统计数据失败");
 			}
 

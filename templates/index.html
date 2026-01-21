@@ -55,8 +55,8 @@
             <script>
                 document.addEventListener('DOMContentLoaded', async () => {
                     try {
-                        const baseUrl = 'https://umami.acofork.com';
-                        const shareId = 'CdkXbGgZr6ECKOyK'; 
+                        const baseUrl = '{{ config.extra.umami_url | safe }}';
+                        const shareId = '{{ config.extra.umami_share_id | safe }}'; 
                         
                         // 1. Load total views
                         const stats = await window.fetchUmamiStats(baseUrl, shareId, {});
