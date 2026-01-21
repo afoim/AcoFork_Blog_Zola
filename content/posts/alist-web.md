@@ -26,7 +26,7 @@ extra:
 
 1. Fork仓库：
    
-   [https://github.com/alist-org/alist-web](https://github.com/alist-org/alist-web)
+   [<https://github.com/alist-org/alist-web>](https://github.com/alist-org/alist-web)
 
 2. 更改项目根目录的`env.production`文件为你的后端服务器地址  
    ![QmduQJq3TydzvLzBn47zLxp2MR1iD2sxm67EzFUFuEBvQa.webp](/img/6c212ffe9728bfb01218cdd3c51cce7e.webp)

@@ -27,7 +27,7 @@ Windows：[SourceForge](https://sourceforge.net/projects/qbittorrent/files/qbitt
 
 Linux：`apt/yum install qbittorrent-nox`
 
-Docker：https://github.com/linuxserver/docker-qbittorrent
+Docker：<https://github.com/linuxserver/docker-qbittorrent>
 
 Tracker服务器大全：[中国可用的 BT Tracker 服务器列表，每24小时自动更新 - 小小编程](https://www.yaozuopan.top/index.php/archives/1014/#:~:text=%E4%B8%AD%E5%9B%BD%E5%8F%AF%E7%94%A8%E7%9A%84%20BT%20T)
 
@@ -85,8 +85,8 @@ services:
 
 1. [ACG.RIP](https://acg.rip)
 2. [末日动漫资源网](https://share.acgnx.se)
-3. 蜜柑计划 国内直连：1. <https://mikanime.tv> 2. <https://hadestian.cn> 3. <https://mk.misakaae.com> 4. <https://mikan.yujiangqaq.com> 5. RSS镜像站：https://mikanani.longc.top
-4. 蜜柑计划 需翻墙：https://mikanani.me
+3. 蜜柑计划 国内直连：1. <https://mikanime.tv> 2. <https://hadestian.cn> 3. <https://mk.misakaae.com> 4. <https://mikan.yujiangqaq.com> 5. RSS镜像站：<https://mikanani.longc.top>
+4. 蜜柑计划 需翻墙：<https://mikanani.me>
    然后找你想要的番剧下载
 
 #### 规范重命名

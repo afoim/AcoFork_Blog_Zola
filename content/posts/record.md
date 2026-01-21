@@ -50,7 +50,7 @@ pip install keyboard pyperclip pillow boto3 pyautogui
 
 <https://github.com/juewuy/ShellCrash>
 
-Tg通知频道：https://t.me/ShellClash
+Tg通知频道：<https://t.me/ShellClash>
 
 ```shell
 bash -c "$(curl -kfsSl https://r2.072103.xyz/shellclash.sh)" && source /etc/profile &> /dev/null
@@ -286,7 +286,7 @@ apt install s-tui
 
 ---
 
-# Windows超级牛逼包管理器：https://scoop.sh
+# Windows超级牛逼包管理器：<https://scoop.sh>
 
 ---
 
@@ -307,8 +307,8 @@ apt install s-tui
 
 # 国内Docker镜像
 
-- 1Panel Docker监控：https://status.1panel.top/status/docker
-- 南京大学GHCR镜像源：https://ghcr.nju.edu.cn
+- 1Panel Docker监控：<https://status.1panel.top/status/docker>
+- 南京大学GHCR镜像源：<https://ghcr.nju.edu.cn>
 
 ---
 

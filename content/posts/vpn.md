@@ -38,21 +38,21 @@ extra:
 
 可以前往这两个仓库进行一键安装~
 
-[https://github.com/0x0129/hysteria2](https://github.com/0x0129/hysteria2)
+[<https://github.com/0x0129/hysteria2>](https://github.com/0x0129/hysteria2)
 
-[https://github.com/seagullz4/hysteria2](https://github.com/seagullz4/hysteria2)
+[<https://github.com/seagullz4/hysteria2>](https://github.com/seagullz4/hysteria2)
 
 大致安装过程：自签名，不使用acme，不使用端口跳跃
 
 客户端（Hiddify）：
 
-[https://github.com/hiddify/hiddify-app](https://github.com/hiddify/hiddify-app)
+[<https://github.com/hiddify/hiddify-app>](https://github.com/hiddify/hiddify-app)
 
 其他客户端在第二个Github Repo获取
 
 ## 使用旧协议：V2Ray
 
-[https://github.com/233boy/v2ray](https://github.com/233boy/v2ray)
+[<https://github.com/233boy/v2ray>](https://github.com/233boy/v2ray)
 
 VPS安装脚本：`bash <(curl -s -L <https://git.io/v2ray.sh)`>
 

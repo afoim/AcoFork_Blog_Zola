@@ -14,7 +14,7 @@ extra:
 
 # 直接下载服务端文件并运行
 
-[https://github.com/afoim/phira-mp-autobuild](https://github.com/afoim/phira-mp-autobuild)
+[<https://github.com/afoim/phira-mp-autobuild>](https://github.com/afoim/phira-mp-autobuild)
 
 这里有一些由Github Action自动构建的服务端文件，涵盖以下系统和架构![](/img/d17db57e7ff48cd2cf9bd05f41b314e0.webp)
 

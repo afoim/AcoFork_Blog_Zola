@@ -14,7 +14,7 @@ extra:
 > 视频： <https://www.bilibili.com/video/BV14dqwBVEa5/>
 
 比如说我的博客
-[https://blog.acofork.com](https://blog.acofork.com)
+[<https://blog.acofork.com>](https://blog.acofork.com)
 
 它在国内的节点是 **阿里云 ESA Pages/EdgeOne Pages** ，而在国外的节点是 **Cloudflare Page**
 
@@ -23,8 +23,8 @@ extra:
 对于大厂的监控，我们不必做防护，但对于你自托管的监控，推荐套 **Cloudflare Tunnel** ，防止被DDoS
 
 国内监控：
-[https://kuma.2x.nz](https://kuma.2x.nz)
+[<https://kuma.2x.nz>](https://kuma.2x.nz)
 
 海外监控：
-[https://vps.2x.nz](https://vps.2x.nz)
+[<https://vps.2x.nz>](https://vps.2x.nz)
 

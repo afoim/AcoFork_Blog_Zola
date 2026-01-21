@@ -17,7 +17,7 @@ extra:
 
 下载并安装
 
-前往 [evsar3/sshfs-win-manager: A GUI for SSHFS-Win (https://github.com/billziss-gh/sshfs-win)](https://github.com/evsar3/sshfs-win-manager)
+前往 [evsar3/sshfs-win-manager: A GUI for SSHFS-Win (<https://github.com/billziss-gh/sshfs-win>)](https://github.com/evsar3/sshfs-win-manager)
 
 下载并安装
 

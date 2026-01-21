@@ -10,8 +10,13 @@
             <time datetime="{{ page.date }}">{{ page.date }}</time>
             <span>•</span>
             <span>{{ page.reading_time }} 分钟阅读</span>
+            <span id="views-separator" style="display: none">•</span>
+            <span id="page-views" style="display: none"></span>
         </div>
         <h1 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">{{ page.title }}</h1>
+        {% if page.description %}
+        <p class="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">{{ page.description }}</p>
+        {% endif %}
         {% if page.extra.image %}
         <div class="w-full rounded-2xl overflow-hidden shadow-sm mb-8">
             <img src="{{ page.extra.image }}" alt="{{ page.title }}" class="w-full h-auto">
@@ -19,8 +24,47 @@
         {% endif %}
     </header>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const baseUrl = 'https://umami.acofork.com';
+                const shareId = 'CdkXbGgZr6ECKOyK';
+                // Current page path
+                const urlPath = window.location.pathname;
+                
+                const stats = await window.fetchUmamiStats(baseUrl, shareId, {
+                    url: urlPath
+                });
+                
+                // Check for both 'visits' (new preference) or 'pageviews' (fallback)
+                const metric = (stats && (stats.visits || stats.pageviews));
+                
+                let views = 0;
+                let hasData = false;
+
+                if (metric && typeof metric.value !== 'undefined') {
+                    views = metric.value;
+                    hasData = true;
+                } else if (stats && (typeof stats.visits === 'number' || typeof stats.pageviews === 'number')) {
+                        // Fallback for flat structure
+                        views = stats.visits || stats.pageviews;
+                        hasData = true;
+                }
+
+                if (hasData) {
+                    const viewEl = document.getElementById('page-views');
+                    viewEl.textContent = views + ' 次访问';
+                    viewEl.style.display = 'inline';
+                    document.getElementById('views-separator').style.display = 'inline';
+                }
+            } catch (e) {
+                console.error('Failed to load page views:', e);
+            }
+        });
+    </script>
+
     <!-- Post Content -->
-    <article class="prose prose-lg dark:prose-invert max-w-none bg-white dark:bg-gray-800 p-8 md:p-12 rounded-2xl shadow-sm break-words">
+    <article class="prose prose-lg dark:prose-invert max-w-none bg-white dark:bg-gray-800 p-8 md:p-12 rounded-2xl shadow-sm">
         {{ page.content | safe }}
     </article>
 

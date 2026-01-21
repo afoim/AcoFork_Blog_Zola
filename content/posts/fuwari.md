@@ -37,7 +37,7 @@ extra:
 
 1. Fork仓库：
    
-   [https://github.com/saicaca/fuwari](https://github.com/saicaca/fuwari)
+   [<https://github.com/saicaca/fuwari>](https://github.com/saicaca/fuwari)
 
 2. 避免有小废物不会Fork仓库，这里附上图片教程
 

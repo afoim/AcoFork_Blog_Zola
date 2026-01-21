@@ -7,7 +7,7 @@ draft: false
 taxonomies:
   tags: ["Steam"]
 extra:
-  image: https://eo-r2.2x.nz/myblog/img/QmPEHve8DdVZdwxAZ26BPgbc6cDCBaKC76VVijqVoMBY2k.png
+  image: <https://eo-r2.2x.nz/myblog/img/QmPEHve8DdVZdwxAZ26BPgbc6cDCBaKC76VVijqVoMBY2k.png>
   lang: ''
 
 ---
@@ -23,7 +23,7 @@ OS X x86/Arm64
 
 <https://github.com/JustArchiNET/ArchiSteamFarm>
 
-或前往Release：https://github.com/JustArchiNET/ArchiSteamFarm/releases/latest
+或前往Release：<https://github.com/JustArchiNET/ArchiSteamFarm/releases/latest>
 
 下载你适用于你作业系统的可执行文件的压缩包
 
@@ -47,4 +47,4 @@ ASF并不会干扰你的正常使用Steam的行为，当账号被占用时，ASF
 
 ---
 
-ASF可以视为一个无头Steam客户端，它不仅能挂卡，还能做更多事情，详见：https://github.com/JustArchiNET/ArchiSteamFarm/wiki
+ASF可以视为一个无头Steam客户端，它不仅能挂卡，还能做更多事情，详见：<https://github.com/JustArchiNET/ArchiSteamFarm/wiki>

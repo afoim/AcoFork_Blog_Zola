@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
+{% set section = get_section(path="posts/_index.md") %}
 <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
     <!-- Sidebar / Profile -->
     <div class="md:col-span-1 space-y-6">
@@ -24,17 +25,149 @@
         </div>
 
         <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-6 text-center">
-            <h3 class="font-bold text-gray-900 dark:text-white mb-4">关于</h3>
-            <p class="text-sm text-gray-500 dark:text-gray-400">
-                分享技术，记录生活。
-            </p>
+            <h3 class="font-bold text-gray-900 dark:text-white mb-4">全站统计</h3>
+            {% set_global total_words = 0 %}
+            {% for page in section.pages %}
+                {% if page.word_count %}
+                    {% set_global total_words = total_words + page.word_count %}
+                {% endif %}
+            {% endfor %}
+            
+            <div class="grid grid-cols-2 gap-4">
+                <div class="flex flex-col">
+                    <span class="text-2xl font-bold text-blue-600 dark:text-blue-400">{{ section.pages | length }}</span>
+                    <span class="text-xs text-gray-500 dark:text-gray-400">文章数</span>
+                </div>
+                <div class="flex flex-col">
+                    {% if total_words > 10000 %}
+                        <span class="text-2xl font-bold text-green-600 dark:text-green-400">{{ total_words / 10000 | round(precision=1) }}w</span>
+                    {% else %}
+                        <span class="text-2xl font-bold text-green-600 dark:text-green-400">{{ total_words }}</span>
+                    {% endif %}
+                    <span class="text-xs text-gray-500 dark:text-gray-400">总字数</span>
+                </div>
+                <div class="flex flex-col col-span-2" id="total-views-container" style="display: none;">
+                    <span class="text-2xl font-bold text-orange-600 dark:text-orange-400" id="total-views"></span>
+                    <span class="text-xs text-gray-500 dark:text-gray-400">总访问量</span>
+                </div>
+            </div>
+            
+            <script>
+                document.addEventListener('DOMContentLoaded', async () => {
+                    try {
+                        const baseUrl = 'https://umami.acofork.com';
+                        const shareId = 'CdkXbGgZr6ECKOyK'; 
+                        
+                        // 1. Load total views
+                        const stats = await window.fetchUmamiStats(baseUrl, shareId, {});
+                        if (stats) {
+                            const metric = stats.visits || stats.pageviews;
+                            if (metric && typeof metric.value !== 'undefined') {
+                                const views = metric.value;
+                                const formattedViews = views > 10000 ? (views / 10000).toFixed(1) + 'w' : views;
+                                document.getElementById('total-views').textContent = formattedViews;
+                                document.getElementById('total-views-container').style.display = 'flex';
+                            } else {
+                                const val = stats.visits || stats.pageviews;
+                                if (typeof val === 'number') {
+                                    const formattedViews = val > 10000 ? (val / 10000).toFixed(1) + 'w' : val;
+                                    document.getElementById('total-views').textContent = formattedViews;
+                                    document.getElementById('total-views-container').style.display = 'flex';
+                                }
+                            }
+                        }
+
+                        // 2. Load views for each article in the list
+                        const viewSpans = document.querySelectorAll('.view-count');
+                        viewSpans.forEach(async (span) => {
+                            const path = span.getAttribute('data-path');
+                            if (!path) return;
+                            
+                            try {
+                                // Fetch stats for specific path
+                                const pageStats = await window.fetchUmamiStats(baseUrl, shareId, { url: path });
+                                
+                                // Check for both 'visits' (new preference) or 'pageviews' (fallback)
+                                const metric = (pageStats && (pageStats.visits || pageStats.pageviews));
+                                
+                                if (metric && typeof metric.value !== 'undefined') {
+                                    const views = metric.value;
+                                    span.textContent = views + ' 次访问';
+                                } else if (pageStats && (typeof pageStats.visits === 'number' || typeof pageStats.pageviews === 'number')) {
+                                     // Fallback for flat structure
+                                     const val = pageStats.visits || pageStats.pageviews;
+                                     span.textContent = val + ' 次访问';
+                                } else {
+                                     span.style.display = 'none';
+                                }
+                            } catch (err) {
+                                console.warn(`Failed to load views for ${path}`, err);
+                                span.style.display = 'none';
+                            }
+                        });
+
+                    } catch (e) {
+                        console.error('Failed to load views:', e);
+                    }
+                });
+            </script>
         </div>
     </div>
 
     <!-- Main Feed -->
     <div class="md:col-span-3 space-y-6">
-        {% set section = get_section(path="posts/_index.md") %}
-        {% for page in section.pages | slice(end=10) %}
+        {# Separate pinned and regular pages #}
+        {% set pinned_pages = [] %}
+        {% set regular_pages = [] %}
+        
+        {% for page in section.pages %}
+            {% if page.extra.pinned %}
+                {% set_global pinned_pages = pinned_pages | concat(with=page) %}
+            {% else %}
+                {% set_global regular_pages = regular_pages | concat(with=page) %}
+            {% endif %}
+        {% endfor %}
+
+        {# Show pinned pages first #}
+        {% for page in pinned_pages %}
+        <article class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-300 border-l-4 border-red-500 dark:border-red-500 relative">
+            {% if page.extra.image %}
+            <div class="h-48 md:h-64 w-full overflow-hidden">
+                <a href="{{ page.permalink }}">
+                    <img src="{{ page.extra.image }}" alt="{{ page.title }}" class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500">
+                </a>
+            </div>
+            {% endif %}
+            <div class="p-6">
+                <div class="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-2 space-x-4">
+                    <time datetime="{{ page.date }}">{{ page.date }}</time>
+                    <span class="view-count" data-path="{{ page.path }}"></span>
+                </div>
+                <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-3">
+                    <a href="{{ page.permalink }}" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors flex items-center gap-2">
+                        <svg class="w-5 h-5 text-red-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"></path></svg>
+                        <span>{{ page.title }}</span>
+                    </a>
+                </h2>
+                <p class="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3">
+                    {{ page.description }}
+                </p>
+                <div class="flex items-center justify-between">
+                    <div class="flex flex-wrap gap-2">
+                        {% if page.taxonomies.tags %}
+                        {% for tag in page.taxonomies.tags | slice(end=3) %}
+                        <a href="{{ get_taxonomy_url(kind="tags", name=tag) }}" class="text-xs text-blue-500 bg-blue-50 dark:bg-blue-900/30 px-2 py-1 rounded-md hover:bg-blue-100 dark:hover:bg-blue-900/50">#{{ tag }}</a>
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+                    <a href="{{ page.permalink }}" class="text-blue-600 dark:text-blue-400 font-medium hover:underline text-sm">阅读更多 →</a>
+                </div>
+            </div>
+        </article>
+        {% endfor %}
+
+        {# Show regular pages #}
+        {% for page in regular_pages | slice(end=10) %}
         <article class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-300">
             {% if page.extra.image %}
             <div class="h-48 md:h-64 w-full overflow-hidden">
@@ -46,6 +179,7 @@
             <div class="p-6">
                 <div class="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-2 space-x-4">
                     <time datetime="{{ page.date }}">{{ page.date }}</time>
+                    <span class="view-count" data-path="{{ page.path }}"></span>
                 </div>
                 <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-3">
                     <a href="{{ page.permalink }}" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">{{ page.title }}</a>

@@ -44,13 +44,13 @@ extra:
 
 - 下载Ventoy最新版可执行文件：
   
-  [https://www.ventoy.net/cn/download.html](https://www.ventoy.net/cn/download.html)
+  [<https://www.ventoy.net/cn/download.html>](https://www.ventoy.net/cn/download.html)
   
   - 使用GPT分区表，NTFS格式将Ventoy写入U盘
 
 - 下载PVE最新版ISO（使用USTC镜像源）：
   
-  [https://mirrors.ustc.edu.cn/help/proxmox.html](https://mirrors.ustc.edu.cn/help/proxmox.html)
+  [<https://mirrors.ustc.edu.cn/help/proxmox.html>](https://mirrors.ustc.edu.cn/help/proxmox.html)
   
   - 将PVE的ISO文件放入U盘根目录
 
@@ -62,7 +62,7 @@ extra:
 
 ### 安装PVE快捷管理脚本
 
-- 安装PVE快捷管理脚本：[pve\_source.tar.gz | AcoFork-AList](https://alist.onani.cn/pve_source.tar.gz) 或 [**https://wwp.lanzoul.com/ivHta1ngmo6d**](https://wwp.lanzoul.com/ivHta1ngmo6d) （密码:i1ws）（来自：在下莫老师）
+- 安装PVE快捷管理脚本：[pve\_source.tar.gz | AcoFork-AList](https://alist.onani.cn/pve_source.tar.gz) 或 [**<https://wwp.lanzoul.com/ivHta1ngmo6d**>](https://wwp.lanzoul.com/ivHta1ngmo6d) （密码:i1ws）（来自：在下莫老师）
   
   - 解压：`tar zxvf pve_source.tar.gz`
   
@@ -80,7 +80,7 @@ extra:
 
 - 下载驱动：
   
-  [https://www.realtek.com/Download/List?cate\_id=584](https://www.realtek.com/Download/List?cate_id=584)![](/img/bbbf44985b98c193eb1ca72199de34d8.webp)
+  [<https://www.realtek.com/Download/List?cate\_id=584>](https://www.realtek.com/Download/List?cate_id=584)![](/img/bbbf44985b98c193eb1ca72199de34d8.webp)
 
 - 解压，安装：`sh autorun.sh`
 
@@ -173,7 +173,7 @@ extra:
 
 - 前往官网下载最新版ISO：
   
-  [https://www.fnnas.com/](https://www.fnnas.com/)
+  [<https://www.fnnas.com/>](https://www.fnnas.com/)
 
 - 上传至PVE：![](/img/839a6e4c95cf97688c250f2ca0e47ae1.webp)
 
@@ -265,13 +265,13 @@ extra:
 
 - 下载Debian12 ISO（USTC镜像源）（建议选择DVD镜像，包更全，安装更快）
   
-  [https://mirrors.ustc.edu.cn/help/debian-cd.html](https://mirrors.ustc.edu.cn/help/debian-cd.html)
+  [<https://mirrors.ustc.edu.cn/help/debian-cd.html>](https://mirrors.ustc.edu.cn/help/debian-cd.html)
 
 - 上传至PVE，创建Debian虚拟机，CPU类型选择host，步骤略
 
 ### 安装1Panel：
 
-[https://1panel.cn/docs/installation/online\_installation/](https://1panel.cn/docs/installation/online_installation/)
+[<https://1panel.cn/docs/installation/online\_installation/>](https://1panel.cn/docs/installation/online_installation/)
 
 - 在1Panel中安装`Openresty` `MySQL` `Halo` `AList` `Cloudflared` 配置步骤略
 
@@ -384,8 +384,8 @@ extra:
 
 ![](/img/ba737a801a0b760aa0cef02ed7adc811.webp)
 
-[https://blog.onani.cn](https://blog.onani.cn)
+[<https://blog.onani.cn>](https://blog.onani.cn)
 
-[https://alist.onani.cn](https://alist.onani.cn)
+[<https://alist.onani.cn>](https://alist.onani.cn)
 
 ![](/img/bde17fb625f5e59f31a18df68fcb1e3b.webp)

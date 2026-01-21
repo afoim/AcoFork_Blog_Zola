@@ -25,7 +25,7 @@ Error: SSR functions package size exceeds 128MiB limit (157MiB)
 
 Demo： [Umami](https://eo-umami.acofork.com/share/rC995W8J6CT4uLDo)
 
-视频： https://www.bilibili.com/video/BV1JiqSBaEY1/
+视频： <https://www.bilibili.com/video/BV1JiqSBaEY1/>
 
 唯一的缺陷，无法获取用户地区（原逻辑有个高达60M的本地Geo文件）
 ![](/img/ed119a9d57f4344732115718e72ada4f.png)

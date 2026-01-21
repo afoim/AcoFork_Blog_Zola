@@ -12,7 +12,7 @@ extra:
 
 ---
 
-> 仅供学习交流，请在下载后24h内删除。体验地址： [https://lsky.2x.nz](https://lsky.2x.nz)
+> 仅供学习交流，请在下载后24h内删除。体验地址： [<https://lsky.2x.nz>](https://lsky.2x.nz)
 > 视频教程： <https://www.bilibili.com/video/BV1UieUzQEvq/>
 
 # 安装包体

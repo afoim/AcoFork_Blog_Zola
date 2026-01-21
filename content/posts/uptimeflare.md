@@ -107,4 +107,4 @@ UptimeFlare非常自由，你可以在 `callbacks` 中编写故障时要做的�
 ![](/img/d2c9ea6e184d3945edb7dae272504aae.png)
 
 最终效果：
-[https://ok.2x.nz](https://ok.2x.nz)
+[<https://ok.2x.nz>](https://ok.2x.nz)

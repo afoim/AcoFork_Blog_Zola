@@ -6,7 +6,7 @@ draft: false
 taxonomies:
   tags: ["Rewrite"]
 extra:
-  image: https://eo-r2.2x.nz/myblog/img/bafybeihhyuk3zjqkisf66swxft4j5srv3g7wozy3zn4ykpsh3cuveuuwb4.png
+  image: <https://eo-r2.2x.nz/myblog/img/bafybeihhyuk3zjqkisf66swxft4j5srv3g7wozy3zn4ykpsh3cuveuuwb4.png>
   lang: ''
 ---
 

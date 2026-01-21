@@ -6,6 +6,7 @@
     <title>{% block title %}{{ config.title }}{% endblock title %}</title>
     <link rel="stylesheet" href="/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css"/>
     <link rel="icon" href="https://q2.qlogo.cn/headimg_dl?dst_uin=2726730791&amp;spec=0">
     <script src="https://pic1.acofork.com/random.js"></script>
     <link rel="alternate" type="application/rss+xml" title="RSS" href="{{ get_url(path="rss.xml", trailing_slash=false) }}">
@@ -122,11 +123,10 @@
     </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/elasticlunr/0.9.6/elasticlunr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
     <script src="/js/umami-share.js"></script>
     <script src="/js/search.js"></script>
     <script src="/js/gfm-alerts.js"></script>
-    <script src="/js/external-links.js"></script>
-    <script src="/js/anchor-fix.js"></script>
     <script>
         function toggleTheme() {
             if (document.documentElement.classList.contains('dark')) {
@@ -165,6 +165,27 @@
             const menu = document.getElementById('mobile-menu');
             menu.classList.toggle('hidden');
         }
+
+        // Initialize Fancybox
+        document.addEventListener("DOMContentLoaded", function() {
+            Fancybox.bind("[data-fancybox]", {
+                // Your custom options
+            });
+            
+            // Auto-wrap images in prose content with Fancybox links if they aren't already
+            const articleImages = document.querySelectorAll('.prose img');
+            articleImages.forEach(img => {
+                if (img.parentElement.tagName !== 'A') {
+                    const wrapper = document.createElement('a');
+                    wrapper.href = img.src;
+                    wrapper.setAttribute('data-fancybox', 'gallery');
+                    wrapper.setAttribute('data-caption', img.alt || '');
+                    
+                    img.parentNode.insertBefore(wrapper, img);
+                    wrapper.appendChild(img);
+                }
+            });
+        });
     </script>
 </body>
 </html>

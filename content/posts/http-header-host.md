@@ -31,4 +31,4 @@ CDN上托管了那么多的网站，那它是如何识别每个用户需要访�
 ![](/img/10b2969fde97039f8170ea0603e258f8.png)
 
 # Demo
-[https://status.acofork.com](https://status.acofork.com)
+[<https://status.acofork.com>](https://status.acofork.com)

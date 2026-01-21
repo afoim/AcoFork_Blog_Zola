@@ -80,14 +80,28 @@
 				shareId,
 			);
 			const currentTimestamp = Date.now();
-			const params = new URLSearchParams({
+			// 构造查询参数
+            const requestParams = {
 				startAt: 0,
 				endAt: currentTimestamp,
 				unit: "hour",
 				timezone: queryParams.timezone || "Asia/Shanghai",
-				compare: false,
 				...queryParams,
-			});
+			};
+            
+            // 构造最终的 URLSearchParams
+            const params = new URLSearchParams();
+            
+            for (const [key, value] of Object.entries(requestParams)) {
+                if (key === 'url') {
+                    // Umami v3 特殊逻辑：参数名变更为 'path'，且需要 'eq.' 前缀
+                    const pathValue = value.endsWith('/') ? value : value + '/'; // 确保尾随斜杠一致性（可选，视实际数据而定）
+                    // 用户指出：需要使用 eq. 前缀，参数名为 path
+                    params.append('path', `eq.${value}`); 
+                } else {
+                    params.append(key, value);
+                }
+            }
 
 			const statsUrl = `${baseUrl}/api/websites/${websiteId}/stats?${params.toString()}`;
 

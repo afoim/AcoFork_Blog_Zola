@@ -36,7 +36,7 @@ extra:
 # 使用方式：  
 
 ## 1. 直接访问
-访问在线体验地址：[https://paoshoushou.112601.xyz/](https://paoshoushou.112601.xyz/)
+访问在线体验地址：[<https://paoshoushou.112601.xyz/>](https://paoshoushou.112601.xyz/)
 
 ## 2. 本地部署
 1. 克隆或下载项目文件

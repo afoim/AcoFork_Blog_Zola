@@ -66,7 +66,7 @@ extra:
 >1. 网站托管在Cloudflare或者托管商声明支持ECH
 >2. 网站域名被SNI阻断，客户端被发RST包
 
-首先我提供一个网站：https://www.cloudflare-cn.com/ssl/encrypted-sni/#results
+首先我提供一个网站：<https://www.cloudflare-cn.com/ssl/encrypted-sni/#results>
 这个网站可以查询你的浏览器是否正在使用ECH。进入网站点击 `检查我的浏览器` ，待检查完毕后，检查 `安全 SNI` 一项是否为 `√` 
 如果你为 `×` ，也不要气馁，我们现在来解决
 ### Edge浏览器
@@ -75,12 +75,12 @@ extra:
 选择`Cloudflare （1.1.1.1）`
 再次测试即可
 （其他浏览器我没测试，应该大同小异，网上搜索一下XX浏览器开启ECH就行）
-接下来尝试访问：https://iwara.tv 。你应该能直连了
+接下来尝试访问：<https://iwara.tv> 。你应该能直连了
 # 方法二：Accesser
 >本方法采用一个神奇的方法来绕过SNI阻断，域前置。原理为客户端先找网站要一张SSL证书，然后再用这个通用证书写好要访问的网站发给服务器，这样，GFW也就看不见你要访问的网站，也就没法进行SNI阻断。
 >注意：本方法需要在本地运行一个程序并且劫持所有HTTP流量，可能会导致某些正常上网情况下不会出现的问题，请酌情使用
 >
-[https://github.com/URenko/Accesser](https://github.com/URenko/Accesser)
+[<https://github.com/URenko/Accesser>](https://github.com/URenko/Accesser)
 
 Accesser是一个HTTP代理。它通过中间人的身份处理终端的HTTP出口流量，以绕过SNI阻断。我们正常访问网站时，客户端会发送Client Hello，而这个报文是明文，并且通常会携带ServerName，这个时候GFW就能通过检测ServerName来进行阻断，代替网站向客户端发送一个RST报文重置连接，做到网站被“墙”的效果
 

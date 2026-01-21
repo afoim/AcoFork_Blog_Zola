@@ -120,7 +120,7 @@ Zerotier默认的网络组模式为`Private`。即私密模式，哪怕别人知
 
 # Zerotier授权设备
 
-前往Zerotier的网页控制台：[ZeroTier Central]([https://my.zerotier.com/](https://my.zerotier.com/))
+前往Zerotier的网页控制台：[ZeroTier Central]([<https://my.zerotier.com/>](https://my.zerotier.com/))
 
 授权刚才加入的设备![](/img/4ab9553d901f25240a93aa9a60f22a0e.webp)
 
@@ -253,7 +253,7 @@ root@n100-debian:~# ip a
 
 如果你的环境无法连接上Github
 
-尝试手动下载：[https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb)
+尝试手动下载：[<https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb>](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb)
 
 然后将其通过SSH等方式传到Linux上，如图终端为MobaXterm![](/img/9cce55629b6f348e49f9d1880b1723cd.webp)
 
