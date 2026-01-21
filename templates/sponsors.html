@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <header class="mb-10 text-center">
+        <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">赞助</h1>
+        <p class="text-gray-600 dark:text-gray-300">感谢您的支持！</p>
+    </header>
+
+    <!-- Payment QR Codes -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm text-center">
+            <h3 class="text-xl font-bold text-blue-500 mb-4">支付宝</h3>
+            <img src="{{ get_url(path="sponsors/alipay.svg") }}" alt="Alipay" class="w-48 h-48 mx-auto object-contain">
+        </div>
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm text-center">
+            <h3 class="text-xl font-bold text-green-500 mb-4">微信支付</h3>
+            <img src="{{ get_url(path="sponsors/wechat.svg") }}" alt="WeChat Pay" class="w-48 h-48 mx-auto object-contain">
+        </div>
+    </div>
+
+    {% set data = load_data(path="data/sponsors.json") %}
+    
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm overflow-hidden">
+        <div class="px-6 py-4 border-b border-gray-100 dark:border-gray-700">
+            <h3 class="font-bold text-gray-900 dark:text-white">近期赞助</h3>
+        </div>
+        <ul class="divide-y divide-gray-100 dark:divide-gray-700">
+            {% for sponsor in data %}
+            <li class="p-4 flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                <div class="flex items-center space-x-4">
+                    <img src="{{ sponsor.avatar | default(value="https://q2.qlogo.cn/headimg_dl?dst_uin=2726730791&spec=0") }}" alt="{{ sponsor.name }}" class="w-10 h-10 rounded-full bg-gray-200">
+                    <div>
+                        <p class="font-medium text-gray-900 dark:text-white">{{ sponsor.name }}</p>
+                        <p class="text-xs text-gray-500">{{ sponsor.date }}</p>
+                    </div>
+                </div>
+                <div class="font-bold text-green-600 dark:text-green-400">
+                    {{ sponsor.amount }}
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    
+    <div class="mt-12 prose dark:prose-invert mx-auto text-center">
+        {{ page.content | safe }}
+    </div>
+</div>
+{% endblock content %}

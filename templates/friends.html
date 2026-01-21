@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <header class="mb-10 text-center">
+        <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">友链</h1>
+        <p class="text-gray-600 dark:text-gray-300">认识一下我的朋友们！</p>
+    </header>
+
+    {% set data = load_data(path="data/friends.json") %}
+    
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for friend in data %}
+        <a href="{{ friend.url }}" target="_blank" rel="noopener noreferrer" 
+           class="group block bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm hover:shadow-md transition-all hover:-translate-y-1">
+            <div class="flex items-center space-x-4">
+                <img src="{{ friend.avatar }}" alt="{{ friend.name }}" class="w-16 h-16 rounded-full object-cover border-2 border-gray-100 dark:border-gray-700 group-hover:border-blue-500 transition-colors">
+                <div class="flex-1 min-w-0">
+                    <h3 class="text-lg font-bold text-gray-900 dark:text-white truncate group-hover:text-blue-500 transition-colors">{{ friend.name }}</h3>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 line-clamp-2">{{ friend.description }}</p>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+    
+    <div class="mt-12 prose dark:prose-invert mx-auto bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-sm">
+        {{ page.content | safe }}
+    </div>
+</div>
+{% endblock content %}

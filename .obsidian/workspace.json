@@ -1,0 +1,211 @@
+{
+  "main": {
+    "id": "8ef22d7179d780b3",
+    "type": "split",
+    "children": [
+      {
+        "id": "9b314c3f7cd15bcc",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "7352728c033b1de8",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "content/posts/acg-randompic-api.md",
+                "mode": "source",
+                "source": true
+              },
+              "icon": "lucide-file",
+              "title": "acg-randompic-api"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "bd60db1db197613b",
+    "type": "split",
+    "children": [
+      {
+        "id": "35a8cbdf8710659c",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "3c7fd3507597d843",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "文件列表"
+            }
+          },
+          {
+            "id": "8ecfb80186489ace",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "搜索"
+            }
+          },
+          {
+            "id": "75bed15d2258dec1",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "书签"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "93a8144e5c1ea3bb",
+    "type": "split",
+    "children": [
+      {
+        "id": "7cea4ef9b85e0e74",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "7d2882bcd1246e3c",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "content/posts/acg-randompic-api.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "acg-randompic-api 的反向链接列表"
+            }
+          },
+          {
+            "id": "69f934b7e6d9d3bd",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "content/posts/acg-randompic-api.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "acg-randompic-api 的出链列表"
+            }
+          },
+          {
+            "id": "b0f05c750fb7b185",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "标签"
+            }
+          },
+          {
+            "id": "b28679fe4128ce3e",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "添加笔记属性"
+            }
+          },
+          {
+            "id": "01430deaeafcd851",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "content/posts/acg-randompic-api.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "acg-randompic-api 的大纲"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "canvas:新建白板": false,
+      "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
+      "command-palette:打开命令面板": false,
+      "bases:新建数据库": false
+    }
+  },
+  "active": "7352728c033b1de8",
+  "lastOpenFiles": [
+    "public/tags/zhong-ding-xiang/page/1/index.html",
+    "public/tags/zerotier/page/1/index.html",
+    "public/tags/zeabur/page/1/index.html",
+    "public/tags/yu-ming-you-xiang/page/1/index.html",
+    "public/tags/you-xuan/page/1/index.html",
+    "public/tags/xssgong-ji/page/1/index.html",
+    "public/tags/xia-zai-qi/page/1/index.html",
+    "public/tags/wordpress/page/1/index.html",
+    "public/tags/whois/page/1/index.html",
+    "public/tags/wei-xin-qi-ye-you/page/1/index.html",
+    "public/tags/web/page/1/index.html",
+    "public/sponsors/wechat.svg",
+    "public/sponsors/mjt.jpg",
+    "public/sponsors/alipay.svg",
+    "public/img/ff62c246f612f2a26ef19cae0526669b.png",
+    "public/img/feb7c0d7416f9ec20ca7b6e22c2762d3.webp",
+    "public/img/feab68604949242e0e520a527d0105b1.webp",
+    "public/img/fe9560300ae8842612b82e07b662fa5e.png",
+    "public/img/fe11d42514b50924f2ce9220ec786485.png",
+    "public/img/fd0c37075b89369c74001491daf9de63.jpg",
+    "public/img/fcfe21514a2531a53efa1a00b79789c7.png",
+    "content/posts/163-free-domain-email.md"
+  ]
+}

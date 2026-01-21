@@ -1,0 +1,53 @@
+base_url = "https://blog.acofork.com"
+title = "AcoFork Blog"
+description = "分享网络技术、服务器部署、内网穿透、静态网站搭建、CDN优化、容器化部署等技术教程与实践经验的个人技术博客，专注于云原生、无服务器架构和前后端开发，作者为afoim/二叉树树"
+default_language = "zh"
+generate_feeds = true
+feed_filenames = ["rss.xml", "atom.xml"]
+author = "AcoFork"
+
+taxonomies = [
+    {name = "tags", paginate_by = 5, rss = true},
+]
+
+[extra]
+subtitle = "技术分享与实践"
+author = "二叉树树"
+bio = "Protect What You Love."
+avatar = "https://q2.qlogo.cn/headimg_dl?dst_uin=2726730791&spec=0"
+license = "CC BY-NC-SA 4.0"
+license_url = "https://creativecommons.org/licenses/by-nc-sa/4.0/"
+
+menu = [
+    {name = "首页", url = "/", external = false},
+    {name = "归档", url = "/posts", external = false},
+    {name = "友链", url = "/friends", external = false},
+    {name = "赞助", url = "/sponsors", external = false},
+    {name = "统计", url = "https://umami.acofork.com/share/CdkXbGgZr6ECKOyK", external = true},
+    {name = "监控", url = "https://status.acofork.com", external = true},
+]
+
+[markdown]
+render_emoji = true
+external_links_target_blank = true  # 自动为外部链接添加 target="_blank"
+external_links_no_follow = true     # 建议：外部链接添加 nofollow
+smart_punctuation = true            # 开启智能标点（可选）
+
+[markdown.highlighting]
+light_theme = "github-light"                                                                                     
+dark_theme = "github-dark"
+#error_on_missing_language = true
+
+# index_format = "elasticlunr_javascript"
+
+[link_checker]
+skip_prefixes = [
+    "http://127.0.0.1",
+    "http://localhost",
+]
+internal_level = "warn"
+external_level = "warn"
+
+[slugify]
+anchors = "safe"
+slugify = "on" # 强制开启 slugify，通常会包含小写转换
